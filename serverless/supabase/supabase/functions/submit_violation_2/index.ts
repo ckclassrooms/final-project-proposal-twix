@@ -54,14 +54,10 @@ const incomingData = await req.json()
     lat=incomingData["lat" as keyof typeof incomingData]
 
     lon=incomingData["lon" as keyof typeof incomingData]
-
-    if(lat>90 || lat<-90 || lon<-180 || lon>180)
-      return errorResponse("Latitude and longitude out of bounds",400);
   }
   if("license_plate" in incomingData){
     var lp=incomingData["license_plate" as keyof typeof incomingData]
-    if(lp.length()>10)
-      return errorResponse("License plate length too long. Keep it under 10",400)
+
     license_plate=lp
 
 
@@ -70,8 +66,7 @@ const incomingData = await req.json()
   if("notes" in incomingData)
   {
     var nt=incomingData["notes" as keyof typeof incomingData]
-    if(nt.length()>150)
-      nt=nt.substring(150);
+    
     notes=nt
   }
     
