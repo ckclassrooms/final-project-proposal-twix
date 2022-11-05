@@ -1,7 +1,7 @@
-Start postgres docker (first time only): `docker run --name cs484 -e POSTGRES_PASSWORD=jonbhai -d postgres`
-login to docker : `docker exec -it cs484 bash`
-upgrade to su user: `su - postgres`
-launch psql: `psql`
-create user: `CREATE USER cs484 PASSWORD 'jonbhai';`
-create database with owner : `create database cs484 owner cs484;`
-cond
+Install docker, docker-compose 
+Navigate to this folder and run `docker build -t custm_cs484 .`
+docker image will be created
+run `docker-compose up -d`
+login to docker container using `docker exec -it bash cs484`
+within container run `cd docker-entrypoint-initdb.d`
+run ` psql -U cs484 -d cs484 -a -f create_tables.sql`

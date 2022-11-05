@@ -1,0 +1,17 @@
+
+version: '3.8'
+services:
+  db:
+    image: custom_cs484
+    container_name: cs484
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=cs484
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+    volumes: 
+      - db:/var/lib/postgresql/data
+volumes:
+  db:
+    driver: local
