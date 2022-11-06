@@ -1,0 +1,4 @@
+Custom ignors for application
+Added by Nitish:
+/mapbox_files
+.DS_Store
