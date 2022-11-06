@@ -1,5 +1,7 @@
 from flask import Flask, jsonify, request,json
 import html
+import psycopg2
+
 app = Flask(__name__)
 
 @app.route("/")
