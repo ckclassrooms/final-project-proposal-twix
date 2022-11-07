@@ -2,12 +2,27 @@ import './App.css';
 import './scss/styles.scss';
 import { BrowserRouter as Router,Routes, Route, Link } from 'react-router-dom';
 import Landing from './components/Landing';
+import Nav from './components/Navbar';
 // import Nav from './components/Navbar';
 import SubmitObstruction from './components/SubmitObstruction';
 import LiveDb from './components/LiveDb';
 import Maps from './components/Maps';
-
+import { useState, useEffect } from "react";
+import {supabase} from './supabaseClient'
 function App() {
+
+  const [session, setSession] = useState(null);
+  // const [requests, setRequests] = useState([]);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+  }, []);
   return (
     <Router>
            <div className="App">
@@ -29,6 +44,7 @@ function App() {
               </ul>
             </div>
           </nav>
+          <Nav session={session} setSession={setSession}/>
            <Routes>
                  <Route path='/' element ={< Landing />}></Route>
                  <Route path='/liveDb' element={< LiveDb />}></Route>
