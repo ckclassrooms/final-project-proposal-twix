@@ -6,10 +6,11 @@ import time
 
 import random
 conn = psycopg2.connect(
-        host="db.kesgogujwpshhhahoouk.supabase.co",
+        host="localhost",
+        port=54322,
         database="postgres",
         user="postgres",
-        password="u5jA!Wxr324@mWu")
+        password="postgres")
 
 def dummy_op():
 # Open a cursor to perform database operations

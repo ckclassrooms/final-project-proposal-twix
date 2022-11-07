@@ -1,4 +1,4 @@
-Custom ignors for application
-Added by Nitish:
 /mapbox_files
+/ignore
 .DS_Store
+.vscode
