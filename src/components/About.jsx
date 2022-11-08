@@ -5,7 +5,7 @@ function About() {
         <>
             <h1> CS 484 Final Project: BikeSpy </h1>
 
-  <h3><a href="https://github.com/ckclassrooms/final-project-proposal-twix.git">Twix</a></h3>
+  <h3>Github (Team Name: Twix): https://github.com/ckclassrooms/final-project-proposal-twix.git</h2>
   <br></br>
 <h2>App deployment: https://cool-conkies-80a0da.netlify.app/ </h2>
 
