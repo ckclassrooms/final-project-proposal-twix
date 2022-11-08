@@ -1,6 +1,7 @@
 # CS 484 Final Project: BikeSpy
 ## Team Name
 **Twix** (Github Repo: https://github.com/ckclassrooms/final-project-proposal-twix.git)
+App deployment: https://cool-conkies-80a0da.netlify.app/
 ## Team Members:
 | Name                            | Net ID   |
 | ------------------------------- | -------- |
@@ -20,8 +21,6 @@ The project involves a web application that allows users to report and submit th
 
 In addition to the live database view, the data can also be visualized in an interactive map. 
 
-Further, the application can also be extended by training a Automatic Licence Plate Recognition system to capture Licence Plate Number from the submitted photographs. This component is still being explored for feasibility.
-
 We envision the following security and privacy concerns when managing the user data for our application:
 - The location acquired from the device should be securely read and stored.
 - The authentication methods, SSO or User Sign-up, should be implemented securely.
@@ -31,6 +30,7 @@ For the implementation, the following tech stack is being considered:
 
 | Tech Stack   | Description |
 | -----------  | ----------- |
-| Languages    | Python, JavaScript              |
-| Frameworks   | React, Flask                    |
-| Services     | AWS Lambda, AWS EC2, Supabase   |
+| Languages    | JavaScript  |
+| Frameworks   | React       |
+| Services     | Supabase    |
+| Database     | PostgreSQL, PostGIS|
