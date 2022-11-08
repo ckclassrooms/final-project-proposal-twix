@@ -9,7 +9,7 @@ function Nav({session, setSession}) {
             provider: 'google'
           })
           console.log("user",user)
-          console.log("err",err)
+          console.log("err",error)
         // setSession("Setting Something as session")
     }
 
