@@ -8,12 +8,15 @@ function Nav({session, setSession}) {
         let { user, error } = await supabase.auth.signInWithOAuth({
             provider: 'google'
           })
+          console.log("user",user)
+          console.log("err",err)
         // setSession("Setting Something as session")
     }
 
     const logoutSubmit = async ()=>{
         // Todo - Add logic to logout
         let { error } = await supabase.auth.signOut()
+        console.log(error)
         // setSession(null);
     }
 
