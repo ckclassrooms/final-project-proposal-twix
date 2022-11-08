@@ -27,8 +27,8 @@ function App() {
   return (
     <Router>
            <div className="App">
-            {
-              /*
+            
+              
               <nav class="navbar navbar-default">
             <div class="container-fluid">
               <ul className="nav nav-pills navbar-expand">
@@ -47,8 +47,7 @@ function App() {
               </ul>
             </div>
           </nav> 
-              */
-            }
+              
            
           
           <Nav session={session} setSession={setSession}/>
