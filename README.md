@@ -1,7 +1,9 @@
 # CS 484 Final Project: BikeSpy
 ## Team Name
 **Twix** (Github Repo: https://github.com/ckclassrooms/final-project-proposal-twix.git)
-App deployment: https://cool-conkies-80a0da.netlify.app/
+
+App Deployment: https://cool-conkies-80a0da.netlify.app/
+
 ## Team Members:
 | Name                            | Net ID   |
 | ------------------------------- | -------- |
