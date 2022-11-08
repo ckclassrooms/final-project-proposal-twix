@@ -2,9 +2,18 @@
   text-align: center;
 }
 
-a {
+.nav-item a {
   text-decoration: none !important;
   color: white !important;
+}
+
+h3 a, h2 a {
+  text-decoration: none !important;
+  color: blue !important;
+}
+
+h3 a:hover, h2 a:hover {
+  text-decoration: underline !important;
 }
 
 .navbar {
@@ -31,3 +40,13 @@ a {
   .liveDb-div .card {
     margin-bottom: 20px;
   }
+
+  .about-content img {
+    width: 100%;
+  }
+
+  .about-content {
+    margin-top: 20px;
+    margin-left: 20px;
+  }
+  
