@@ -1,6 +1,6 @@
 import './App.css';
 import './scss/styles.scss';
-import { BrowserRouter as Router,Routes, Route } from 'react-router-dom';
+import { Routes, Route } from "react-router-dom";
 import Landing from './components/Landing';
 import Nav from './components/Navbar';
 import SubmitObstruction from './components/SubmitObstruction';
