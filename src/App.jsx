@@ -7,13 +7,12 @@ import SubmitObstruction from './components/SubmitObstruction';
 import LiveDb from './components/LiveDb';
 import Maps from './components/Maps';
 import About from './components/About';
+import { supabase } from './supabaseClient'
 import { useState, useEffect } from "react";
-import {supabase} from './supabaseClient'
 function App() {
 
   const [session, setSession] = useState(null);
   // const [requests, setRequests] = useState([]);
-
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);

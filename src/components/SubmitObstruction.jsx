@@ -1,6 +1,51 @@
-import React from 'react'
-
+import React from 'react';
+import {useState} from 'react';
+import Avatar from '../components/Avatar';
+import {supabase} from '../supabaseClient';
 function SubmitObstruction() {
+    const [file, setFile] = useState();
+    function handleChange(e) {
+        console.log(e.target.files);
+        setFile(URL.createObjectURL(e.target.files[0]));
+    }
+
+
+ 
+
+    const uploadAvatar = async (event) => {
+        try {
+          //setUploading(true)
+    
+        //   if (!event.target.files || event.target.files.length === 0) {
+        //     throw new Error('You must select an image to upload.')
+        //   }
+    
+          const file = document.getElementById('single').files[0]
+          const fileExt = file.name.split('.').pop()
+          const fileName = `${Math.random()}.${fileExt}`
+          const filePath = `${fileName}`
+    
+          console.log(`File ${file}`)
+          console.log(`File ${fileExt}`)
+          console.log(`File ${fileName}`)
+          console.log(`File ${filePath}`)
+
+
+          let { data, error: uploadError } = await supabase.storage.from('avatars').upload(filePath, file)
+    
+          if (uploadError) {
+            throw uploadError
+          }
+          console.log("urL: ", data)
+          //onUpload(filePath)
+        } catch (error) {
+          alert(error.message)
+        } finally {
+           console.log("Jo")
+          //setUploading(false)
+        }
+      }
+    
     return (
         <>
         <div class="d-flex justify-content-center">
@@ -39,10 +84,19 @@ function SubmitObstruction() {
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
             </div>
             <div class="form-group">
-                <label for="exampleFormControlFile1">Image</label>
-                <input type="file" class="form-control-file" id="exampleFormControlFile1"/>
+                {/* <label for="exampleFormControlFile1">Upload an Image:    </label> */}
+                {/* <input type="file" onChange={handleChange}/> */}
+                <img src={file}/>
+                <input
+              type="file"
+              id="single"
+              accept="image/*"
+            //   onChange={uploadAvatar}
+              //disabled={uploading}
+            />
             </div>
-            <button type="button" class="btn btn-primary">Submit</button>
+
+            <button type="button" class="btn btn-primary" onClick={uploadAvatar}>Submit</button>
         </form>
         </div>
         </>
