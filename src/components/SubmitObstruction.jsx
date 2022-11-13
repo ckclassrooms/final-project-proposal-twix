@@ -3,6 +3,7 @@ import {useState} from 'react';
 // import Avatar from '../components/Avatar';
 import {supabase} from '../supabaseClient';
 function SubmitObstruction() {
+  const file = ""
     // const [file, setFile] = useState();
     // function handleChange(e) {
     //     console.log(e.target.files);
