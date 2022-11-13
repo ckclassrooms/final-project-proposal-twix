@@ -1,13 +1,13 @@
 import React from 'react';
 import {useState} from 'react';
-import Avatar from '../components/Avatar';
+// import Avatar from '../components/Avatar';
 import {supabase} from '../supabaseClient';
 function SubmitObstruction() {
     const [file, setFile] = useState();
-    function handleChange(e) {
-        console.log(e.target.files);
-        setFile(URL.createObjectURL(e.target.files[0]));
-    }
+    // function handleChange(e) {
+    //     console.log(e.target.files);
+    //     setFile(URL.createObjectURL(e.target.files[0]));
+    // }
 
 
  
@@ -86,7 +86,7 @@ function SubmitObstruction() {
             <div class="form-group">
                 {/* <label for="exampleFormControlFile1">Upload an Image:    </label> */}
                 {/* <input type="file" onChange={handleChange}/> */}
-                <img src={file}/>
+                <img src={file} alt={"Image Preview"}/>
                 <input
               type="file"
               id="single"
