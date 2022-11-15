@@ -25,6 +25,14 @@ def dummy_op():
         cur.close()
         conn.close()
 
+def fill_users():
+        cur = conn.cursor()
+        cur.execute("""INSERT INTO USERS(user_name,profile_pic_url) VALUES(a,null)""")
+        cur.execute("""INSERT INTO USERS(user_name,profile_pic_url) VALUES(a,null)""")
+        cur.execute("""INSERT INTO USERS(user_name,profile_pic_url) VALUES(a,null)""")
+        cur.execute("""INSERT INTO USERS(user_name,profile_pic_url) VALUES(a,null)""")
+        conn.commit()
+        cur.close()
 
 def insert_into_tables(violation,cur):
         
@@ -73,4 +81,5 @@ def fill_db():
         conn.close()
 
 # dummy_op()
+# fill_users
 fill_db()
