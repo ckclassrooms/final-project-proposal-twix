@@ -2,6 +2,7 @@ import React from 'react';
 // import {useState} from 'react';
 // import Avatar from '../components/Avatar';
 import {supabase} from '../supabaseClient';
+import { v4 as uuidv4 } from 'uuid';
 function SubmitObstruction() {
   const file = ""
     // const [file, setFile] = useState();
@@ -23,28 +24,25 @@ function SubmitObstruction() {
     
           const file = document.getElementById('single').files[0]
           const fileExt = file.name.split('.').pop()
-          const fileName = `${Math.random()}.${fileExt}`
-          const filePath = `${fileName}`
-    
-          console.log(`File ${file}`)
-          console.log(`File ${fileExt}`)
-          console.log(`File ${fileName}`)
-          console.log(`File ${filePath}`)
+          const fileName = `${uuidv4().toString().replace(/-/g,"")}.${fileExt}`
+          const filePath1 = `public/violations/${fileName}`
+          console.log(`File ${filePath1}`)
 
 
-          let { data, error: uploadError } = await supabase.storage.from('avatars').upload(filePath, file)
+          let {  error: uploadError } = await supabase.storage.from('bike-lane-1').upload(filePath1, file)
     
           if (uploadError) {
             throw uploadError
           }
-          console.log("urL: ", data)
           //onUpload(filePath)
+          return filePath1
         } catch (error) {
           alert(error.message)
         } finally {
-           console.log("Jo")
+           console.log("Upload complete")
           //setUploading(false)
         }
+        
       }
     
     return (
