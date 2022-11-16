@@ -60,7 +60,7 @@ serve(async (req) => {
   console.log(incomingData)
   console.log(typeof incomingData)
   console.log(">>>>>>")
-  const { error, data } = await supabase.rpc('get_points1', { lat1: incomingData["lat1"as keyof typeof incomingData ],
+  const { error, data } = await supabase.rpc('get_points1', { lat1: incomingData["lat1" as keyof typeof incomingData ],
   lon1:incomingData["lon1"as keyof typeof incomingData ],
   lat2: incomingData["lat2"as keyof typeof incomingData ], 
   lon2:incomingData["lon2"as keyof typeof incomingData ],

@@ -34,10 +34,10 @@ WHERE ST_covers(
 --- Main function of maps page >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 CREATE OR REPLACE FUNCTION get_points1(lat1 double precision,lon1 double precision,lat2 double precision, lon2 double precision,cats text[])
-  RETURNS TABLE(lat double precision, lon double precision,id integer,violation_type text,ts timestamp)
+  RETURNS TABLE(lat double precision, lon double precision,id integer,violation_type text,ts timestamp, image_url text)
   LANGUAGE sql AS
 $func$
-SELECT ST_X(v.loc::geometry) as lat, ST_Y(v.loc::geometry)as lon,v.id,v.violation_type,v.ts
+SELECT v.lat as lat, v.lon as lon,v.id,v.violation_type,v.ts,v.image_url
 FROM   violations v
 WHERE  ST_covers(
  ST_TRANSFORM(ST_MakeEnvelope(lat1,lon1,lat2,lon2,  4326),4326),

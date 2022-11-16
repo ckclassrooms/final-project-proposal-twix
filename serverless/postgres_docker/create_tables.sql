@@ -17,12 +17,11 @@ CREATE TABLE violations (
   license_plate     VARCHAR(100) NULL,
   notes             VARCHAR(100) ,
   loc geography(POINT,4326) NULL,
+  lat double precision NULL,
+  lon double precision NULL,
+  image_url VARCHAR(500) NULL,
   CONSTRAINT fk_user_violations FOREIGN KEY(user_id) REFERENCES users(id)
 
 );
 
-CREATE TABLE images (
-    id INT,
-    image_url VARCHAR(500),
-    CONSTRAINT fk_violation_images FOREIGN KEY(id) REFERENCES violations(id)
-);
+
