@@ -1,6 +1,7 @@
 import React from 'react'
 import Card from 'react-bootstrap/Card';
 import {supabase} from '../supabaseClient'
+/*
 async function getGridData() {
     var myHeaders = new Headers();
     myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtlc2dvZ3Vqd3BzaGhoYWhvb3VrIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjcxNjY4NTksImV4cCI6MTk4Mjc0Mjg1OX0.vLaXeTLbdnc7MyhoA9Qe9v_gp3w0r_GP-XR80AFu6oc");
@@ -27,13 +28,25 @@ async function getGridData() {
     console.log(res);
 }
 
+async function getMap() {
+    const { data, error } = await supabase.functions.invoke('maps_func_2', {
+        body: { "lat1": -87.651769,
+        "lon1": 41.880070,
+        "lat2": -87.647589,
+        "lon2":41.869612,
+        "cats":["TAXI"] }
+      })
 
+      console.log("grid data ",data)
+}
+*/
 async function getGrid() {
     const { data, error } = await supabase.functions.invoke('grid_func_1', {
         body: { }
       })
 
       console.log("grid data ",data)
+      console.log("ERROR",error)
 }
 function LiveDb() {
     // getGridData();
