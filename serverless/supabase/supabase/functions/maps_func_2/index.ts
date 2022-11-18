@@ -5,9 +5,13 @@
 import { serve } from "https://deno.land/std@0.131.0/http/server.ts"
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@v2.0.6'
 console.log("Hello from Functions!")
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, content-type, x-client-info, apikey',
+}
 const createGeoJSON= (data1:object[])=> {
-  console.log(data1);
-  console.log(typeof data1)
+  // console.log(data1);
+  // console.log(typeof data1)
   let d:object
   let features:object[]=[];
 
@@ -41,42 +45,52 @@ const createGeoJSON= (data1:object[])=> {
       features.push(inner);
     }
     
-    console.log(features)
+    // console.log(features)
     d = {
       "features":features,
       "type": "FeatureCollection"
     }
     return d;
 }
-
-
 serve(async (req) => {
-  const  incomingData  = await req.json()
   const supabase = createClient(
     Deno.env.get("SUPABASE_URL") ?? "",
-    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
-    { global: { headers: { Authorization: req.headers.get('Authorization')! } } }
+    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
   );
-  console.log(incomingData)
-  console.log(typeof incomingData)
-  console.log(">>>>>>")
+  if (req.method === 'OPTIONS') {
+    return new Response(
+        'ok',
+        {
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "POST",
+                "Access-Control-Expose-Headers": "Content-Length, X-JSON",
+                "Access-Control-Allow-Headers": "apikey,X-Client-Info, Content-Type, Authorization, Accept, Accept-Language, X-Authorization",
+            }
+        }
+    );
+}
+  const  incomingData  = await req.json()
+  
+  const cats1 = <object[]>incomingData["cats" as keyof typeof incomingData ]
+  console.log("cats1",cats1)
+  let cats2=null
+  if(cats1!=null && Object.keys(cats1).length>0)
+    cats2=cats1
+  else
+    cats2=["CONSTRUCTION_VEHICLE","COMPANY","MUNICIPAL_VEHICLE","PRIVATE_VEHICLE","TAXI","OTHER"]
   const { error, data } = await supabase.rpc('get_points1', { lat1: incomingData["lat1" as keyof typeof incomingData ],
   lon1:incomingData["lon1"as keyof typeof incomingData ],
   lat2: incomingData["lat2"as keyof typeof incomingData ], 
   lon2:incomingData["lon2"as keyof typeof incomingData ],
-   cats:incomingData["cats"as keyof typeof incomingData ]  });
+   cats:cats2 });
     
-  // prints out the contents of the file
 
-    var res= createGeoJSON(<object[]>data);
-    console.log(typeof data)
+  var res= createGeoJSON(<object[]>data);
+
+
   return new Response(JSON.stringify( res ), {
-    headers: {  'Content-Type': 'application/json',
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "POST",
-    "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
-   },
-    status: 200,
+    headers:{ ...corsHeaders,"Content-Type": "application/json" }
   })
   
 })
