@@ -6,7 +6,7 @@ function Nav({session, setSession}) {
     const loginSubmit = async ()=>{
         // Todo - Add logic to login via Github Oauth
         let { user, error } = await supabase.auth.signInWithOAuth({
-            provider: 'google'
+            provider: 'github'
           })
           console.log("user",user)
           console.log("err",error)
@@ -41,7 +41,7 @@ function Nav({session, setSession}) {
             <li className="nav-item "><NavLink className={({ isActive }) => "nav-link " + (isActive ? " active" : "")}
             to="/" end>Home</NavLink></li>
             <li className="nav-item"><NavLink className={({ isActive }) => "nav-link " + (isActive ? " active" : "")}
-            to="/liveDb">Live Database</NavLink></li>
+            to="/maps">Live Database</NavLink></li>
             <li className="nav-item"><NavLink className={({ isActive }) => "nav-link " + (isActive ? " active" : "")}
             to="/submitObstruction">Submit Obstruction</NavLink></li> 
             <div className="ms-auto" style={{display:"flex"}}>

@@ -27,7 +27,17 @@ async function getGridData() {
     console.log(res);
 }
 
+async function getMap() {
+    const { data, error } = await supabase.functions.invoke('maps_func_2', {
+        body: { "lat1": -87.651769,
+        "lon1": 41.880070,
+        "lat2": -87.647589,
+        "lon2":41.869612,
+        "cats":["TAXI"] }
+      })
 
+      console.log("grid data ",data)
+}
 async function getGrid() {
     const { data, error } = await supabase.functions.invoke('grid_func_1', {
         body: { }
