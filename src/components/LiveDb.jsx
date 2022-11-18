@@ -46,6 +46,7 @@ async function getGrid() {
       })
 
       console.log("grid data ",data)
+      console.log("ERROR",error)
 }
 function LiveDb() {
     // getGridData();
