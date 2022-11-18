@@ -1,7 +1,8 @@
 from flask import Flask, jsonify, request,json
 import html
 import psycopg2
-
+import requests
+import json
 app = Flask(__name__)
 
 @app.route("/")
@@ -25,6 +26,30 @@ Data extracted:
 '''
 #postgres docker: cs484:jonbhai
 
+
+def grid():
+    url = "https://kesgogujwpshhhahoouk.functions.supabase.co/grid_func_1"
+
+    payload = json.dumps({
+    "violation_type": [
+        "TAXI",
+        "COMPANY"
+    ],
+    "ts1": "2022-11-16T00:56:00",
+    "ts2": "2022-11-16T01:56:00",
+    "metro_city": [
+        "chicago"
+    ]
+    })
+    headers = {
+    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtlc2dvZ3Vqd3BzaGhoYWhvb3VrIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjcxNjY4NTksImV4cCI6MTk4Mjc0Mjg1OX0.vLaXeTLbdnc7MyhoA9Qe9v_gp3w0r_GP-XR80AFu6oc',
+    'Content-Type': 'application/json'
+    }
+
+    response = requests.request("POST", url, headers=headers, data=payload)
+
+    print(response.text)
+
 @app.route("/submit", methods=['POST'])
 def accept_data_from_client():
     # todo deal with auth
@@ -37,6 +62,7 @@ def accept_data_from_client():
         jsonOut[each]=html.escape(form_data[each])
     # output = html.escape("form_data:"+form_data)
     print(form_data['username'])
+    grid()
     return {"data":jsonOut}
     
 
