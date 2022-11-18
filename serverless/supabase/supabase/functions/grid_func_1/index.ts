@@ -7,15 +7,28 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@v2.0.6'
 console.log("Hello from Functions!")
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey',
+  'Access-Control-Allow-Headers': 'authorization, content-type, x-client-info, apikey',
 }
 serve(async (req) => {
-  const incomingData  = await req.json()
   const supabase = createClient(
     Deno.env.get("SUPABASE_URL") ?? "",
-    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
-    { global: { headers: { Authorization: req.headers.get('Authorization')! } } }
+    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
   );
+  if (req.method === 'OPTIONS') {
+    return new Response(
+        'ok',
+        {
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "POST",
+                "Access-Control-Expose-Headers": "Content-Length, X-JSON",
+                "Access-Control-Allow-Headers": "apikey,X-Client-Info, Content-Type, Authorization, Accept, Accept-Language, X-Authorization",
+            }
+        }
+    );
+}
+  const incomingData  = await req.json()
+  
     console.log("Incoming data",incomingData)
 
 
