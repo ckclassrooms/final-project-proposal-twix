@@ -32,8 +32,26 @@ function About() {
                     <li>The authentication methods, SSO or User Sign-up, should be implemented securely.</li>
                     <li>All confidential data should be stored in hashed form, and not as plain-text.</li>
                 </ul>
+                <h2>Current Milestone Achieved</h2>
+            <p><ol>
+                <li>The front-end interface and basic functionality such as Navigation Bar, Form Control, layout and Access Control is setup.</li>
+                <li>The user can login via GitHub OAuth which is routed via Supabaae.</li>
+                <li>At the back-end, the database, edge functions for data transmission to and from DB is setup.</li>
+                <li>Maps page development is in progress.</li>
+                <li>The image store with Supabaae is setup to accept input images via form and tag it to violation.</li>
+                <li>The grid is formed dynamically based on the data received from the DB</li>
+            </ol>
+            </p>
+            <h2>Further Steps:</h2>
+            <p>
+                <ol>
+                    <li>Filtering and pagination on the grid layout is in progress.</li>
+                    <li>Fix Mapbox conflicts and have the user visualize violations on Map, only for the visible area of map, controlled by corresponding events.</li>
+                </ol>
+            </p>
+            <p><b>Note:</b> Few options such as 'Submit Obstruction' and 'Live DB' are accessible from Navigation Bar without login for testing purposes. Final version will have everything in Nav Bar locked under access control.</p>
             </div>
-
+            
         </>
     )
 }
