@@ -49,4 +49,36 @@ h3 a:hover, h2 a:hover {
     margin-top: 20px;
     margin-left: 20px;
   }
+
+  #root .container {
+    border: 1px solid grey;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    padding-bottom: 10px;
+    width: 1000px;
+  }
   
+  .filterDiv {
+    margin: 10px 0 10px 200px;
+  }
+
+  .filterDiv form {
+    margin-left: 10px;
+  }
+
+  .filterDiv .defaultHidden {
+    display: none;
+  }
+
+  .filterValues div {
+    margin-left: 10px;
+  }
+
+  .filterValues button {
+    margin-top: 10px;
+  }
+
+  .dropdown {
+    min-width: 130px;
+  }
