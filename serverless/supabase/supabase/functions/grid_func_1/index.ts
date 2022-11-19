@@ -28,10 +28,6 @@ serve(async (req) => {
     );
 }
   const incomingData  = await req.json()
-  
-    console.log("Incoming data",incomingData)
-
-
 
   const supabaseQuery = supabase
   .from('violations')
@@ -66,7 +62,7 @@ serve(async (req) => {
   if(incomingData["license_plate" as keyof typeof incomingData]){
     supabaseQuery.in('license_plate',incomingData["license_plate" as keyof typeof incomingData])
   }
-  // supabaseQuery.eq('images.id','id');
+
   const { data, error } = await supabaseQuery
  
   return new Response(
