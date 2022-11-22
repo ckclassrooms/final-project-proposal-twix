@@ -11,19 +11,40 @@ const corsHeaders = {
 }
 serve(async (req) => {
   const incomingData = await req.json()
+  if (req.method === 'OPTIONS') {
+    return new Response(
+        'ok',
+        {
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "POST",
+                "Access-Control-Expose-Headers": "Content-Length, X-JSON",
+                "Access-Control-Allow-Headers": "apikey,X-Client-Info, Content-Type, Authorization, Accept, Accept-Language, X-Authorization",
+            }
+        }
+    );
   const supabase = createClient(
     Deno.env.get("SUPABASE_URL") ?? "",
     Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
     { global: { headers: { Authorization: req.headers.get('Authorization')! } } }
   );
-  const { error } = await supabase
+  const query =  supabase
   .from('violations')
+  if("lat" in incomingData && "lon" in incomingData){
+    .insert({  user_id: incomingData["user_id" as keyof typeof incomingData],
+    "violation_type": incomingData["violation_type" as keyof typeof incomingData],
+    "lat":incomingData["lat" as keyof typeof incomingData],
+    "lon":incomingData["lon" as keyof typeof incomingData],
+    
+
+    })
+  }
   .insert({  user_id: incomingData["user_id" as keyof typeof incomingData],
     "violation_type": incomingData["violation_type" as keyof typeof incomingData],
     })
   console.log("Incoming data",incomingData)
 
-
+  const { error } = await query
   return new Response(
     JSON.stringify(data),
     { headers: { "Content-Type": "application/json" } },
