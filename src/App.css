@@ -86,3 +86,7 @@ h3 a:hover, h2 a:hover {
   .filterValues select{
     min-width: 415px;
   }
+
+  #map {
+    height: 400px;
+    }
