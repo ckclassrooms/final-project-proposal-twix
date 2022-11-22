@@ -100,14 +100,14 @@ function Maps() {
                 // map.current.setGeoJSON(
                 //     data1
                 // );
-                if(layer_exists == true){
+                if(layer_exists === true){
                 map.current.removeLayer('points')
                 map.current.removeSource('points_source')
                 }
 
                 map.current.addSource('points_source', {
                     'type': 'geojson',
-                    'data': 'https://pfpkazivqzaanncegjkr.supabase.co/storage/v1/object/public/test/geojson_file.json?t=2022-11-22T04%3A22%3A20.108Z'
+                    'data': data1
                 })
                 console.log('source added')
                 
