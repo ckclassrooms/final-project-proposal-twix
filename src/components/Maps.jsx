@@ -95,6 +95,7 @@ function Maps() {
                 }}
                 )
                 console.log(data)
+                console.log(error)
                 console.log(typeof(data))
                 var data1 = JSON.stringify(data)
                 // map.current.setGeoJSON(
