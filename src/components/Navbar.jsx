@@ -39,9 +39,9 @@ function Nav({session, setSession}) {
         return ( 
         <ul className="nav nav-pills navbar-expand">
             <li className="nav-item "><NavLink className={({ isActive }) => "nav-link " + (isActive ? " active" : "")}
-            to="/" end>Home</NavLink></li>
+            to="/" end>Home1</NavLink></li>
             <li className="nav-item"><NavLink className={({ isActive }) => "nav-link " + (isActive ? " active" : "")}
-            to="/liveDb">Live Database</NavLink></li>
+            to="/liveDb">Live Database1</NavLink></li>
             <li className="nav-item"><NavLink className={({ isActive }) => "nav-link " + (isActive ? " active" : "")}
             to="/submitObstruction">Submit Obstruction</NavLink></li> 
             <div className="ms-auto" style={{display:"flex"}}>
