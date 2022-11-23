@@ -28,28 +28,43 @@ serve(async (req) => {
     Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
     { global: { headers: { Authorization: req.headers.get('Authorization')! } } }
   );
-  const query =  supabase
-  .from('violations')
+  var lat=null,lon=null,license_plate=null,image_url=null,notes=null;
   if("lat" in incomingData && "lon" in incomingData){
-    .insert({  user_id: incomingData["user_id" as keyof typeof incomingData],
-    "violation_type": incomingData["violation_type" as keyof typeof incomingData],
-    "lat":incomingData["lat" as keyof typeof incomingData],
-    "lon":incomingData["lon" as keyof typeof incomingData],
-    
-
-    })
+    lat=incomingData["lat" as keyof typeof incomingData]
+    lon=incomingData["lon" as keyof typeof incomingData]
   }
-  .insert({  user_id: incomingData["user_id" as keyof typeof incomingData],
-    "violation_type": incomingData["violation_type" as keyof typeof incomingData],
-    })
-  console.log("Incoming data",incomingData)
+  if("license_plate" in incomingData)
+    license_plate=incomingData["license_plate" as keyof typeof incomingData]
+  
+  if("notes" in incomingData)
+    notes=incomingData["notes" as keyof typeof incomingData]
+  
+  if("image_url" in incomingData)
+    image_url=incomingData["image_url" as keyof typeof incomingData]
+  
+  const time = new Date().toISOString();
 
-  const { error } = await query
+  const { error, data } = await supabase.rpc('insert_into_table',{  "user_id": incomingData["user_id" as keyof typeof incomingData],
+  "violation_type": incomingData["violation_type" as keyof typeof incomingData],
+  "lat":lat,
+  "lon":lon,
+  "metro_city":incomingData["metro_city" as keyof typeof incomingData],
+  "license_plate":license_plate,
+  "ts":time,
+  "image_url":image_url,
+  "notes":notes
+
+  }); 
+  console.log("Incoming data",incomingData)
+  console.log("data res",data)
+  console.log("error res",error)
+
   return new Response(
-    JSON.stringify(data),
+    JSON.stringify(""),
     { headers: { "Content-Type": "application/json" } },
-  )
-})
+  );
+
+});
 
 // To invoke:
 // curl -i --location --request POST 'http://localhost:54321/functions/v1/' \
