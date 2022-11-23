@@ -44,3 +44,25 @@ WHERE  ST_covers(
   st_transform(v.loc::geometry,4326)) and v.violation_type = ANY(cats);
 $func$;
 
+
+
+-----Insert func
+CREATE OR REPLACE FUNCTION insert_into_table("user_number" integer,
+"violation_type" text,
+"lat" double precision,
+"lon" double precision,
+"metro_city" text,
+"license_plate" text,
+"ts" timestamp,
+"image_url" text,
+"notes" text)
+returns void 
+  LANGUAGE sql AS
+$func$
+INSERT into violations(user_id,violation_type,ts,metro_city,license_plate,notes,loc,lat,lon,image_url) VALUES(
+  user_number,violation_type,ts,metro_city,license_plate,notes,ST_SetSRID(ST_MakePoint(lon,lat),4326),lat,lon,image_url)
+$func$;
+
+
+
+select * from insert_into_table(1,'TAXI',22.02,22.02,'bangalore','sdds3','2022-11-23T21:30:21.754Z','adsadf','notes');

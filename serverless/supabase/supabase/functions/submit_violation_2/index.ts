@@ -3,6 +3,7 @@
 // This enables autocomplete, go to definition, etc.
 
 import { serve } from "https://deno.land/std@0.131.0/http/server.ts"
+
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@v2.0.6'
 console.log("Hello from Functions!")
 const corsHeaders = {
@@ -23,28 +24,44 @@ serve(async (req) => {
             }
         }
     );
+}
   const supabase = createClient(
     Deno.env.get("SUPABASE_URL") ?? "",
     Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
     { global: { headers: { Authorization: req.headers.get('Authorization')! } } }
   );
-  const query =  supabase
-  .from('violations')
+  var lat=null,lon=null,license_plate=null,image_url=null,notes=null;
   if("lat" in incomingData && "lon" in incomingData){
-    .insert({  user_id: incomingData["user_id" as keyof typeof incomingData],
-    "violation_type": incomingData["violation_type" as keyof typeof incomingData],
-    "lat":incomingData["lat" as keyof typeof incomingData],
-    "lon":incomingData["lon" as keyof typeof incomingData],
-    
-
-    })
+    lat=incomingData["lat" as keyof typeof incomingData]
+    lon=incomingData["lon" as keyof typeof incomingData]
   }
-  .insert({  user_id: incomingData["user_id" as keyof typeof incomingData],
+  if("license_plate" in incomingData)
+    license_plate=incomingData["license_plate" as keyof typeof incomingData]
+  
+  if("notes" in incomingData)
+    notes=incomingData["notes" as keyof typeof incomingData]
+  
+  if("image_url" in incomingData)
+    image_url=incomingData["image_url" as keyof typeof incomingData]
+  
+  const time = new Date().toISOString();
+  const body ={ 
+    "user_number": incomingData["user_id" as keyof typeof incomingData],
     "violation_type": incomingData["violation_type" as keyof typeof incomingData],
-    })
+    "lat":lat,
+    "lon":lon,
+    "metro_city":incomingData["metro_city" as keyof typeof incomingData],
+    "license_plate":license_plate,
+    "ts":time,
+    "image_url":image_url,
+    "notes":notes
+    }
+  console.log("Payload body = ",body)
+  const { error, data } = await supabase.rpc('insert_into_table',body); 
   console.log("Incoming data",incomingData)
+  console.log("data res",data)
+  console.log("error res",error)
 
-  const { error } = await query
   return new Response(
     JSON.stringify(data),
     { headers: { "Content-Type": "application/json" } },
