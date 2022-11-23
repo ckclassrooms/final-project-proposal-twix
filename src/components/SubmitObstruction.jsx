@@ -10,11 +10,7 @@ function SubmitObstruction() {
     //     console.log(e.target.files);
     //     setFile(URL.createObjectURL(e.target.files[0]));
     // }
-
-
- 
-
-    const uploadAvatar = async (event) => {
+    const uploadImage = async (event) => {
         try {
           //setUploading(true)
     
@@ -32,18 +28,35 @@ function SubmitObstruction() {
           let {  error: uploadError } = await supabase.storage.from('bike-lane-1').upload(filePath1, file)
     
           if (uploadError) {
+            console.log("Unable to upload ",uploadError)
             throw uploadError
           }
+
+          console.log("Upload complete")
           //onUpload(filePath)
           return filePath1
         } catch (error) {
-          alert(error.message)
+          
         } finally {
            console.log("Upload complete")
           //setUploading(false)
         }
         
       }
+
+      async function uploadDets(jsonArray) {
+        console.log("jsonArray");
+        console.log(jsonArray);
+        const { data, error } = await supabase.functions.invoke('submit_violation_2', {
+            body: jsonArray === undefined ? {} : JSON.stringify(jsonArray)
+          })
+          if (error) {
+            console.log(error);
+          }
+          console.log("data:");
+          console.log(data);
+          console.log("Update the UI to reflect status")
+    }
     
     return (
         <>
@@ -95,7 +108,7 @@ function SubmitObstruction() {
             />
             </div>
 
-            <button type="button" class="btn btn-primary" onClick={uploadAvatar}>Submit</button>
+            <button type="button" class="btn btn-primary" onClick={uploadImage}>Submit</button>
         </form>
         </div>
         </>
