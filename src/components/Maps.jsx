@@ -1,7 +1,7 @@
 import React from 'react'
 import './mapbox-gl.css'
 import { useRef, useEffect, useState } from 'react';
-import mapboxgl from '!mapbox-gl';
+import mapboxgl from 'mapbox-gl';
 import {supabase} from '../supabaseClient';
 
 mapboxgl.accessToken = process.env.MAPBOX_ACCESS_TOKEN
