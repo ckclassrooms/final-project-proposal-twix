@@ -47,15 +47,15 @@ $func$;
 
 
 -----Insert func
-CREATE OR REPLACE FUNCTION insert_into_table(user_number integer,
-violation_type text,
-lat double precision,
-lon double precision,
-metro_city text,
-license_plate text,
-ts timestamp,
-image_url text,
-notes text)
+CREATE OR REPLACE FUNCTION insert_into_table("user_number" integer,
+"violation_type" text,
+"lat" double precision,
+"lon" double precision,
+"metro_city" text,
+"license_plate" text,
+"ts" timestamp,
+"image_url" text,
+"notes" text)
 returns void 
   LANGUAGE sql AS
 $func$
