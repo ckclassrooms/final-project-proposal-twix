@@ -10,7 +10,7 @@ import About from './components/About';
 import { supabase } from './supabaseClient'
 import { useState, useEffect } from "react";
 function App() {
-  console.log("vALUE ",supabase.auth.user());
+  //console.log("vALUE ",supabase.auth.user());
   const [session, setSession] = useState(null);
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -21,11 +21,12 @@ function App() {
       // setIsLoggedIn(true);
     });
 
-    console.log("vALUE ",supabase.auth.user());
+    //console.log("vALUE ",supabase.auth.user());
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
     });
   }, []);
+
   return (
       <>
         <Nav session={session} setSession={setSession}/>
