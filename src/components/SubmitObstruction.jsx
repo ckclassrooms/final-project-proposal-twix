@@ -52,7 +52,7 @@ function SubmitObstruction() {
         console.log("upload complete with imagepath = ",imagePath)
         console.log("Making db call")
         const { data, error } = await supabase.functions.invoke('submit_violation_2', {
-            body: jsonObj === undefined ? {} : JSON.stringify({"user_id":1,
+            body:  JSON.stringify({"user_id":1,
             "lat":22.22,
             "lon":22.33,
             "license_plate":"sadfsdfg",
