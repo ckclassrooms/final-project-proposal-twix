@@ -82,31 +82,31 @@ function Maps() {
                     map.current.addImage('custom-marker', image);
                 map.current.addSource('points_source', {
                     'type': 'geojson',
-                    'data': data1
-                    // {   "type": "FeatureCollection",
-                    //     "features": [
-                    //       {
-                    //         "type": "Feature",
-                    //         "properties": {
-                    //           "title": "Lincoln Park",
-                    //           "description": "A northside park that is home to the Lincoln Park Zoo"
-                    //         },
-                    //         "geometry": {
-                    //           "coordinates": [-87.637596, 41.940403],
-                    //           "type": "Point"
-                    //         }
-                    //       },
-                    //       {
-                    //         "type": "Feature",
-                    //         "properties": {
-                    //           "title": "Burnham Park",
-                    //           "description": "A lakefront park on Chicago's south side"
-                    //         },
-                    //         "geometry": {
-                    //           "coordinates": [-87.603735, 41.829985],
-                    //           "type": "Point"
-                    //         }
-                    //       }]}
+                    'data': 
+                    {   "type": "FeatureCollection",
+                        "features": [
+                          {
+                            "type": "Feature",
+                            "properties": {
+                              "title": "Lincoln Park",
+                              "description": "A northside park that is home to the Lincoln Park Zoo"
+                            },
+                            "geometry": {
+                              "coordinates": [-87.637596, 41.940403],
+                              "type": "Point"
+                            }
+                          },
+                          {
+                            "type": "Feature",
+                            "properties": {
+                              "title": "Burnham Park",
+                              "description": "<strong>Truckeroo</strong><p>Truckeroo</a> brings dozens of food trucks, live music, and games to half and M Street SE (across from Navy Yard Metro Station) today from 11:00 a.m. to 11:00 p.m.</p>"
+                            },
+                            "geometry": {
+                              "coordinates": [-87.603735, 41.829985],
+                              "type": "Point"
+                            }
+                          }]}
                 })
                 console.log('source added')
                 
@@ -131,8 +131,9 @@ function Maps() {
 
 
         })
-        map.current.on('click', 'places', (e) => {
+        map.current.on('click', 'points', (e) => {
             // Copy coordinates array.
+
             console.log("inside map click")
             const coordinates = e.features[0].geometry.coordinates.slice();
             const description = e.features[0].properties.description;
@@ -147,7 +148,7 @@ function Maps() {
             new mapboxgl.Popup()
             .setLngLat(coordinates)
             .setHTML(description)
-            .addTo(map);
+            .addTo(map.current);
             });
             layer_exists = true
             console.log("layer added")
