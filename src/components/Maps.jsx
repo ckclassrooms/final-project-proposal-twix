@@ -116,6 +116,7 @@ function Maps() {
                           }]}
                 })
                 console.log('source added')
+                console.log(data1)
 
                 map.current.addLayer({
                     'id': 'points',
