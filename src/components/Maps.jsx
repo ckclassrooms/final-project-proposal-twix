@@ -81,6 +81,7 @@ function Maps() {
                 map.current.removeLayer('points')
                 map.current.removeSource('points_source')
                 map.current.removeImage('custom-marker')
+                layer_exists=false;
                 }
                 map.current.loadImage(
                     'https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png',
@@ -89,8 +90,8 @@ function Maps() {
                     map.current.addImage('custom-marker', image);
                 map.current.addSource('points_source', {
                     'type': 'geojson',
-                    'data': 
-                    {   "type": "FeatureCollection",
+                    'data': data
+                    /*{   "type": "FeatureCollection",
                         "features": [
                           {
                             "type": "Feature",
@@ -113,7 +114,7 @@ function Maps() {
                               "coordinates": [-87.603735, 41.829985],
                               "type": "Point"
                             }
-                          }]}
+                          }]}*/
                 })
                 console.log('source added')
                 console.log(data1)

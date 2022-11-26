@@ -31,14 +31,14 @@ const incomingData = await req.json()
     Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
     { global: { headers: { Authorization: req.headers.get('Authorization')! } } }
   );
-  // const {
-  //   data: { user },
-  // } = await supabase.auth.getUser()
-  // if(user==null)
-  // return new Response(JSON.stringify({ error: "Unauthorized " }), {
-  //   headers: { 'Content-Type': 'application/json' },
-  //   status: 401,
-  // })
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+  if(user==null)
+  return new Response(JSON.stringify({ error: "Unauthorized " }), {
+    headers: { 'Content-Type': 'application/json' },
+    status: 401,
+  })
   var lat=null,lon=null,license_plate=null,image_url=null,notes=null, user_number=null,violation_type=null,metro_city=null;
 
 
