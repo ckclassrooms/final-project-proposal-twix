@@ -47,8 +47,17 @@ function SubmitObstruction() {
       async function uploadDets(jsonObj) {
         console.log("jsonArray");
         console.log(jsonObj);
+        console.log("Uploading image")
+        const imagePath = await uploadImage()
+        console.log("upload complete with imagepath = ",imagePath)
+        console.log("Making db call")
         const { data, error } = await supabase.functions.invoke('submit_violation_2', {
-            body: jsonObj === undefined ? {} : JSON.stringify(jsonObj)
+            body:  JSON.stringify({"user_id":1,
+            "lat":22.22,
+            "lon":22.33,
+            "license_plate":"sadfsdfg",
+            "metro_city":"bangalore",
+            "violation_type":"death"})
           })
           if (error) {
             console.log(error);
@@ -108,7 +117,7 @@ function SubmitObstruction() {
             />
             </div>
 
-            <button type="button" class="btn btn-primary" onClick={uploadImage}>Submit</button>
+            <button type="button" class="btn btn-primary" onClick={() =>uploadDets({})}>Submit</button>
         </form>
         </div>
         </>
