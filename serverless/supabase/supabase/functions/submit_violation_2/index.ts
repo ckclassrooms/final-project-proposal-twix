@@ -11,7 +11,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey',
 }
 serve(async (req) => {
-  const incomingData = await req.json()
+  
   if (req.method === 'OPTIONS') {
     return new Response(
         'ok',
@@ -25,12 +25,23 @@ serve(async (req) => {
         }
     );
 }
+const incomingData = await req.json()
   const supabase = createClient(
     Deno.env.get("SUPABASE_URL") ?? "",
     Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
     { global: { headers: { Authorization: req.headers.get('Authorization')! } } }
   );
-  var lat=null,lon=null,license_plate=null,image_url=null,notes=null;
+  // const {
+  //   data: { user },
+  // } = await supabase.auth.getUser()
+  // if(user==null)
+  // return new Response(JSON.stringify({ error: "Unauthorized " }), {
+  //   headers: { 'Content-Type': 'application/json' },
+  //   status: 401,
+  // })
+  var lat=null,lon=null,license_plate=null,image_url=null,notes=null, user_number=null,violation_type=null,metro_city=null;
+
+
   if("lat" in incomingData && "lon" in incomingData){
     lat=incomingData["lat" as keyof typeof incomingData]
     lon=incomingData["lon" as keyof typeof incomingData]
@@ -44,13 +55,28 @@ serve(async (req) => {
   if("image_url" in incomingData)
     image_url=incomingData["image_url" as keyof typeof incomingData]
   
+  if("user_id" in incomingData)
+    user_number=incomingData["user_id" as keyof typeof incomingData]
+
+  if("violation_type" in incomingData)
+    violation_type=incomingData["violation_type" as keyof typeof incomingData]
+
+  if("metro_city" in incomingData)
+    metro_city=incomingData["metro_city" as keyof typeof incomingData]
+  
+  if(user_number==null || violation_type==null || metro_city==null){
+    return new Response(JSON.stringify({ error: "User_id,violation_type, metro_city fields are mandatory " }), {
+      headers: {  ...corsHeaders,'Content-Type': 'application/json' },
+      status: 400,
+    })
+  }
   const time = new Date().toISOString();
   const body ={ 
-    "user_number": incomingData["user_id" as keyof typeof incomingData],
-    "violation_type": incomingData["violation_type" as keyof typeof incomingData],
+    "user_number": user_number ,
+    "violation_type": violation_type,
     "lat":lat,
     "lon":lon,
-    "metro_city":incomingData["metro_city" as keyof typeof incomingData],
+    "metro_city":metro_city,
     "license_plate":license_plate,
     "ts":time,
     "image_url":image_url,
@@ -61,10 +87,15 @@ serve(async (req) => {
   console.log("Incoming data",incomingData)
   console.log("data res",data)
   console.log("error res",error)
-
+  if(error){
+    return new Response(JSON.stringify({ error: error.message }), {
+      headers: {  ...corsHeaders,'Content-Type': 'application/json' },
+      status: 400,
+    })
+  }
   return new Response(
-    JSON.stringify(data),
-    { headers: { "Content-Type": "application/json" } },
+    JSON.stringify({data:data}),
+    { headers: {  ...corsHeaders,"Content-Type": "application/json" } },
   )
 })
 
