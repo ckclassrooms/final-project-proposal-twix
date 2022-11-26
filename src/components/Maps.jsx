@@ -8,7 +8,7 @@ import mapboxgl from '!mapbox-gl';
 import {supabase} from '../supabaseClient';
 
 import Button from 'react-bootstrap/Button';
-import {Form} from 'react-bootstrap';
+// import {Form} from 'react-bootstrap';
 
 
 
@@ -20,14 +20,14 @@ function Maps() {
 
     var [mapLoaded, setLoadedMap] = useState(false)
 
-    const [violation, setViolation] = useState('construction');
+    // const [violation, setViolation] = useState('construction');
 
     const mapContainer = useRef();
     // const mapContainer = React.createRef();
     const map = useRef(null);
     const lng = -87.64
     const lat = 41.87
-    const zoom = 10
+    const zoom = 11
 
     // const [lng, setLng] = useState(-87.64);
     // const [lat, setLat] = useState(41.87);
@@ -52,7 +52,18 @@ function Maps() {
     function Map_gen(){
         console.log(typeof(map.current.getBounds()['_ne']))
         console.log("test button press", mapLoaded)
-        console.log(violation)
+        // console.log(document.getElementById('f2').value)
+
+        var array_cat = []
+        var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+
+        for (var i = 0; i < checkboxes.length; i++) {
+        array_cat.push(checkboxes[i].value)
+        }
+        console.log(array_cat)
+
+
+        // console.log(violation)
             if(mapLoaded === true){
 
                 console.log("test button")
@@ -66,7 +77,7 @@ function Maps() {
                 "lat2": -87.647589,
                 "lon2": 41.869612,
                 "cats": [
-                  "TAXI"
+                  array_cat
                 ]
                 }}
                 )
@@ -172,16 +183,38 @@ function Maps() {
             <br/><br/><br/>
 
 
-                    <div className="violationFilterValue">
-                    <Form.Select aria-label="Default select example" onChange={(event) => setViolation(event.target.value)}>
-                        <option value="CONSTRUCTION">Construction</option>
-                        <option value="COMPANU">Company Vehicle</option>
-                        <option value="MUNICIPAL">Municipal Vehicle - including USPS</option>
-                        <option value="PRIVATE">Private Owner Vehicle</option>
-                        <option value="TAXI">Taxi / Uber / Lyft</option>
-                        <option value="OTHER">Other  (damaged lane, snow, debris, pedestrian, etc.)</option>
-                    </Form.Select>
-                    </div>:
+            <div className="form-check">
+                <input className="form-check-input" type="checkbox" value="CONSTRUCTION_VEHICLE" id="o1"/>
+                <label className="form-check-label">
+                    CONSTRUCTION VEHICLE
+                </label>
+                <br/>
+                <input className="form-check-input" type="checkbox" value="COMPANY" id="o2"/>
+                <label className="form-check-label">
+                    COMPANY
+                </label>
+                <br/>
+                <input className="form-check-input" type="checkbox" value="MUNICIPAL_VEHICLE" id="o3"/>
+                <label className="form-check-label">
+                    MUNICIPAL VEHICLE
+                </label>
+                <br/>
+                <input className="form-check-input" type="checkbox" value="PRIVATE_VEHICLE" id="o4"/>
+                <label className="form-check-label">
+                    PRIVATE VEHICLE
+                </label>
+                <br/>
+                <input className="form-check-input" type="checkbox" value="TAXI" id="o5"/>
+                <label className="form-check-label">
+                    TAXI
+                </label>
+                <br/>
+                <input className="form-check-input" type="checkbox" value="OTHER" id="o6"/>
+                <label className="form-check-label">
+                    OTHER
+                </label>
+            </div>
+            <br/>
                 
 
             <div id="button">
