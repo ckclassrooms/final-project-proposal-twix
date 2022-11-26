@@ -44,11 +44,11 @@ function SubmitObstruction() {
         
       }
 
-      async function uploadDets(jsonArray) {
+      async function uploadDets(jsonObj) {
         console.log("jsonArray");
-        console.log(jsonArray);
+        console.log(jsonObj);
         const { data, error } = await supabase.functions.invoke('submit_violation_2', {
-            body: jsonArray === undefined ? {} : JSON.stringify(jsonArray)
+            body: jsonObj === undefined ? {} : JSON.stringify(jsonObj)
           })
           if (error) {
             console.log(error);
