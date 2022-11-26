@@ -50,40 +50,6 @@ function Maps() {
 
                 console.log("test button")
 
-                // var myHeaders = new Headers();
-                // myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtlc2dvZ3Vqd3BzaGhoYWhvb3VrIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjcxNjY4NTksImV4cCI6MTk4Mjc0Mjg1OX0.vLaXeTLbdnc7MyhoA9Qe9v_gp3w0r_GP-XR80AFu6oc");
-                // myHeaders.append("Content-Type", "application/json");
-        
-                // myHeaders.append("Access-Control-Allow-Origin", "*")
-                // myHeaders.append("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS")
-                // myHeaders.append("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With")
-        
-                // var raw = JSON.stringify({
-                // "lat1": -87.651769,
-                // "lon1": 41.88007,
-                // "lat2": -87.647589,
-                // "lon2": 41.869612,
-                // "cats": [
-                //     "TAXI"
-                // ]
-                // });
-        
-                // var requestOptions = {
-                // method: 'POST',
-                // headers: myHeaders,
-                // body: {
-                //     "lat1": -87.651769,
-                //     "lon1": 41.88007,
-                //     "lat2": -87.647589,
-                //     "lon2": 41.869612,
-                //     "cats": [
-                //         "TAXI"
-                //     ]
-                //     },
-                // redirect: 'follow'
-                // };
-                // var result = ""
-
             async function getMap(){
                 console.log('calling edge func')
                 const {data, error} = await supabase.functions.invoke('maps_func_2', {
@@ -107,19 +73,81 @@ function Maps() {
                 if(layer_exists === true){
                 map.current.removeLayer('points')
                 map.current.removeSource('points_source')
+                map.current.removeImage('custom-marker')
                 }
-
+                map.current.loadImage(
+                    'https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png',
+                    (error, image) => {
+                    if (error) throw error;
+                    map.current.addImage('custom-marker', image);
                 map.current.addSource('points_source', {
                     'type': 'geojson',
                     'data': data1
+                    // {   "type": "FeatureCollection",
+                    //     "features": [
+                    //       {
+                    //         "type": "Feature",
+                    //         "properties": {
+                    //           "title": "Lincoln Park",
+                    //           "description": "A northside park that is home to the Lincoln Park Zoo"
+                    //         },
+                    //         "geometry": {
+                    //           "coordinates": [-87.637596, 41.940403],
+                    //           "type": "Point"
+                    //         }
+                    //       },
+                    //       {
+                    //         "type": "Feature",
+                    //         "properties": {
+                    //           "title": "Burnham Park",
+                    //           "description": "A lakefront park on Chicago's south side"
+                    //         },
+                    //         "geometry": {
+                    //           "coordinates": [-87.603735, 41.829985],
+                    //           "type": "Point"
+                    //         }
+                    //       }]}
                 })
                 console.log('source added')
                 
+                // map.current.addImage('custom-marker', image);
+
                 map.current.addLayer({
                     'id': 'points',
                     'type': 'symbol',
-                    'interactive':true,
                     'source': 'points_source',
+                    'layout': {
+                        'icon-image': 'custom-marker',
+                        // get the title name from the source's "title" property
+                        'text-field': ['get', 'title'],
+                        'text-font': [
+                        'Open Sans Semibold',
+                        'Arial Unicode MS Bold'
+                        ],
+                        'text-offset': [0, 1.25],
+                        'text-anchor': 'top'
+                        }
+            });
+
+
+        })
+        map.current.on('click', 'places', (e) => {
+            // Copy coordinates array.
+            console.log("inside map click")
+            const coordinates = e.features[0].geometry.coordinates.slice();
+            const description = e.features[0].properties.description;
+             
+            // Ensure that if the map is zoomed out such that multiple
+            // copies of the feature are visible, the popup appears
+            // over the copy being pointed to.
+            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+            }
+             
+            new mapboxgl.Popup()
+            .setLngLat(coordinates)
+            .setHTML(description)
+            .addTo(map);
             });
             layer_exists = true
             console.log("layer added")
