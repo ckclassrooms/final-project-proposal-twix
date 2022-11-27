@@ -58,6 +58,7 @@ function Maps() {
         };
         
         function success(pos) {
+        // eslint-disable-next-line
           const crd = pos.coords;
         
           console.log('Your current position is:');
