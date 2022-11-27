@@ -3,6 +3,7 @@ import React from 'react';
 // import Avatar from '../components/Avatar';
 import {supabase} from '../supabaseClient';
 import { v4 as uuidv4 } from 'uuid';
+// import { Button } from 'bootstrap';
 function SubmitObstruction() {
   const file = ""
     // const [file, setFile] = useState();
@@ -42,6 +43,15 @@ function SubmitObstruction() {
           //setUploading(false)
         }
         
+      }
+
+      function getLocation() {
+        if (navigator.geolocation) {
+          var position = navigator.geolocation.getCurrentPosition();
+          var currLatLong = [position.coords.latitude, position.coords.longitude]
+        }
+        // return currLatLong
+        console.log(currLatLong)
       }
 
       async function uploadDets(jsonObj) {
@@ -95,6 +105,7 @@ function SubmitObstruction() {
             <div class="form-group">
                 <label for="exampleFormControlInput1">Location</label>
                 <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Geolocation format example: 41.890561, -87.646545"/>
+                <button type="button" class="btn btn-primary" onClick={()=>getLocation()}>Get Location</button>
             </div>
             <div class="form-group">
                 <label for="exampleFormControlInput1">License Plate #</label>
