@@ -48,6 +48,44 @@ function Maps() {
             setLoadedMap(true);
         })
         });
+    
+    async function mylocation()
+        {
+          const options = {
+          enableHighAccuracy: true,
+          timeout: 5000,
+          maximumAge: 0
+        };
+        
+        function success(pos) {
+          const crd = pos.coords;
+        
+          console.log('Your current position is:');
+          console.log(`Latitude : ${crd.latitude}`);
+          console.log(`Longitude: ${crd.longitude}`);
+          console.log(`More or less ${crd.accuracy} meters.`);
+
+          var currLat = crd.latitude
+          var currLong = crd.longitude
+          console.log("hello")
+          console.log(currLat, currLong)
+            
+          map.current.flyTo({
+            // center: [(Math.random() - 0.5) * 360, (Math.random() - 0.5) * 100],
+            center: [currLong, currLat],
+            essential: true // this animation is considered essential with respect to prefers-reduced-motion
+            });
+        }
+        
+        function error(err) {
+          console.warn(`ERROR({err.code}): ${err.message}`);
+        }
+
+        navigator.geolocation.getCurrentPosition(success, error, options);
+        
+        console.log("test 2")
+    }
+       
 
     function Map_gen(){
         console.log(typeof(map.current.getBounds()['_ne']))
@@ -198,7 +236,8 @@ function Maps() {
             </div>
             <br/>
                 
-
+            <div><Button onClick={()=>mylocation()} id="fly">Go to my location!</Button></div>
+            <br/>
             <div id="button">
             <Button onClick={()=>Map_gen()}>Load Map</Button>
             </div>
