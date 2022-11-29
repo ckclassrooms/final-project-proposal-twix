@@ -59,7 +59,7 @@ function SubmitObstruction() {
         console.log(`Latitude : ${crd.latitude}`);
         console.log(`Longitude: ${crd.longitude}`);
         console.log(`More or less ${crd.accuracy} meters.`);
-        document.getElementById("exampleFormControlInput1").value = "My value";
+        document.getElementById("exampleFormControlInput1").value = `${crd.latitude}, ${crd.longitude}`;
       }
       
       function error(err) {
@@ -119,7 +119,7 @@ function SubmitObstruction() {
             </div>
             <div class="form-group">
                 <label for="exampleFormControlInput1">Location</label>
-                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Geolocation format example: 41.890561, -87.646545"/>
+                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Geolocation format example: 41.890561, -87.646545" disabled/>
                 <button type="button" class="btn btn-primary" onClick={()=>getLocation()}>Get Location</button>
             </div> 
             <div class="form-group">
