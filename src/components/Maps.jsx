@@ -236,7 +236,7 @@ function Maps() {
             new mapboxgl.Popup()
                 .setLngLat(coordinates)
                 // eslint-disable-next-line
-                .setHTML("<strong>Violation reported at: </strong>" + timeViolation + "<br/>" + "<strong>Vehicle Category: </strong>" + violation + "<p><img src='\"./images/484-bikespy-flow-chart.jpg/\"'></img></p>")
+                .setHTML("<strong>Violation reported at: </strong>" + timeViolation + "<br/>" + "<strong>Vehicle Category: </strong>" + violation + "<p><img src='\"./images/download.png/\"'></p>")
                 // <p><img src='+e.features[0].properties.image+'></img></p>'
                 .addTo(map.current);
         });

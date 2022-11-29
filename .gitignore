@@ -24,3 +24,4 @@ yarn-debug.log*
 yarn-error.log*
 src/components/geojson_file.json
 .vscode
+src/components/images/
