@@ -3,12 +3,15 @@
 // This enables autocomplete, go to definition, etc.
 
 import { serve } from "https://deno.land/std@0.131.0/http/server.ts"
+
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@v2.0.6'
 console.log("Hello from Functions!")
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, content-type, x-client-info, apikey',
 }
+
+
 const createGeoJSON= (data1:object[])=> {
   // console.log(data1);
   // console.log(typeof data1)
@@ -53,6 +56,8 @@ const createGeoJSON= (data1:object[])=> {
     }
     return d;
 }
+
+
 serve(async (req) => {
   const supabase = createClient(
     Deno.env.get("SUPABASE_URL") ?? "",
@@ -60,19 +65,19 @@ serve(async (req) => {
   );
   if (req.method === 'OPTIONS') {
     return new Response(
-        'ok',
-        {
-            headers: {
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "POST",
-                "Access-Control-Expose-Headers": "Content-Length, X-JSON",
-                "Access-Control-Allow-Headers": "apikey,X-Client-Info, Content-Type, Authorization, Accept, Accept-Language, X-Authorization",
-            }
+      'ok',
+      {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "POST",
+          "Access-Control-Expose-Headers": "Content-Length, X-JSON",
+          "Access-Control-Allow-Headers": "apikey,X-Client-Info, Content-Type, Authorization, Accept, Accept-Language, X-Authorization",
         }
+      }
     );
-}
-  const  incomingData  = await req.json()
-  
+  }
+  const incomingData = await req.json()
+
   const cats1 = <object[]>incomingData["cats" as keyof typeof incomingData ]
   console.log("cats1",cats1)
   let cats2=null
@@ -80,20 +85,34 @@ serve(async (req) => {
     cats2=cats1
   else
     cats2=["CONSTRUCTION_VEHICLE","COMPANY","MUNICIPAL_VEHICLE","PRIVATE_VEHICLE","TAXI","OTHER"]
-  const { error, data } = await supabase.rpc('get_points1', { lat1: incomingData["lat1" as keyof typeof incomingData ],
-  lon1:incomingData["lon1"as keyof typeof incomingData ],
-  lat2: incomingData["lat2"as keyof typeof incomingData ], 
-  lon2:incomingData["lon2"as keyof typeof incomingData ],
+
+
+  var lineString="SRID=4326;LINESTRING(";
+  const incomingPoly = incomingData["poly" as keyof typeof incomingData]
+  for (const i in incomingPoly) {
+    const eachLoc = incomingPoly[i];
+    if(eachLoc.length >2 || eachLoc.length <2){
+      return new Response(
+        JSON.stringify({"error":"Invalid length"}),
+        { headers: { ...corsHeaders,"Content-Type": "application/json" },
+        status: 400, },
+        
+      ) 
+    }
+      
+    lineString=lineString+eachLoc[0]+" "+eachLoc[1]+",";
+  }
+  lineString=lineString+incomingPoly[0][0]+" "+incomingPoly[0][1]+")";
+  console.log(lineString)
+
+  const { error, data } = await supabase.rpc('polygon_map', {locs:lineString,
    cats:cats2 });
-    
+   var res= createGeoJSON(<object[]>data);
 
-  var res= createGeoJSON(<object[]>data);
-
-
-  return new Response(JSON.stringify( res ), {
-    headers:{ ...corsHeaders,"Content-Type": "application/json" }
-  })
-  
+  return new Response(
+    JSON.stringify(res),
+    { headers: { ...corsHeaders,"Content-Type": "application/json" } },
+  )
 })
 
 // To invoke:

@@ -46,6 +46,9 @@ $func$;
 
 
 
+
+
+
 -----Insert func
 CREATE OR REPLACE FUNCTION insert_into_table("user_number" integer,
 "violation_type" text,
@@ -66,3 +69,43 @@ $func$;
 
 
 select * from insert_into_table(1,'TAXI',22.02,22.02,'bangalore','sdds3','2022-11-23T21:30:21.754Z','adsadf','notes');
+
+
+
+
+--------- >>>>>>>>>>>>>>>>>>>>
+CREATE OR REPLACE FUNCTION polygon_map("locs" text,cats text[])
+returns TABLE(lat double precision, lon double precision,id integer,violation_type text,ts timestamp, image_url text) 
+  LANGUAGE sql AS
+$func$
+SELECT v.lat as lat, v.lon as lon,v.id,v.violation_type,v.ts,v.image_url
+FROM   violations v
+WHERE  ST_covers(
+ ST_Polygon(ST_GeomFromText(locs),4326),
+  st_transform(v.loc::geometry,4326)) and v.violation_type = ANY(cats);
+$func$;
+
+
+
+
+
+
+CREATE OR REPLACE FUNCTION poly_test("locs" text)
+returns geometry
+  LANGUAGE sql AS
+$func$
+SELECT 
+ ST_Polygon(ST_GeomFromText(locs),4326);
+$func$;
+
+
+select * from poly_test('SRID=4326;LINESTRING(-87.651769 41.880070,-87.647589 41.869612,-87.651769 41.780070,-87.651769 41.880070)')
+
+
+select * from polygon_map('SRID=4326;LINESTRING(-87.651769 41.880070,-87.647589 41.869612,-87.651769 41.780070,-87.651769 41.880070)',['TAXI'])
+
+
+select * from get_points1(-87.651769,
+     41.880070,
+    -87.647589,
+    41.869612,array['TAXI'])
