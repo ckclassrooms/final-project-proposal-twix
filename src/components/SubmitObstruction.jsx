@@ -119,7 +119,7 @@ function SubmitObstruction() {
             </div>
             <div class="form-group">
                 <label for="exampleFormControlInput1">Location</label>
-                <input type="email" class="form-control" id="exampleFormControlInput1" value='${crd.latitude}' placeholder="Geolocation format example: 41.890561, -87.646545"/>
+                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Geolocation format example: 41.890561, -87.646545"/>
                 <button type="button" class="btn btn-primary" onClick={()=>getLocation()}>Get Location</button>
             </div> 
             <div class="form-group">
