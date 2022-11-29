@@ -5,7 +5,7 @@ import { useRef, useEffect, useState } from 'react';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import mapboxgl from '!mapbox-gl';
 
-import {supabase} from '../supabaseClient';
+import { supabase } from '../supabaseClient';
 
 import Button from 'react-bootstrap/Button';
 // import {Form} from 'react-bootstrap';
@@ -38,58 +38,79 @@ function Maps() {
     useEffect(() => {
         if (map.current) return;
         map.current = new mapboxgl.Map({
-        container: mapContainer.current,
-        style: 'mapbox://styles/mapbox/streets-v11',
-        center: [lng, lat],
-        zoom: zoom
+            container: mapContainer.current,
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [lng, lat],
+            zoom: zoom
         });
-        map.current.on('load',() => {
+        map.current.on('load', () => {
             console.log('test map on load')
             setLoadedMap(true);
         })
-        });
+    });
     
-    async function mylocation()
-        {
-          const options = {
-          enableHighAccuracy: true,
-          timeout: 5000,
-          maximumAge: 0
+    async function mylocation() {
+        const options = {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0
         };
-        
-        function success(pos) {
-        // eslint-disable-next-line
-          const crd = pos.coords;
-        
-          console.log('Your current position is:');
-          console.log(`Latitude : ${crd.latitude}`);
-          console.log(`Longitude: ${crd.longitude}`);
-          console.log(`More or less ${crd.accuracy} meters.`);
 
-          var currLat = crd.latitude
-          var currLong = crd.longitude
-          console.log("hello")
-          console.log(currLat, currLong)
-            
-          map.current.flyTo({
-            // center: [(Math.random() - 0.5) * 360, (Math.random() - 0.5) * 100],
-            center: [currLong, currLat],
-            essential: true // this animation is considered essential with respect to prefers-reduced-motion
+        function success(pos) {
+            // eslint-disable-next-line
+            const crd = pos.coords;
+
+            console.log('Your current position is:');
+            console.log(`Latitude : ${crd.latitude}`);
+            console.log(`Longitude: ${crd.longitude}`);
+            console.log(`More or less ${crd.accuracy} meters.`);
+
+            var currLat = crd.latitude
+            var currLong = crd.longitude
+            console.log("hello")
+            console.log(currLat, currLong)
+
+            map.current.flyTo({
+                // center: [(Math.random() - 0.5) * 360, (Math.random() - 0.5) * 100],
+                center: [currLong, currLat],
+                essential: true // this animation is considered essential with respect to prefers-reduced-motion
             });
         }
-        
+
         function error(err) {
-          console.warn(`ERROR({err.code}): ${err.message}`);
+            console.warn(`ERROR({err.code}): ${err.message}`);
         }
 
         navigator.geolocation.getCurrentPosition(success, error, options);
-        
+
         console.log("test 2")
     }
-       
 
-    function Map_gen(){
-        console.log(typeof(map.current.getBounds()['_ne']))
+    // eslint-disable-next-line
+    async function polygon(array1, array2){
+
+    }
+
+    async function supabaseCall(lat1, lon1, lat2, lon2, cats) {
+        const { data, error } = await supabase.functions.invoke('maps_func_2', {
+            body: {
+                "lat1": lat1,
+                "lon1": lon1,
+                "lat2": lat2,
+                "lon2": lon2,
+                "cats": [
+                    cats]
+            }
+        }
+        )
+        console.log(data)
+        console.log(error)
+
+        return data
+    }
+
+    function Map_gen() {
+        console.log(typeof (map.current.getBounds()['_ne']))
         console.log("test button press", mapLoaded)
         // console.log(document.getElementById('f2').value)
 
@@ -97,101 +118,102 @@ function Maps() {
         var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
 
         for (var i = 0; i < checkboxes.length; i++) {
-        array_cat.push(checkboxes[i].value)
+            array_cat.push(checkboxes[i].value)
         }
         console.log(array_cat)
 
 
         // console.log(violation)
-            if(mapLoaded === true){
+        if (mapLoaded === true) {
 
-                console.log("test button")
+            console.log("test button")
 
-            async function getMap(){
+            async function getMap() {
                 console.log('calling edge func')
-                const {data, error} = await supabase.functions.invoke('maps_func_2', {
-                body: {
-                "lat1": -87.651769,
-                "lon1": 41.88007,
-                "lat2": -87.647589,
-                "lon2": 41.869612,
-                "cats": [
-                  array_cat
+
+                // values for testing
+                var lat1 = -87.651769
+                var lon1 = 41.88007
+                var lat2 = -87.647589
+                var lon2 = 41.869612
+                var cats = [
+                    array_cat
                 ]
-                }}
-                )
+
+
+                var data = await supabaseCall(lat1, lon1, lat2, lon2, cats)
+                console.log("test geojson object")
                 console.log(data)
-                console.log(error)
-                console.log(typeof(data))
+                console.log(typeof (data))
                 var data1 = JSON.stringify(data)
                 // map.current.setGeoJSON(
                 //     data1
                 // );
-                if(layer_exists === true){
-                map.current.removeLayer('points')
-                map.current.removeSource('points_source')
-                map.current.removeImage('custom-marker')
-                layer_exists=false;
+                if (layer_exists === true) {
+                    map.current.removeLayer('points')
+                    map.current.removeSource('points_source')
+                    map.current.removeImage('custom-marker')
+                    layer_exists = false;
                 }
                 map.current.loadImage(
                     'https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png',
                     (error, image) => {
-                    if (error) throw error;
-                    map.current.addImage('custom-marker', image);
-                map.current.addSource('points_source', {
-                    'type': 'geojson',
-                    'data': data
-                })
-                console.log('source added')
-                console.log(data1)
+                        if (error) throw error;
+                        map.current.addImage('custom-marker', image);
+                        map.current.addSource('points_source', {
+                            'type': 'geojson',
+                            'data': data
+                        })
+                        console.log('source added')
+                        console.log(data1)
 
-                map.current.addLayer({
-                    'id': 'points',
-                    'type': 'symbol',
-                    'source': 'points_source',
-                    'layout': {
-                        'icon-image': 'custom-marker',
-                        // get the title name from the source's "title" property
-                        'text-field': ['get', 'title'],
-                        'text-font': [
-                        'Open Sans Semibold',
-                        'Arial Unicode MS Bold'
-                        ],
-                        'text-offset': [0, 1.25],
-                        'text-anchor': 'top'
-                        }
-            });
+                        map.current.addLayer({
+                            'id': 'points',
+                            'type': 'symbol',
+                            'source': 'points_source',
+                            'layout': {
+                                'icon-image': 'custom-marker',
+                                // get the title name from the source's "title" property
+                                'text-field': ['get', 'title'],
+                                'text-font': [
+                                    'Open Sans Semibold',
+                                    'Arial Unicode MS Bold'
+                                ],
+                                'text-offset': [0, 1.25],
+                                'text-anchor': 'top'
+                            }
+                        });
 
 
-        })
-        map.current.on('click', 'points', (e) => {
-            // Copy coordinates array.
+                    })
+                map.current.on('click', 'points', (e) => {
+                    // Copy coordinates array.
 
-            console.log("inside map click")
-            const coordinates = e.features[0].geometry.coordinates.slice();
-            const violation = e.features[0].properties.violation;
-            const timeViolation = e.features[0].properties.time;
-            // console.log("typeof")
-            // console.log(typeof(violation))
-            
-             
-            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                    console.log("inside map click")
+                    const coordinates = e.features[0].geometry.coordinates.slice();
+                    const violation = e.features[0].properties.violation;
+                    const timeViolation = e.features[0].properties.time;
+                    // console.log("typeof")
+                    // console.log(typeof(violation))
+
+
+                    while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                    }
+
+                    new mapboxgl.Popup()
+                        .setLngLat(coordinates)
+                        // eslint-disable-next-line
+                        .setHTML("<strong>Violation reported at: </strong>" + timeViolation + "<br/>" + "<strong>Vehicle Category: </strong>" + violation + "<p><img src='\"./images/484-bikespy-flow-chart.jpg/\"'></img></p>")
+                        // <p><img src='+e.features[0].properties.image+'></img></p>'
+                        .addTo(map.current);
+                });
+                layer_exists = true
+                console.log("layer added")
             }
-             
-            new mapboxgl.Popup()
-            .setLngLat(coordinates)
-            // eslint-disable-next-line
-            .setHTML("<strong>Violation reported at: </strong>" + timeViolation + "<br/>" + "<strong>Vehicle Category: </strong>" + violation + "<p><img src='\"./images/484-bikespy-flow-chart.jpg/\"'></img></p>")
-            // <p><img src='+e.features[0].properties.image+'></img></p>'
-            .addTo(map.current);
-            });
-            layer_exists = true
-            console.log("layer added")
-              }
             (async () => await getMap())()
-    }
         }
+    }
     // })
 
     return (
@@ -201,49 +223,49 @@ function Maps() {
             <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
             <link href="https://api.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css" rel="stylesheet" />
             {/* <style dangerouslySetInnerHTML={{__html: "\n  body { margin:0; padding:0; }\n  #map { position:absolute; top:50px; bottom:0; width:100%; }\n" }} /> */}
-            <br/><br/><br/>
+            <br /><br /><br />
 
 
             <div className="form-check">
-                <input className="form-check-input" type="checkbox" value="CONSTRUCTION_VEHICLE" id="o1"/>
+                <input className="form-check-input" type="checkbox" value="CONSTRUCTION_VEHICLE" id="o1" />
                 <label className="form-check-label">
                     CONSTRUCTION VEHICLE
                 </label>
-                <br/>
-                <input className="form-check-input" type="checkbox" value="COMPANY" id="o2"/>
+                <br />
+                <input className="form-check-input" type="checkbox" value="COMPANY" id="o2" />
                 <label className="form-check-label">
                     COMPANY
                 </label>
-                <br/>
-                <input className="form-check-input" type="checkbox" value="MUNICIPAL_VEHICLE" id="o3"/>
+                <br />
+                <input className="form-check-input" type="checkbox" value="MUNICIPAL_VEHICLE" id="o3" />
                 <label className="form-check-label">
                     MUNICIPAL VEHICLE
                 </label>
-                <br/>
-                <input className="form-check-input" type="checkbox" value="PRIVATE_VEHICLE" id="o4"/>
+                <br />
+                <input className="form-check-input" type="checkbox" value="PRIVATE_VEHICLE" id="o4" />
                 <label className="form-check-label">
                     PRIVATE VEHICLE
                 </label>
-                <br/>
-                <input className="form-check-input" type="checkbox" value="TAXI" id="o5"/>
+                <br />
+                <input className="form-check-input" type="checkbox" value="TAXI" id="o5" />
                 <label className="form-check-label">
                     TAXI
                 </label>
-                <br/>
-                <input className="form-check-input" type="checkbox" value="OTHER" id="o6"/>
+                <br />
+                <input className="form-check-input" type="checkbox" value="OTHER" id="o6" />
                 <label className="form-check-label">
                     OTHER
                 </label>
             </div>
-            <br/>
-                
-            <div><Button onClick={()=>mylocation()} id="fly">Go to my location!</Button></div>
-            <br/>
+            <br />
+
+            <div><Button onClick={() => mylocation()} id="fly">Go to my location!</Button></div>
+            <br />
             <div id="button">
-            <Button onClick={()=>Map_gen()}>Load Map</Button>
+                <Button onClick={() => Map_gen()}>Load Map</Button>
             </div>
-            <br/><br/><br/>
-            <div ref = {mapContainer} id="map" />
+            <br /><br /><br />
+            <div ref={mapContainer} id="map" />
         </div>
     );
 }
