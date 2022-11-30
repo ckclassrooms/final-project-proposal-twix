@@ -21,7 +21,7 @@ function Nav({session, setSession}) {
     }
 
     if (session != null){
-        return ( <ul className="nav nav-pills navbar-expand">
+        return ( <ul className="nav nav-pills navbar-expand fixed-top">
         <li className="nav-item"><NavLink className={({ isActive }) => "nav-link " + (isActive ? " active" : "")}
             to="/" end>Home</NavLink></li>
         <li className="nav-item"><NavLink className={({ isActive }) => "nav-link " + (isActive ? " active" : "")}
@@ -37,7 +37,7 @@ function Nav({session, setSession}) {
     }
     else {
         return ( 
-        <ul className="nav nav-pills navbar-expand">
+        <ul className="nav nav-pills navbar-expand fixed-top">
             <li className="nav-item "><NavLink className={({ isActive }) => "nav-link " + (isActive ? " active" : "")}
             to="/" end>Home</NavLink></li>
             <li className="nav-item"><NavLink className={({ isActive }) => "nav-link " + (isActive ? " active" : "")}
