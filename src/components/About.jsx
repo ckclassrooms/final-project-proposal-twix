@@ -3,7 +3,7 @@ import React from 'react'
 function About() {
     return (
         <>  
-            <div class="about-content">
+            <div class="about-content" style={{marginTop: "60px"}}>
                 <h1> CS 484 Final Project: BikeSpy </h1>
                 <br/>
                 <h3>Github repo: <a href="https://github.com/ckclassrooms/final-project-proposal-twix.git">Twix Team</a></h3>

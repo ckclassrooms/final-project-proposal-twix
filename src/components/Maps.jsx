@@ -291,7 +291,7 @@ function Maps() {
     // })
 
     return (
-        <div>
+        <div style={{marginTop: "60px"}}>
             <meta charSet="utf-8" />
             <title>Maps for BikeSpy</title>
             <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />

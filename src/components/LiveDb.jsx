@@ -88,7 +88,7 @@ function LiveDb() {
     
     return (
         <>
-        <div class="filterDiv d-flex flex-md-row">
+        <div class="filterDiv d-flex flex-md-row" style={{marginTop: "60px"}}>
             <DropdownButton id="dropdown-item-button" title={ valueToFilter[filterText]} onSelect={(eventKey, event) => onDropdownChange(event)}>
                 <Dropdown.Item as="button" value="violationType">Violation type</Dropdown.Item>
                 <Dropdown.Item as="button" value="time">Time</Dropdown.Item>
