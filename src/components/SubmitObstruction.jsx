@@ -5,74 +5,82 @@ import {supabase} from '../supabaseClient';
 import { v4 as uuidv4 } from 'uuid';
 // import { Button } from 'bootstrap';
 function SubmitObstruction() {
-  const file = ""
+  // const file = ""
     // const [file, setFile] = useState();
     // function handleChange(e) {
     //     console.log(e.target.files);
     //     setFile(URL.createObjectURL(e.target.files[0]));
     // }
-    const uploadImage = async (event) => {
-        try {
-          //setUploading(true)
-    
-        //   if (!event.target.files || event.target.files.length === 0) {
-        //     throw new Error('You must select an image to upload.')
-        //   }
-    
-          const file = document.getElementById('single').files[0]
-          const fileExt = file.name.split('.').pop()
-          const fileName = `${uuidv4().toString().replace(/-/g,"")}.${fileExt}`
-          const filePath1 = `public/violations/${fileName}`
-          console.log(`File ${filePath1}`)
-
-
-          let {  error: uploadError } = await supabase.storage.from('bike-lane-1').upload(filePath1, file)
-    
-          if (uploadError) {
-            console.log("Unable to upload ",uploadError)
-            throw uploadError
-          }
-
-          console.log("Upload complete")
-          const { data } = supabase
-                          .storage
-                          .from('bike-lane-1')
-                          .getPublicUrl(filePath1)
-          //onUpload(filePath)
-          console.log("image uploaded url = ",data)
-          return data["publicUrl"]
-        } catch (error) {
-          console.log("Upload error",error)
-        } finally {
-           console.log("Upload complete")
-          //setUploading(false)
-        }
-        
-      }
-      function getLocation()
-      {
-        const options = {
-        enableHighAccuracy: true,
-        timeout: 5000,
-        maximumAge: 0
-      };
-      
-      function success(pos) {
-        // eslint-disable-next-line
-        const crd = pos.coords;
-        console.log('Your current position is:');
-        console.log(`Latitude : ${crd.latitude}`);
-        console.log(`Longitude: ${crd.longitude}`);
-        console.log(`More or less ${crd.accuracy} meters.`);
-        document.getElementById("geoLocation").value = `${crd.longitude}, ${crd.latitude}`;
-      }
-      
-      function error(err) {
-        console.warn(`ERROR(${err.code}): ${err.message}`);
-      }
-      
-      navigator.geolocation.getCurrentPosition(success, error, options);
+  const loadFile = function(event) {
+    var output = document.getElementById('output');
+    output.src = URL.createObjectURL(event.target.files[0]);
+    output.onload = function() {
+      URL.revokeObjectURL(output.src)
     }
+  }
+
+  const uploadImage = async (event) => {
+      try {
+        //setUploading(true)
+  
+      //   if (!event.target.files || event.target.files.length === 0) {
+      //     throw new Error('You must select an image to upload.')
+      //   }
+  
+        const file = document.getElementById('single').files[0]
+        const fileExt = file.name.split('.').pop()
+        const fileName = `${uuidv4().toString().replace(/-/g,"")}.${fileExt}`
+        const filePath1 = `public/violations/${fileName}`
+        console.log(`File ${filePath1}`)
+
+
+        let {  error: uploadError } = await supabase.storage.from('bike-lane-1').upload(filePath1, file)
+  
+        if (uploadError) {
+          console.log("Unable to upload ",uploadError)
+          throw uploadError
+        }
+
+        console.log("Upload complete")
+        const { data } = supabase
+                        .storage
+                        .from('bike-lane-1')
+                        .getPublicUrl(filePath1)
+        //onUpload(filePath)
+        console.log("image uploaded url = ",data)
+        return data["publicUrl"]
+      } catch (error) {
+        console.log("Upload error",error)
+      } finally {
+          console.log("Upload complete")
+        //setUploading(false)
+      }
+      
+    }
+    function getLocation()
+    {
+      const options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0
+    };
+    
+    function success(pos) {
+      // eslint-disable-next-line
+      const crd = pos.coords;
+      console.log('Your current position is:');
+      console.log(`Latitude : ${crd.latitude}`);
+      console.log(`Longitude: ${crd.longitude}`);
+      console.log(`More or less ${crd.accuracy} meters.`);
+      document.getElementById("geoLocation").value = `${crd.longitude}, ${crd.latitude}`;
+    }
+    
+    function error(err) {
+      console.warn(`ERROR(${err.code}): ${err.message}`);
+    }
+    
+    navigator.geolocation.getCurrentPosition(success, error, options);
+  }
 
     function submitButtonClick(event){
       var city_selector = document.getElementById("city-selector");
@@ -185,14 +193,15 @@ function SubmitObstruction() {
             <div class="form-group">
                 {/* <label for="exampleFormControlFile1">Upload an Image:    </label> */}
                 {/* <input type="file" onChange={handleChange}/> */}
-                <img src={file} alt={"Preview"}/>
                 <input
-              type="file"
-              id="single"
-              accept="image/*"
-            //   onChange={uploadAvatar}
-              //disabled={uploading}
-            />
+                  type="file"
+                  id="single"
+                  accept="image/*"
+                  onchange={loadFile}
+                // onChange={uploadAvatar}
+                // disabled={uploading}
+                />
+                <img id="output" alt={"Preview"} />
             </div>
             <button type="button" class="btn btn-primary" onClick={submitButtonClick}>Submit</button>
         </form>
