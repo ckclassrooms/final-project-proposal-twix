@@ -136,7 +136,7 @@ function SubmitObstruction() {
     return (
         <>
         <div class="d-flex justify-content-center">
-        <form class="form-class" id="submit_form">
+        <form class="form-class" id="submit_form" style={{marginTop: "60px"}}>
             {/* <div class="form-group">
                 <label for="exampleFormControlInput1">Username</label>
                 <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="username"/>
