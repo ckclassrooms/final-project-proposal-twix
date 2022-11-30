@@ -119,7 +119,8 @@ function SubmitObstruction() {
             "lon":jsonObj["lat"],
             "license_plate":jsonObj["license"],
             "metro_city":jsonObj["city"],
-            "violation_type":jsonObj["violation"]})
+            "violation_type":jsonObj["violation"],
+          "image_url":imagePath})
           })
           if (error) {
             console.log(error);
