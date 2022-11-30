@@ -104,9 +104,9 @@ function SubmitObstruction() {
         payload["license"]=license
 
       console.log("Form data",payload)
+      document.getElementById("submit_form").reset();
       uploadDets(payload)
       alert("Form submitted");
-      document.getElementById("submit_form").reset();
     }
 
       async function uploadDets(jsonObj) {
