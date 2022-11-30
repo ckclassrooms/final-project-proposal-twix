@@ -106,7 +106,7 @@ function SubmitObstruction() {
       console.log("Form data",payload)
       document.getElementById("submit_form").reset();
       // uploadDets(payload)
-      if (city !== "Select One" || violation !== "Select One") { 
+      if (city !== "Select One" && violation !== "Select One") { 
         uploadDets(payload)
         alert("Form Submited")
         } else { 
