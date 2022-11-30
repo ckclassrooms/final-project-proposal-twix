@@ -13,12 +13,7 @@ conn = psycopg2.connect(
         user="postgres",
         password="postgres")
 '''
-conn = psycopg2.connect(
-        host="db.kesgogujwpshhhahoouk.supabase.co",
-        port=5432,
-        database="postgres",
-        user="postgres",
-        password="u5jA!Wxr324@mWu")
+
 
 def dummy_op():
 # Open a cursor to perform database operations
