@@ -40,8 +40,7 @@ function SubmitObstruction() {
                           .getPublicUrl(filePath1)
           //onUpload(filePath)
           console.log("image uploaded url = ",data)
-          var data1=JSON.parse(data)
-          return data1["publicUrl"]
+          return data["publicUrl"]
         } catch (error) {
           console.log("Upload error",error)
         } finally {
