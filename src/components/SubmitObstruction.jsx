@@ -47,7 +47,7 @@ function SubmitObstruction() {
                         .from('bike-lane-1')
                         .getPublicUrl(filePath1)
         //onUpload(filePath)
-        console.log("image uploaded url = ",data)
+        console.log("image uploaded url = ", data)
         return data["publicUrl"]
       } catch (error) {
         console.log("Upload error",error)
@@ -197,7 +197,7 @@ function SubmitObstruction() {
                   type="file"
                   id="single"
                   accept="image/*"
-                  onchange={loadFile}
+                  onChange={loadFile}
                 // onChange={uploadAvatar}
                 // disabled={uploading}
                 />
