@@ -39,6 +39,7 @@ const incomingData = await req.json()
     headers: { 'Content-Type': 'application/json' },
     status: 401,
   })
+  console.log("User details ",user)
   var lat=null,lon=null,license_plate=null,image_url=null,notes=null, user_number=null,violation_type=null,metro_city=null;
 
 

@@ -10,7 +10,7 @@ CREATE TABLE users (
 
 CREATE TABLE violations (
   id              SERIAL PRIMARY KEY,
-  user_id           INT,
+  user_id           VARCHAR(100),
   violation_type    VARCHAR(100) NULL,
   ts                TIMESTAMP NOT NULL,
   metro_city        VARCHAR(100) NULL,
