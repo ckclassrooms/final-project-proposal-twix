@@ -24,12 +24,15 @@ function SubmitObstruction() {
           const fileName = `${uuidv4().toString().replace(/-/g,"")}.${fileExt}`
           const filePath1 = `public/violations/${fileName}`
           console.log(`File ${filePath1}`)
+
+
           let {  error: uploadError } = await supabase.storage.from('bike-lane-1').upload(filePath1, file)
     
           if (uploadError) {
             console.log("Unable to upload ",uploadError)
             throw uploadError
           }
+
           console.log("Upload complete")
           const { data } = supabase
                           .storage
@@ -70,31 +73,39 @@ function SubmitObstruction() {
       
       navigator.geolocation.getCurrentPosition(success, error, options);
     }
+
     function submitButtonClick(event){
       var city_selector = document.getElementById("city-selector");
       var city = city_selector.options[city_selector.selectedIndex].text;
       var violation_selector = document.getElementById("violation-type");
       var violation = violation_selector.options[violation_selector.selectedIndex].text;
+
       var loc_text = document.getElementById("geoLocation");
       var loc = loc_text.value;
+
       var license_text = document.getElementById("license_plate");
       var license = license_text.value;
+
       var notes_text = document.getElementById("notes");
       var notes = notes_text.value;
       var payload = {"city":city,"violation":violation}
+
       if(loc!==""){
         payload["lon"]=loc.split(",")[0]
         payload["lat"]=loc.split(",")[1]
+
       }
         
+
       if(notes!=="")
         payload["notes"]=notes
+
       if(license!=="")
         payload["license"]=license
+
       console.log("Form data",payload)
       document.getElementById("submit_form").reset();
       // uploadDets(payload)
-      if (city !== "Select One" || violation !== "Select One") { 
       if (city !== "Select One" && violation !== "Select One") { 
         uploadDets(payload)
         alert("Form Submited")
@@ -102,6 +113,7 @@ function SubmitObstruction() {
         alert("Please fill all required values!")
         }
     }
+
       async function uploadDets(jsonObj) {
         console.log("jsonArray");
         console.log(jsonObj);
@@ -188,4 +200,5 @@ function SubmitObstruction() {
         </>
     )
 }
+
 export default SubmitObstruction
