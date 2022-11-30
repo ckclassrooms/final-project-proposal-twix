@@ -105,7 +105,13 @@ function SubmitObstruction() {
 
       console.log("Form data",payload)
       document.getElementById("submit_form").reset();
-      uploadDets(payload)
+      // uploadDets(payload)
+      if (city !== "Select One" || violation !== "Select One") { 
+        uploadDets(payload)
+        alert("Form Submited")
+        } else { 
+        alert("Please fill all required values!")
+        }
     }
 
       async function uploadDets(jsonObj) {
@@ -133,7 +139,7 @@ function SubmitObstruction() {
           console.log("data:");
           console.log(data);
           console.log("Update the UI to reflect status")
-          alert("Form submitted");
+          // alert("Form submitted");
     }
   
     return (
