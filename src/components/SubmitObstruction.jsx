@@ -120,6 +120,8 @@ function SubmitObstruction() {
         alert("Please fill all required values (marked with *)")
         }
         document.getElementById("submit_form").reset();
+        var image = document.getElementById('output');
+        image = null;
     }
 
       async function uploadDets(jsonObj) {
