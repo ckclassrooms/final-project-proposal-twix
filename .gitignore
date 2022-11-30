@@ -18,10 +18,8 @@
 .env.development.local
 .env.test.local
 .env.production.local
-
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 src/components/geojson_file.json
 .vscode
-src/components/images/

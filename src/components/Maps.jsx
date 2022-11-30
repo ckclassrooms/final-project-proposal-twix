@@ -25,7 +25,7 @@ const draw = new MapboxDraw({
   },
   // Set mapbox-gl-draw to draw by default.
   // The user does not have to click the polygon control button first.
-  defaultMode: 'draw_polygon'
+  defaultMode: 'simple_select'
 });
 
 
@@ -224,7 +224,12 @@ function Maps() {
             console.log("inside map click")
             const coordinates = e.features[0].geometry.coordinates.slice();
             const violation = e.features[0].properties.violation;
-            const timeViolation = e.features[0].properties.time;
+            const timeViolationDate = (e.features[0].properties.time).slice(0,10);
+            console.log(timeViolationDate)
+            const timeViolationTime = (e.features[0].properties.time).slice(11,19);
+            console.log(timeViolationTime)
+            const imageURL = e.features[0].properties.image_url;
+
             // console.log("typeof")
             // console.log(typeof(violation))
 
@@ -236,8 +241,7 @@ function Maps() {
             new mapboxgl.Popup()
                 .setLngLat(coordinates)
                 // eslint-disable-next-line
-                .setHTML("<strong>Violation reported at: </strong>" + timeViolation + "<br/>" + "<strong>Vehicle Category: </strong>" + violation + "<p><img src='\"./images/download.png/\"'></p>")
-                // <p><img src='+e.features[0].properties.image+'></img></p>'
+                .setHTML("<strong>Violation reported at: </strong> <br/>" + timeViolationDate +"<br/>" + timeViolationTime + "<br/>" + "<strong>Vehicle Category: </strong><br/>" + violation + "<br/><img style=\"width:100px;height:100px;\" align = \"center\" src='"+ imageURL + "\'>")
                 .addTo(map.current);
         });
         layer_exists = true
@@ -245,7 +249,12 @@ function Maps() {
     }
 
     function Map_gen() {
-        console.log(typeof (map.current.getBounds()['_ne']))
+        console.log("bounds all")
+        const curr_bounds = map.current.getBounds()
+        console.log("ne-lang" + curr_bounds['_ne']['lng'])
+        console.log("ne-lat" + curr_bounds['_ne']['lat'])
+        console.log("sw-lang" + curr_bounds['_sw']['lng'])
+        console.log("se-lang" + curr_bounds['_sw']['lat'])
         console.log("test button press", mapLoaded)
         // console.log(document.getElementById('f2').value)
 
@@ -266,10 +275,10 @@ function Maps() {
                 console.log('calling edge func')
 
                 // values for testing
-                var lat1 = -87.651769
-                var lon1 = 41.88007
-                var lat2 = -87.647589
-                var lon2 = 41.869612
+                var lat1 = curr_bounds['_sw']['lng']
+                var lon1 = curr_bounds['_ne']['lat']
+                var lat2 = curr_bounds['_ne']['lng']
+                var lon2 = curr_bounds['_sw']['lat']
                 var data = await supabaseCall(lat1, lon1, lat2, lon2, array_cat)
                 loadMapWithData(data)
                 
