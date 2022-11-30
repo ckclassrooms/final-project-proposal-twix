@@ -106,7 +106,6 @@ function SubmitObstruction() {
       console.log("Form data",payload)
       document.getElementById("submit_form").reset();
       uploadDets(payload)
-      alert("Form submitted");
     }
 
       async function uploadDets(jsonObj) {
@@ -128,9 +127,13 @@ function SubmitObstruction() {
           if (error) {
             console.log(error);
           }
+          // else{
+          //   alert("Form submitted");
+          // }
           console.log("data:");
           console.log(data);
           console.log("Update the UI to reflect status")
+          alert("Form submitted");
     }
   
     return (
