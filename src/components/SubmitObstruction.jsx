@@ -39,6 +39,8 @@ function SubmitObstruction() {
                           .from('bike-lane-1')
                           .getPublicUrl(filePath1)
           //onUpload(filePath)
+          console.log("image uploaded url = ",data)
+          data=JSON.parse(data)
           return data["publicUrl"]
         } catch (error) {
           console.log("Upload error",error)
