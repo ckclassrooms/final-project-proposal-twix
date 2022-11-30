@@ -50,7 +50,7 @@ function SubmitObstruction() {
         
       }
 
-      var loadFile = function(event) {
+      const loadFile = function(event) {
         var output = document.getElementById('output');
         output.src = URL.createObjectURL(event.target.files[0]);
         output.onload = function() {
@@ -196,15 +196,15 @@ function SubmitObstruction() {
                 {/* <input type="file" onChange={handleChange}/> */}
                 <img src={file} alt={"Preview"}/>
                 <input
-              type="file"
-              id="single"
-              accept="image/*"
-              onchange="loadFile(event)"
-            //   onChange={uploadAvatar}
-              //disabled={uploading}
-            />
+                  type="file"
+                  id="single"
+                  accept="image/*"
+                  onchange={loadFile}
+                //   onChange={uploadAvatar}
+                  //disabled={uploading}
+                />
             {/* <input type="file" accept="image/*" onchange="loadFile(event)"> */}
-            <img id="output"/>
+            <img id="output" alt="preview"/>
             </div>
             <button type="button" class="btn btn-primary" onClick={submitButtonClick}>Submit</button>
         </form>
