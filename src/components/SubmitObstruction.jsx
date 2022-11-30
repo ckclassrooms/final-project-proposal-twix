@@ -5,7 +5,7 @@ import {supabase} from '../supabaseClient';
 import { v4 as uuidv4 } from 'uuid';
 // import { Button } from 'bootstrap';
 function SubmitObstruction() {
-  const file = ""
+  // const file = ""
     // const [file, setFile] = useState();
     // function handleChange(e) {
     //     console.log(e.target.files);
@@ -194,7 +194,6 @@ function SubmitObstruction() {
             <div class="form-group">
                 {/* <label for="exampleFormControlFile1">Upload an Image:    </label> */}
                 {/* <input type="file" onChange={handleChange}/> */}
-                <img src={file} alt={"Preview"}/>
                 <input
                   type="file"
                   id="single"
@@ -203,8 +202,9 @@ function SubmitObstruction() {
                 //   onChange={uploadAvatar}
                   //disabled={uploading}
                 />
+                <img id="output" alt={"Preview"}/>
             {/* <input type="file" accept="image/*" onchange="loadFile(event)"> */}
-            <img id="output" alt="preview"/>
+            {/* <img id="output" alt="preview"/> */}
             </div>
             <button type="button" class="btn btn-primary" onClick={submitButtonClick}>Submit</button>
         </form>
