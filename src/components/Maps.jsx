@@ -1,5 +1,5 @@
 import React from 'react'
-import './mapbox-gl.css'
+import '../scss/mapbox-gl.css'
 import { useRef, useEffect, useState } from 'react';
 
 // eslint-disable-next-line import/no-webpack-loader-syntax
@@ -9,7 +9,6 @@ import { supabase } from '../supabaseClient';
 
 import Button from 'react-bootstrap/Button';
 // import {Form} from 'react-bootstrap';
-
 
 
 mapboxgl.accessToken = process.env.MAPBOX_ACCESS_TOKEN
@@ -96,7 +95,9 @@ function Maps() {
       }
       else if(e.type==='draw.update'){
         const poly = draw.getAll();
-        console.log("draw.update called",poly);
+        const locArray = poly.features[0].geometry.coordinates[0];
+        loadPolygonData(locArray)
+        console.log("draw.update called",locArray);
       }
     }
 
@@ -156,6 +157,7 @@ function Maps() {
         if(error)
             console.log("Error",error)
         loadMapWithData(data)
+        // layer_exists = true
 
     }
 
@@ -308,7 +310,7 @@ function Maps() {
                 <br />
                 <input className="form-check-input" type="checkbox" value="COMPANY" id="o2" />
                 <label className="form-check-label">
-                    COMPANY
+                    COMPANY VEHICLE
                 </label>
                 <br />
                 <input className="form-check-input" type="checkbox" value="MUNICIPAL_VEHICLE" id="o3" />
@@ -328,7 +330,7 @@ function Maps() {
                 <br />
                 <input className="form-check-input" type="checkbox" value="OTHER" id="o6" />
                 <label className="form-check-label">
-                    OTHER
+                    OTHERS
                 </label>
             </div>
             <br />
