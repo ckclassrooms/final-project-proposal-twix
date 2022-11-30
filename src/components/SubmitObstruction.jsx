@@ -34,10 +34,14 @@ function SubmitObstruction() {
           }
 
           console.log("Upload complete")
+          const { data } = supabase
+                          .storage
+                          .from('bike-lane-1')
+                          .getPublicUrl(filePath1)
           //onUpload(filePath)
-          return filePath1
+          return data
         } catch (error) {
-          
+          console.log("Upload error",error)
         } finally {
            console.log("Upload complete")
           //setUploading(false)

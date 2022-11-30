@@ -40,8 +40,9 @@ const incomingData = await req.json()
     status: 401,
   })
   console.log("User details ",user)
-  var lat=null,lon=null,license_plate=null,image_url=null,notes=null, user_number=null,violation_type=null,metro_city=null;
+  var lat=null,lon=null,license_plate=null,image_url=null,notes=null,violation_type=null,metro_city=null;
 
+  var user_id = user["id"]
 
   if("lat" in incomingData && "lon" in incomingData){
     lat=incomingData["lat" as keyof typeof incomingData]
@@ -55,9 +56,6 @@ const incomingData = await req.json()
   
   if("image_url" in incomingData)
     image_url=incomingData["image_url" as keyof typeof incomingData]
-  
-  if("user_id" in incomingData)
-    user_number=incomingData["user_id" as keyof typeof incomingData]
 
   if("violation_type" in incomingData)
     violation_type=incomingData["violation_type" as keyof typeof incomingData]
@@ -65,15 +63,15 @@ const incomingData = await req.json()
   if("metro_city" in incomingData)
     metro_city=incomingData["metro_city" as keyof typeof incomingData]
   
-  if(user_number==null || violation_type==null || metro_city==null){
-    return new Response(JSON.stringify({ error: "User_id,violation_type, metro_city fields are mandatory " }), {
+  if( violation_type===null || metro_city===null){
+    return new Response(JSON.stringify({ error: "violation_type, metro_city fields are mandatory " }), {
       headers: {  ...corsHeaders,'Content-Type': 'application/json' },
       status: 400,
     })
   }
   const time = new Date().toISOString();
   const body ={ 
-    "user_number": user_number ,
+    "user_number": user_id ,
     "violation_type": violation_type,
     "lat":lat,
     "lon":lon,

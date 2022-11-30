@@ -13,7 +13,12 @@ conn = psycopg2.connect(
         user="postgres",
         password="postgres")
 '''
-
+conn = psycopg2.connect(
+        host="db.kesgogujwpshhhahoouk.supabase.co",
+        port=5432,
+        database="postgres",
+        user="postgres",
+        password="u5jA!Wxr324@mWu")
 
 def dummy_op():
 # Open a cursor to perform database operations
@@ -56,24 +61,24 @@ def insert_into_tables(violation,cur):
 
 violation_types = ['CONSTRUCTION_VEHICLE','COMPANY','MUNICIPAL_VEHICLE','PRIVATE_VEHICLE','TAXI','OTHER']
 license_plates = ['adn23','23ewfsd','343sf','353r4f','w43trfw3','','32rwed','23454rre']
-user_ids = [1,2,3,4]
-image_urls = ['https://images.unsplash.com/photo-1668177706281-3c7f9e0153df?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=654&q=80',
-                'https://images.unsplash.com/photo-1668525834119-bd0860fa8e0c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80',
-               'https://images.unsplash.com/photo-1668525330295-e75a2ccd962f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=776&q=80',
-               'https://images.unsplash.com/photo-1668455520578-0847836e48ec?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=930&q=80',
-                'https://images.unsplash.com/photo-1668521524306-78ee6f433560?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
-                'https://images.unsplash.com/photo-1668369313540-6a409df097db?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80']
+user_ids = ["1","2","3","4"]
+image_urls = ['https://dl.airtable.com/.attachmentThumbnails/f9540c659b6c59abdaba8daee2e85ec5/e9f2dec5',
+                'https://dl.airtable.com/.attachmentThumbnails/dfa2c32d7c63ce832dc87921b0096cb8/ac2afcb9',
+               'https://dl.airtable.com/.attachmentThumbnails/279117eeb93bce6a27ae7b7e22382bef/80f3ea82',
+               'https://dl.airtable.com/.attachmentThumbnails/f54fde46d840f571d43d3e7419e4b755/89d230ce',
+                'https://dl.airtable.com/.attachmentThumbnails/2b22520c38d8003fc6ea8d296255098f/c9f0dd9d',
+                'https://dl.airtable.com/.attachmentThumbnails/57fcecce4515c4e466330a23293ffae9/7d255989']
 
 def fill_db():
         cur = conn.cursor()
         start_timestamp = datetime.now().timestamp()
         metro_city='chicago'
-        center_lon= 41.869507
-        center_lat= -87.653015
-        for i in range(500):
+        center_lon= 41.864586
+        center_lat= -87.794463
+        for i in range(100):
                 time.sleep(1)
-                lat = center_lat + random.uniform(-0.001, 0.01)
-                lon = center_lon + random.uniform(-0.001, 0.01)
+                lat = center_lat + random.uniform(-0.001, 0.1)
+                lon = center_lon + random.uniform(-0.001, 0.1)
                 ts= dt = datetime.now(timezone.utc)
                 violation  = {
                         "user_id":str(random.choice(user_ids)),

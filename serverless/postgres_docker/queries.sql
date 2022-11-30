@@ -50,7 +50,7 @@ $func$;
 
 
 -----Insert func
-CREATE OR REPLACE FUNCTION insert_into_table("user_number" integer,
+CREATE OR REPLACE FUNCTION insert_into_table("user_number" VARCHAR,
 "violation_type" text,
 "lat" double precision,
 "lon" double precision,
