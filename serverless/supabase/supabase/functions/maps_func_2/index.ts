@@ -29,7 +29,6 @@ const createGeoJSON= (data1:object[])=> {
         "properties": {
         "violation": obj["violation_type" as keyof typeof obj],
         "time": obj["ts" as keyof typeof obj],
-        "image_url":obj["image_url" as keyof typeof obj],
         "icon":{
           "iconSize": [50, 50],
           "iconAnchor": [25, 25],

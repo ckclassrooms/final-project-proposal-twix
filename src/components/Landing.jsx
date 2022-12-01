@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/Card';
 
 function Landing() {
     return (
-        <div class="landing-div" style={{marginTop: "60px"}}>
+        <div class="landing-div">
 
         <Card style={{ width: '18rem' }}>
         { /* <Card.Img variant="top" src="holder.js/100px180" /> */}

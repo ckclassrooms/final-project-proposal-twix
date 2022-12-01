@@ -36,18 +36,3 @@ For the implementation, the following tech stack is being considered:
 | Frameworks   | React       |
 | Services     | Supabase    |
 | Database     | PostgreSQL, PostGIS|
-
-## MVP:
-Current milestones achieved:
-
-1. The front-end interface and basic functionality such as Navigation Bar, Form Control, layout and Access Control is setup.
-2. The user can login via GitHub OAuth which is routed via Supabase.
-3. At the back-end, the database, edge functions for data transmission to and from DB is setup.
-4. Maps page development is in progress.
-5. The image store with Supabaae is setup to accept input images via form and tag it to violation.
-
-Further Steps:
-1. Work on grid layout to make it dynamic based on data received from DB.
-2. Fix Mapbox conflicts and have the user visualize violations on Map, only for the visible area of map, controlled by corresponding events.
-
-Note: Few options such as 'Submit Obstruction' and 'Live DB' are accessible from Navigation Bar without login for testing purposes. Final version will have everything in Nav Bar locked under access control.
