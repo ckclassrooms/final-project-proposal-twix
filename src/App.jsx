@@ -18,12 +18,14 @@ function App() {
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
+      alert("Login Successful!")
       // setIsLoggedIn(true);
     });
 
     //console.log("vALUE ",supabase.auth.user());
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
+      alert("Logged out")
     });
   }, []);
 
