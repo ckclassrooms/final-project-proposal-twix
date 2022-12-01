@@ -18,7 +18,7 @@ function App() {
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
-      alert("Login Successful!")
+      // alert("Login Successful!!")
       // setIsLoggedIn(true);
     });
 
