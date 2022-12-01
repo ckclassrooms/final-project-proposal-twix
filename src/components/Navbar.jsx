@@ -17,6 +17,7 @@ function Nav({session, setSession}) {
     const logoutSubmit = async ()=>{
         // Todo - Add logic to logout
         let { error } = await supabase.auth.signOut()
+        alert("Logged out!")
         console.log(error)
         // setSession(null);
     }
