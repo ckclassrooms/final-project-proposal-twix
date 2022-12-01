@@ -25,7 +25,7 @@ function App() {
     //console.log("vALUE ",supabase.auth.user());
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
-      alert("Logged out")
+      // alert("Logged out")
     });
   }, []);
 
