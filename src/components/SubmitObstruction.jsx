@@ -1,16 +1,7 @@
 import React from 'react';
-// import {useState} from 'react';
-// import Avatar from '../components/Avatar';
 import {supabase} from '../supabaseClient';
 import { v4 as uuidv4 } from 'uuid';
-// import { Button } from 'bootstrap';
 function SubmitObstruction() {
-  // const file = ""
-    // const [file, setFile] = useState();
-    // function handleChange(e) {
-    //     console.log(e.target.files);
-    //     setFile(URL.createObjectURL(e.target.files[0]));
-    // }
   const loadFile = function(event) {
     var output = document.getElementById('output');
     output.src = URL.createObjectURL(event.target.files[0]);
@@ -18,44 +9,50 @@ function SubmitObstruction() {
       URL.revokeObjectURL(output.src)
     }
   }
-
+  var file_incorrect = false
   const uploadImage = async (event) => {
+    
       try {
-        //setUploading(true)
-  
-      //   if (!event.target.files || event.target.files.length === 0) {
-      //     throw new Error('You must select an image to upload.')
-      //   }
-  
+        var allowedExtension = ['jpeg', 'jpg', 'png'];
         const file = document.getElementById('single').files[0]
-        const fileExt = file.name.split('.').pop()
+        const fileExt = file.name.split('.').pop().toLowerCase();
+        var isValidFile = false;
+        // console.log(fileExt)
         const fileName = `${uuidv4().toString().replace(/-/g,"")}.${fileExt}`
         const filePath1 = `public/violations/${fileName}`
         console.log(`File ${filePath1}`)
-
-
         let {  error: uploadError } = await supabase.storage.from('bike-lane-1').upload(filePath1, file)
   
         if (uploadError) {
           console.log("Unable to upload ",uploadError)
           throw uploadError
         }
+        for(var index in allowedExtension) {
 
+          if(fileExt === allowedExtension[index]) {
+              isValidFile = true; 
+              break;
+          }
+      }
+      if(!isValidFile) {
+        alert('Allowed Extensions are : *.' + allowedExtension.join(', *.'));
+        file_incorrect = true
+    }
+        else{
         console.log("Upload complete")
         const { data } = supabase
                         .storage
                         .from('bike-lane-1')
                         .getPublicUrl(filePath1)
-        //onUpload(filePath)
         console.log("image uploaded url = ", data)
         return data["publicUrl"]
-      } catch (error) {
+      }
+     }
+      catch (error) {
         console.log("Upload error",error)
       } finally {
           console.log("Upload complete")
-        //setUploading(false)
       }
-      
     }
     function getLocation()
     {
@@ -103,8 +100,6 @@ function SubmitObstruction() {
         payload["lat"]=loc.split(",")[1]
 
       }
-        
-
       if(notes!=="")
         payload["notes"]=notes
 
@@ -112,10 +107,11 @@ function SubmitObstruction() {
         payload["license"]=license
 
       console.log("Form data",payload)
-      // uploadDets(payload)
       if (city !== "Select One" && violation !== "Select One") { 
         uploadDets(payload)
-        alert("Form Submited")
+        if(file_incorrect === true){
+          alert("Form Submited")
+        }
         } else { 
         alert("Please fill all required values (marked with *)")
         }
@@ -130,6 +126,7 @@ function SubmitObstruction() {
         const imagePath = await uploadImage()
         console.log("upload complete with imagepath = ",imagePath)
         console.log("Making db call")
+        if (file_incorrect !== true){
         const { data, error } = await supabase.functions.invoke('submit_violation_2', {
             body:  JSON.stringify({
             "lat":jsonObj["lat"],
@@ -142,23 +139,15 @@ function SubmitObstruction() {
           if (error) {
             console.log(error);
           }
-          // else{
-          //   alert("Form submitted");
-          // }
           console.log("data:");
           console.log(data);
           console.log("Update the UI to reflect status")
-          // alert("Form submitted");
+        }
     }
-  
     return (
         <>
         <div class="d-flex justify-content-center">
         <form class="form-class" id="submit_form" style={{marginTop: "60px"}}>
-            {/* <div class="form-group">
-                <label for="exampleFormControlInput1">Username</label>
-                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="username"/>
-            </div> */}
             <div class="form-group">
                 <label for="violation-type" class="required" aria-required="true">Category *</label>
                 <select class="form-control" id="violation-type" required>
@@ -192,15 +181,11 @@ function SubmitObstruction() {
                 <textarea class="form-control" id="notes" rows="3"></textarea>
             </div>
             <div class="form-group">
-                {/* <label for="exampleFormControlFile1">Upload an Image:    </label> */}
-                {/* <input type="file" onChange={handleChange}/> */}
                 <input
                   type="file"
                   id="single"
                   accept="image/*"
                   onChange={loadFile}
-                // onChange={uploadAvatar}
-                // disabled={uploading}
                 />
                 <img id="output" alt={"Preview"} />
             </div>
