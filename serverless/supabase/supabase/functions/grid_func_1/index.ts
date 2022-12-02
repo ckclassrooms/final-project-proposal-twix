@@ -63,6 +63,7 @@ serve(async (req) => {
     supabaseQuery.in('license_plate',incomingData["license_plate" as keyof typeof incomingData])
   }
 
+  supabaseQuery.order('ts',{ascending:false})
   const { data, error } = await supabaseQuery
  
   return new Response(
