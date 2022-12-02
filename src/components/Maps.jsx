@@ -10,7 +10,7 @@ function Maps() {
     const lng = -87.64
     const lat = 41.87
     const zoom = 10
-
+    
     // const [lng, setLng] = useState(-87.64);
     // const [lat, setLat] = useState(41.87);
     // const [zoom, setZoom] = useState(10);
@@ -72,7 +72,7 @@ function Maps() {
             data
         );
     }
-    
+
 
     return (
         <div>
