@@ -55,7 +55,8 @@ function LiveDb() {
     
 
     if (liveData.length === 0) {
-        getGrid();
+        console.log("live data len=0")
+        // getGrid();
     }
 
     function pagination(number, firstBool) {
@@ -115,12 +116,13 @@ function LiveDb() {
     }
 
     function onFilterButtonClicked() {
+        console.log("on filter button clicked")
         getGrid(filter);
     }
 
     function onAddButtonClicked(event, key) {
         var updatedValue;
-
+        console.log("on add button clicked")
         if (key === 'time') {
             updatedValue = { "ts1": time1, "ts2": time2}
             
