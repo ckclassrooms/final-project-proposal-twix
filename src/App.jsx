@@ -17,6 +17,13 @@ function App() {
   // const [requests, setRequests] = useState([]);
   
   useEffect(() => {
+
+    if (session==null){
+      console.log("I am null")
+    }
+    else{
+      alert("Hi, I am logged in")
+    }
     console.log("App.jsx use effect, session = ",session)
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
@@ -32,13 +39,13 @@ function App() {
       
       console.log(" auth state changes session",session)
   
-      
+
       // else{
       //   alert("logged out")
       // }
       // alert("Logged out")
     });
-  });
+  },[]);
 
   return (
       <>
