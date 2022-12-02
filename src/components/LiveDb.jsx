@@ -96,10 +96,6 @@ function LiveDb() {
           if (data && data.length > 0) {
             const newLiveData = [];
             data.forEach(d => newLiveData.push(d));
-            console.log(newLiveData);
-            console.log("after slice");
-            console.log(newLiveData.slice(indOfFirstData, indOfLastData));
-            console.log(indOfFirstData, indOfLastData);
             setLiveData(newLiveData);
             setPaginationNumber(Math.floor(newLiveData.length/numOfDataPerPage) + 1);
             setSmallGrid(newLiveData.slice(indOfFirstData, indOfLastData));
@@ -245,6 +241,7 @@ function LiveDb() {
                                 <Card.Text>Submitted:</Card.Text>
                                 <Card.Text>{ d["ts"] }</Card.Text>
                                 <Card.Text>License Plate: { d["license_plate"]}</Card.Text>
+                                <Card.Text>Notes: {d["notes"]}</Card.Text>
                             </Card.Body>
                             </Card>
                         </Col> 
