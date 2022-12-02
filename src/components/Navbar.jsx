@@ -11,9 +11,9 @@ function Nav({session, setSession}) {
           setSession(user);
           console.log("in login submit user",user)
           console.log("err",error)
-        //   if (session !=null){
-        //     alert("Login Successful!!")
-        //   }
+          if (user !=null){
+            alert("Login Successful!!")
+          }
         //   if (error == null){
         //   alert("Login Successful!")}
         // setSession("Setting Something as session")
@@ -24,8 +24,11 @@ function Nav({session, setSession}) {
     const logoutSubmit = async ()=>{
         // Todo - Add logic to logout
         let { error } = await supabase.auth.signOut()
-        // alert("Logged out!")
-        setSession(null);
+        if(error==null){
+            alert("Logged out!")
+            setSession(null);
+        }
+           
         console.log("In logout submit with session = ",session);
         console.log(error)
         // setSession(null);
