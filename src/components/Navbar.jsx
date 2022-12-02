@@ -14,10 +14,10 @@ function Nav({session, setSession}) {
     const logoutSubmit = async ()=>{
         // Todo - Add logic to logout
         let { error } = await supabase.auth.signOut()
-        if(error==null){
-            alert("Logout successful!!")
-            setSession(null);
-        }
+        // if(error==null){
+        //     alert("Logout successful!!")
+        //     setSession(null);
+        // }
     }
 
     if (session != null){
