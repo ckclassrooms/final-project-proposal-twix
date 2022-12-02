@@ -79,6 +79,7 @@ function Maps() {
             }
           })
           draw.delete(pids)
+          
         }
       });
     });
@@ -86,12 +87,14 @@ function Maps() {
     function updateArea(e) {
       if(e.type === 'draw.delete'){
         Map_gen();
+        removeData()
       }
       else if(e.type==='draw.create'){
         const poly = draw.getAll();
         const locArray = poly.features[0].geometry.coordinates[0];
         loadPolygonData(locArray)
         console.log("Draw .create called",locArray);
+        
       }
       else if(e.type==='draw.update'){
         const poly = draw.getAll();
@@ -156,8 +159,9 @@ function Maps() {
         console.log("polygon res",data)
         if(error)
             console.log("Error",error)
+        
         loadMapWithData(data)
-        // layer_exists = true
+        layer_exists = true
 
     }
 
@@ -181,14 +185,17 @@ function Maps() {
         return data
     }
 
-
-    async function loadMapWithData(data){
+    function removeData(){
         if (layer_exists === true) {
             map.current.removeLayer('points')
             map.current.removeSource('points_source')
             map.current.removeImage('custom-marker')
             layer_exists = false;
         }
+    }
+
+    async function loadMapWithData(data){
+        removeData()
         map.current.loadImage(
             'https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png',
             (error, image) => {
@@ -288,10 +295,25 @@ function Maps() {
             (async () => await getMap())()
         }
     }
+
+    function toggleTrue(source) {
+        var checkboxes = document.getElementsByClassName("form-check-input")
+        for(var i=0, n=checkboxes.length;i<n;i++) {
+          checkboxes[i].checked = true;
+        }
+      }
+    
+    function toggleFalse(source) {
+        var checkboxes = document.getElementsByClassName("form-check-input")
+        for(var i=0, n=checkboxes.length;i<n;i++) {
+          checkboxes[i].checked = false;
+        }
+    }
     // })
 
     return (
-        <div style={{marginTop: "60px"}}>
+        <div class="container" style={{marginTop: "60px"}}>
+            <div class="row">
             <meta charSet="utf-8" />
             <title>Maps for BikeSpy</title>
             <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
@@ -299,36 +321,40 @@ function Maps() {
             <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.2/mapbox-gl-draw.js"></script>
       <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.2/mapbox-gl-draw.css" type="text/css"></link>
             {/* <style dangerouslySetInnerHTML={{__html: "\n  body { margin:0; padding:0; }\n  #map { position:absolute; top:50px; bottom:0; width:100%; }\n" }} /> */}
-            <br /><br /><br />
+            <div class="col-lg">
 
-
+            <h5>Select the categories you want to view:</h5>
+            <Button style={{t: "30px"}} onClick={() => toggleTrue()}>Select All</Button>
+            &nbsp;&nbsp;&nbsp;
+            <Button onClick={() => toggleFalse()}>De-select All</Button>
+            <br/><br/>
             <div className="form-check">
-                <input className="form-check-input" type="checkbox" value="CONSTRUCTION_VEHICLE" id="o1" />
+                <input className="form-check-input" type="checkbox" value="CONSTRUCTION_VEHICLE" id="o1" name = "checkmap" />
                 <label className="form-check-label">
                     CONSTRUCTION VEHICLE
                 </label>
                 <br />
-                <input className="form-check-input" type="checkbox" value="COMPANY" id="o2" />
+                <input className="form-check-input" type="checkbox" value="COMPANY" id="o2" name = "checkmap" />
                 <label className="form-check-label">
                     COMPANY VEHICLE
                 </label>
                 <br />
-                <input className="form-check-input" type="checkbox" value="MUNICIPAL_VEHICLE" id="o3" />
+                <input className="form-check-input" type="checkbox" value="MUNICIPAL_VEHICLE" id="o3" name = "checkmap" />
                 <label className="form-check-label">
                     MUNICIPAL VEHICLE
                 </label>
                 <br />
-                <input className="form-check-input" type="checkbox" value="PRIVATE_VEHICLE" id="o4" />
+                <input className="form-check-input" type="checkbox" value="PRIVATE_VEHICLE" id="o4" name = "checkmap" />
                 <label className="form-check-label">
                     PRIVATE VEHICLE
                 </label>
                 <br />
-                <input className="form-check-input" type="checkbox" value="TAXI" id="o5" />
+                <input className="form-check-input" type="checkbox" value="TAXI" id="o5" name = "checkmap" />
                 <label className="form-check-label">
                     TAXI
                 </label>
                 <br />
-                <input className="form-check-input" type="checkbox" value="OTHER" id="o6" />
+                <input className="form-check-input" type="checkbox" value="OTHER" id="o6" name = "checkmap" />
                 <label className="form-check-label">
                     OTHERS
                 </label>
@@ -340,8 +366,9 @@ function Maps() {
             <div id="button">
                 <Button onClick={() => Map_gen()}>Load Map</Button>
             </div>
-            <br /><br /><br />
-            <div ref={mapContainer} id="map" />
+            </div>
+            <div class="col-lg" ref={mapContainer} id="map" />
+            </div>
         </div>
     );
 }
