@@ -8,7 +8,7 @@ function Nav({session, setSession}) {
         let { user, error } = await supabase.auth.signInWithOAuth({
             provider: 'github'
           })
-          setSession(user);
+          setSession(user); 
           console.log("in login submit user",user)
           console.log("err",error)
         //   if (user !=null){

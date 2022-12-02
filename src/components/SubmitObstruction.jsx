@@ -191,7 +191,7 @@ function SubmitObstruction() {
                 <label for="exampleFormControlTextarea1">Notes</label>
                 <textarea class="form-control" id="notes" rows="3"></textarea>
             </div>
-            <div class="form-group">
+            <div class="form-group" id = "preview">
                 {/* <label for="exampleFormControlFile1">Upload an Image:    </label> */}
                 {/* <input type="file" onChange={handleChange}/> */}
                 <input
