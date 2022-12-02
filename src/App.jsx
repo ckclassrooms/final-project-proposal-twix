@@ -40,7 +40,7 @@ function App() {
       }
       // alert("Logged out")
     });
-  }, []);
+  });
 
   return (
       <>
