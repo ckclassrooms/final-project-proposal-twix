@@ -38,14 +38,9 @@ function App() {
       setSession(session);
       
       console.log(" auth state changes session",session)
-  
 
-      // else{
-      //   alert("logged out")
-      // }
-      // alert("Logged out")
     });
-  },[]);
+  });
 
   return (
       <>
