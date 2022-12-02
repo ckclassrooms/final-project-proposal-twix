@@ -29,9 +29,9 @@ function App() {
     
     console.log(" auth state changes session",session)
 
-    if(session!=null){
-      alert("Logged in");
-    }
+    // if(session!=null){
+    //   alert("Logged in");
+    // } 
     // else{
     //   alert("logged out")
     // }
