@@ -10,8 +10,11 @@ function Nav({session, setSession}) {
           })
           console.log("user",user)
           console.log("err",error)
-          if (error == null){
-          alert("Login Successful!")}
+          if (session !=null){
+            alert("Login Successful!!")
+          }
+        //   if (error == null){
+        //   alert("Login Successful!")}
         // setSession("Setting Something as session")
     }
 
