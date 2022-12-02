@@ -9,35 +9,43 @@ import Maps from './components/Maps';
 import About from './components/About';
 import { supabase } from './supabaseClient'
 import { useState, useEffect } from "react";
+
+
 function App() {
   //console.log("vALUE ",supabase.auth.user());
   const [session, setSession] = useState(null);
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
-  
+  const [GLOBAL_STATE,setGLOBAL] = useState(0)
   // const [requests, setRequests] = useState([]);
   
   useEffect(() => {
     console.log("App.jsx use effect, session = ",session)
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      console.log(" get session body session session",session)
-  
-      // alert("Login Successful!!")
-      // setIsLoggedIn(true);
-    });
-  
+    if(GLOBAL_STATE===0){
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        setSession(session);
+        setGLOBAL(1);
+        console.log(" get session body session session",session)
+        // alert("Login Successful!!")
+        // setIsLoggedIn(true);
+      });
+      supabase.auth.onAuthStateChange((_event, session) => {
+      
+        setSession(session);
+        
+        console.log(" auth state changes session",session)
+    
+        
+        // else{
+        //   alert("logged out")
+        // }
+        // alert("Logged out")
+      });
+    }
+    
     //console.log("vALUE ",supabase.auth.user());
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-      
-      console.log(" auth state changes session",session)
-  
-      
-      // else{
-      //   alert("logged out")
-      // }
-      // alert("Logged out")
-    });
+    
+    
+    
   });
 
   return (
