@@ -12,22 +12,16 @@ import { useState, useEffect } from "react";
 function App() {
   //console.log("vALUE ",supabase.auth.user());
   const [session, setSession] = useState(null);
+  const [loginFlag, setLoginflag] = useState(0);
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
   
   // const [requests, setRequests] = useState([]);
   
   useEffect(() => {
-
-    if (session==null){
-      console.log("I am null")
-    }
-    else{
-      alert("Hi, I am logged in")
-    }
-    console.log("App.jsx use effect, session = ",session)
+    // console.log("App.jsx use effect, session = ",session)
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
-      console.log(" get session body session session",session)
+      // console.log(" get session body session session",session)
   
       // alert("Login Successful!!")
       // setIsLoggedIn(true);
@@ -37,10 +31,24 @@ function App() {
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
       
-      console.log(" auth state changes session",session)
+      // console.log(" auth state changes session",session)
 
     });
-  });
+  }, []);
+
+  useEffect(()=>{
+
+    if (session==null){
+      console.log("I am null")
+    }
+    else{
+      if (loginFlag === 0){
+        alert("Hi, I am logged in")
+        setLoginflag(1)
+      }
+    }
+
+  }, [session, loginFlag])
 
   return (
       <>
