@@ -25,7 +25,7 @@ function Nav({session, setSession}) {
         // Todo - Add logic to logout
         let { error } = await supabase.auth.signOut()
         if(error==null){
-            alert("Logged out!")
+            
             setSession(null);
         }
            
