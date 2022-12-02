@@ -56,6 +56,8 @@ function Nav({session, setSession}) {
             to="/" end>Home</NavLink></li>
             <li className="nav-item"><NavLink className={({ isActive }) => "nav-link " + (isActive ? " active" : "")}
             to="/liveDb">Live Database</NavLink></li>
+            <li className="nav-item"><NavLink className={({ isActive }) => "nav-link " + (isActive ? " active" : "")}
+            to="/maps">Maps</NavLink></li>
             <div className="ms-auto" style={{display:"flex"}}>
             <li className="nav-item ms-auto"><button className="btn btn-primary m-1" id='loginSubmit' onClick={()=>loginSubmit()}>Login</button></li>
             </div>              

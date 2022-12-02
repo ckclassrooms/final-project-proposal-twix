@@ -13,33 +13,33 @@ function App() {
   //console.log("vALUE ",supabase.auth.user());
   const [session, setSession] = useState(null);
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  
   // const [requests, setRequests] = useState([]);
-  supabase.auth.getSession().then(({ data: { session } }) => {
-    setSession(session);
-    console.log(" get session body session session",session)
-
-    // alert("Login Successful!!")
-    // setIsLoggedIn(true);
-  });
-
-  //console.log("vALUE ",supabase.auth.user());
-  supabase.auth.onAuthStateChange((_event, session) => {
-    setSession(session);
-    
-    console.log(" auth state changes session",session)
-
-    // if(session!=null){
-    //   alert("Logged in");
-    // } 
-    // else{
-    //   alert("logged out")
-    // }
-    // alert("Logged out")
-  });
+  
   useEffect(() => {
     console.log("App.jsx use effect, session = ",session)
-    
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      console.log(" get session body session session",session)
+  
+      // alert("Login Successful!!")
+      // setIsLoggedIn(true);
+    });
+  
+    //console.log("vALUE ",supabase.auth.user());
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+      
+      console.log(" auth state changes session",session)
+  
+      if(session!=null){
+        alert("Logged in");
+      }
+      // else{
+      //   alert("logged out")
+      // }
+      // alert("Logged out")
+    });
   });
 
   return (
