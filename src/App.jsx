@@ -39,7 +39,7 @@ function App() {
       // }
       // alert("Logged out")
     });
-  });
+  },[session]);
 
   return (
       <>
