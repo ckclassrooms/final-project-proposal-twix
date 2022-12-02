@@ -8,20 +8,25 @@ function Nav({session, setSession}) {
         let { user, error } = await supabase.auth.signInWithOAuth({
             provider: 'github'
           })
-          console.log("user",user)
+          setSession(user);
+          console.log("in login submit user",user)
           console.log("err",error)
-          if (session !=null){
-            alert("Login Successful!!")
-          }
+        //   if (session !=null){
+        //     alert("Login Successful!!")
+        //   }
         //   if (error == null){
         //   alert("Login Successful!")}
         // setSession("Setting Something as session")
+        // if user!= null{
+        //     // alert("Login Successful!!!")
+        // }
     }
-
     const logoutSubmit = async ()=>{
         // Todo - Add logic to logout
         let { error } = await supabase.auth.signOut()
-        alert("Logged out!")
+        // alert("Logged out!")
+        setSession(null);
+        console.log("In logout submit with session = ",session);
         console.log(error)
         // setSession(null);
     }
