@@ -11,9 +11,9 @@ function Nav({session, setSession}) {
           setSession(user);
           console.log("in login submit user",user)
           console.log("err",error)
-          if (user !=null){
-            alert("Login Successful!!")
-          }
+        //   if (user !=null){
+        //     alert("Login Successful!!")
+        //   }
         //   if (error == null){
         //   alert("Login Successful!")}
         // setSession("Setting Something as session")
