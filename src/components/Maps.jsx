@@ -11,8 +11,8 @@ import Button from 'react-bootstrap/Button';
 // import {Form} from 'react-bootstrap';
 
 
-mapboxgl.accessToken = process.env.MAPBOX_ACCESS_TOKEN
-mapboxgl.accessToken = "pk.eyJ1Ijoibml0aXNoZGV3YW4iLCJhIjoiY2xhM2ZqcXlzMGFxZjNvbDRkMHFjOHBjYyJ9.d7qTDfI-UTq6QwfUxbsfZw"
+mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN
+// mapboxgl.accessToken = "pk.eyJ1Ijoibml0aXNoZGV3YW4iLCJhIjoiY2xhM2ZqcXlzMGFxZjNvbDRkMHFjOHBjYyJ9.d7qTDfI-UTq6QwfUxbsfZw"
 console.log(mapboxgl.accessToken)
 
 const draw = new MapboxDraw({
