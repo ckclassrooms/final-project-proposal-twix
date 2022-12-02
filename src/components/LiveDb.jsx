@@ -5,29 +5,27 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Button from 'react-bootstrap/Button';
 import {Form} from 'react-bootstrap';
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import Pagination from "react-bootstrap/Pagination";
 
 function LiveDb() {
-    
-    const [filterText, setFilterText] = useState("Filter");
-    const [time1, setTime1] = useState('');
-    const [time2, setTime2] = useState('');
-    const [city, setCity] = useState('');
-    const [liveData, setLiveData] = useState([]);
-    const [violation, setViolation] = useState('CONSTRUCTION_VEHICLE');
-    const [paginationNumber, setPaginationNumber] = useState(0);
+    const [filterText, setFilterText] = useState(() => "Filter");
+    const [time1, setTime1] = useState(() => '');
+    const [time2, setTime2] = useState(() => '');
+    const [city, setCity] = useState(() => '');
+    const [liveData, setLiveData] = useState(() => []);
+    const [violation, setViolation] = useState(() => 'CONSTRUCTION_VEHICLE');
+    const [paginationNumber, setPaginationNumber] = useState(() => 0);
     const valueToFilter = {
         'violationType': "Violation type",
         'time': "Time",
         'metroCity': "Metro city",
         'Filter': 'Filter'
     }
-    const [filter, setFilter] = useState({"violation_type": [], "metro_city": [], ts1: '', ts2: ''});
+    const [filter, setFilter] = useState(() => ({"violation_type": [], "metro_city": [], ts1: '', ts2: ''}));
 
-    var [active, setActive] = useState(1);
-    var [smallGrid, setSmallGrid] = useState([]);
-    const [loader, setLoader] = useState(false);
+    var [active, setActive] = useState(() => 1);
+    var [smallGrid, setSmallGrid] = useState(() => []);
 
     useEffect(() => {    
         console.log("getting grid");
@@ -39,7 +37,6 @@ function LiveDb() {
     const numOfEpisPerPage = 40;
     var indOfLastEpi = active * numOfEpisPerPage;
     var indOfFirstEpi = indOfLastEpi - numOfEpisPerPage;
-    // const [loading, setLoading] = useState(false);
     for (let number = 1; number <= paginationNumber; number++) {
             pages.push(
                 <Pagination.Item
@@ -52,12 +49,6 @@ function LiveDb() {
               );
         
       }
-    
-
-    if (liveData.length === 0) {
-        console.log("live data len=0")
-        // getGrid();
-    }
 
     function pagination(number, firstBool) {
         console.log(number);
@@ -90,7 +81,7 @@ function LiveDb() {
                 requestData["ts2"] = jsonArray.ts2;
             }
         }
-        setLoader(true);
+        document.getElementsByClassName("loaderContainer")[0].classList.add("show");
         const { data, error } = await supabase.functions.invoke('grid_func_1', {
             body: notEmpty ? JSON.stringify(requestData) : {}
           })
@@ -107,7 +98,8 @@ function LiveDb() {
             setLiveData(newLiveData);
             setPaginationNumber(Math.floor(newLiveData.length/numOfEpisPerPage) + 1);
             setSmallGrid(newLiveData.slice(indOfFirstEpi, indOfLastEpi));
-            // pagination(1);
+            document.getElementsByClassName("loaderContainer")[0].classList.remove("show");
+            document.getElementsByClassName("loaderContainer")[0].classList.add("hide");
           }
     }
 
@@ -136,7 +128,14 @@ function LiveDb() {
             ...previous,
             ...updatedValue
             }));
-        getGrid(filter);
+    }
+
+    function setTime(value, number) {
+        if (number === 1) {
+            setTime1(value);
+        } else {
+            setTime2(value);
+        }
     }
     
     return (
@@ -154,14 +153,14 @@ function LiveDb() {
                     <Form.Label>From</Form.Label>
                     <Form className="md-1">
                         <Form.Group controlId="timeFilterValue1">
-                        <Form.Control type="date" placeholder="Enter value to filter" onChange={(event) => setTime1(event.target.value)}/>
+                        <Form.Control type="date" placeholder="Enter value to filter" onChange={(event) => setTime(event.target.value, 1)}/>
                         </Form.Group>
                     </Form>
                     <br/>
                     <Form.Label>To</Form.Label>
                     <Form className="md-1">
                         <Form.Group controlId="timeFiltervalue2">
-                        <Form.Control type="date" placeholder="Enter value to filter" onChange={(event) => setTime2(event.target.value)} />
+                        <Form.Control type="date" placeholder="Enter value to filter" onChange={(event) => setTime(event.target.value, 2)} />
                         </Form.Group>
                     </Form>
                     <br/>
@@ -212,7 +211,7 @@ function LiveDb() {
                 <Pagination.Last onClick={() => {console.log("in last page");pagination(paginationNumber);}}/>
             </Pagination>
             </div>
-            {loader ? <div class="loader"></div> : 
+            <Container className="loaderContainer"><div class="loader"></div></Container>
             <Container className="gridContainer">
                     <Row xs={3}>{
                     smallGrid.map(d => (
@@ -232,7 +231,6 @@ function LiveDb() {
                     ))}
                     </Row>
             </Container>
-            }
             <div className="container pagination d-flex justify-content-center">
             <Pagination size="sm" count={liveData.length} defaultPage={6} boundaryCount={2}>
                 <Pagination.First onClick={() => {pagination(1);}}/>

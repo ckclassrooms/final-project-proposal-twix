@@ -97,7 +97,7 @@ h3 a:hover, h2 a:hover {
 
 .loader {
   position: absolute;
-    top: 300px;
+    top: 210px;
     left: 50%;
     margin-top: -50px;
     margin-left: -50px;
@@ -117,4 +117,20 @@ h3 a:hover, h2 a:hover {
 #preview{
   width: 100px;
   height: 100px;
+}
+
+.container.loaderContainer {
+    height: 120px;
+    border: none !important;
+    padding: 10px 10px 0 0;
+    margin: 10px 10px 0 0;
+    /* display: none; */
+}
+
+.loaderContainer.hide {
+  display: none;
+}
+
+.loaderContainer.show {
+  display:block;
 }
