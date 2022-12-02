@@ -9,6 +9,7 @@ function Nav({session, setSession}) {
             provider: 'github'
           })
           setSession(user); 
+          console.log("err", error)
     }
     const logoutSubmit = async ()=>{
         // Todo - Add logic to logout

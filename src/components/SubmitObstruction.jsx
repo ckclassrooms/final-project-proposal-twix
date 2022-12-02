@@ -104,6 +104,10 @@ function SubmitObstruction() {
             "violation_type":jsonObj["violation"],
           "image_url":imagePath})
           })
+          if (error){
+            console.log(error);
+          }
+          console.log(data);
     }
   
     return (
