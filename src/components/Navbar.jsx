@@ -63,7 +63,7 @@ function Nav({session, setSession}) {
             to="/maps">Maps</NavLink></li>
         <li className="nav-item"><NavLink onClick={collapseNavBar} className={({ isActive }) => "nav-link " + (isActive ? " active" : "")}
             to="/submitObstruction">Submit Obstruction</NavLink></li>   
-        <li className="nav-item ms-auto"><button className="btn btn-primary m-1" id='logoutSubmit' onClick={()=> {collapseNavBar(); logoutSubmit();}}>Logout</button></li>      
+        <li className="nav-item ms-auto"><button className="btn m-1" id='logoutSubmit' onClick={()=> {collapseNavBar(); logoutSubmit();}}>Logout</button></li>      
     </ul>)
     }
     else {
@@ -79,7 +79,7 @@ function Nav({session, setSession}) {
             <li className="nav-item"><NavLink className={({ isActive }) => "nav-link " + (isActive ? " active" : "")}
             to="/maps">Maps</NavLink></li>
             <div className="ms-auto" style={{display:"flex"}}>
-            <li className="nav-item ms-auto"><button className="btn btn-primary m-1" id='loginSubmit' onClick={()=>loginSubmit()}>Login</button></li>
+            <li className="nav-item ms-auto"><button className="btn m-1" id='loginSubmit' onClick={()=>loginSubmit()}>Login</button></li>
             </div>              
         </ul>)
     }

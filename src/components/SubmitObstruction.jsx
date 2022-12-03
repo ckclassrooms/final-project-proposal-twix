@@ -3,11 +3,18 @@ import { supabase } from '../supabaseClient';
 import { v4 as uuidv4 } from 'uuid';
 import { metroCities } from './metroCity';
 import { violationTypes } from './Violation';
+import { useState } from "react";
 
 var output = ""
 var file_uploaded=false
 function SubmitObstruction() {
-  console.log("submit obstruction")
+
+  const [notes, setNotes] = useState('');
+  const [city, setCity] = useState('');
+  const [location, setLocation] = useState('');
+  const [violation, setViolation] = useState('');
+  const [licensePlate, setlicensePlate] = useState('');
+
   const loadFile = function (event) {
     output = document.getElementById('output');
     output.src = URL.createObjectURL(event.target.files[0]);
@@ -58,7 +65,6 @@ if(file_uploaded){
     }
   }
   catch (error) {
-
     console.log("Upload error", error)
     console.log(error)
     alert("Image upload failed")
@@ -83,7 +89,7 @@ if(file_uploaded){
       console.log(`Latitude : ${crd.latitude}`);
       console.log(`Longitude: ${crd.longitude}`);
       console.log(`More or less ${crd.accuracy} meters.`);
-      document.getElementById("geoLocation").value = `${crd.longitude}, ${crd.latitude}`;
+      setLocation([crd.longitude, crd.latitude]);
     }
 
     function error(err) {
@@ -94,34 +100,21 @@ if(file_uploaded){
   }
 
   function submitButtonClick(event) {
-    var city_selector = document.getElementById("city-selector");
-    var city = city_selector.options[city_selector.selectedIndex].text;
-    var violation_selector = document.getElementById("violation-type");
-    var violation = violation_selector.options[violation_selector.selectedIndex].text;
-
-    var loc_text = document.getElementById("geoLocation");
-    var loc = loc_text.value;
-
-    var license_text = document.getElementById("license_plate");
-    var license = license_text.value;
-
-    var notes_text = document.getElementById("notes");
-    var notes = notes_text.value;
     var payload = { "city": city, "violation": violation }
 
-    if (loc !== "") {
-      payload["lon"] = loc.split(",")[0]
-      payload["lat"] = loc.split(",")[1]
+    if (location !== "") {
+      payload["lon"] = location[0]
+      payload["lat"] = location[1]
 
     }
     if (notes !== "")
       payload["notes"] = notes
 
-    if (license !== "")
-      payload["license"] = license
+    if (licensePlate !== "")
+      payload["license"] = licensePlate
 
     console.log("Form data", payload)
-    if (city !== "Select One" && violation !== "Select One") {
+    if (city !== "Select one city" && violation !== "Select one category") {
       uploadDets(payload)
 
     } else {
@@ -188,35 +181,36 @@ if(file_uploaded){
     return (
       <>
         <div class="d-flex justify-content-center">
-          <form class="form-class" id="submit_form" style={{ marginTop: "60px" }}>
+          <form class="form-class form-horizontal" id="submit_form" style={{ marginTop: "60px" }}>
             <div class="form-group">
-              <label for="violation-type" class="required" aria-required="true">Category *</label>
-              <select class="form-control" id="violation-type" required>
-                <option value="" selected="">Select one category</option>
+              <label for="violation-type" class="required control-label" aria-required="true">Category *</label>
+              <select class="form-control" id="violation-type" onChange={(event) => setViolation(event.target.value)} required>
+                <option value="" disabled>Select one category</option>
                 {generateViolationOptions()}
               </select>
             </div>
             <div class="form-group">
-              <label for="city-selector" class="required" aria-required="true">Metro city *</label>
-              <select class="form-control" id="city-selector" required>
+              <label for="city-selector" class="control-label required" aria-required="true">Metro city *</label>
+              <select class="form-control" id="city-selector" required onChange={(event => setCity(event.target.value))}>
+              <option value="" disabled>Select one city</option>
                 {generateOptions()}
               </select>
             </div>
             <div class="form-group">
               <label for="geoLocation">Location</label>
-              <input type="text" class="form-control" id="geoLocation" value="" disabled />
-              <button type="button" class="btn btn-primary" onClick={() => getLocation()}>Get Location</button>
+              <input type="text" class="form-control" id="geoLocation" value={location} disabled />
+              <button type="button" class="btn" onClick={() => getLocation()}>Get Location</button>
               <span className='smallNote'>(The location might take sometime to load)</span>
             </div>
             <div class="form-group">
               <label for="exampleFormControlInput1">License Plate Number</label>
-              <input type="email" class="form-control" id="license_plate" placeholder="CD 80519" />
+              <input type="email" class="form-control" id="license_plate" onChange={(event => setlicensePlate(event.target.value))} placeholder="CD 80519" />
             </div>
             <div class="form-group">
               <label for="exampleFormControlTextarea1">Notes</label>
-              <textarea class="form-control" id="notes" rows="3"></textarea>
+              <textarea class="form-control" id="notes" rows="3" onChange={(event => setNotes(event.target.value))}></textarea>
             </div>
-            <div class="form-group">
+            <div class="form-group input">
               <input
                 type="file"
                 id="single"
@@ -228,7 +222,7 @@ if(file_uploaded){
               <img id="output" alt={"Preview"} style={{ height: "200px", width: "200px" }} />
             </div>
             
-            <button type="button" class="btn btn-primary" onClick={submitButtonClick}>Submit</button>
+            <button type="button" class="btn" onClick={submitButtonClick}>Submit</button>
 
           </form>
         </div>
