@@ -89,6 +89,11 @@ $func$;
 
 
 
+-- >>>>>>>>>>>>>>>>>>>>>>>
+
+
+
+
 
 CREATE OR REPLACE FUNCTION poly_test("locs" text)
 returns geometry
@@ -109,3 +114,55 @@ select * from get_points1(-87.651769,
      41.880070,
     -87.647589,
     41.869612,array['TAXI'])
+
+
+
+-- ><>>>>>>>>>>>>>>>>>>>>>>>>>>
+CREATE OR REPLACE FUNCTION test3(cats text[],cities text[])
+returns TABLE(lat double precision, lon double precision,violation_type varchar(100)) 
+  AS
+$$
+DECLARE 
+condition_string1 VARCHAR ;
+BEGIN
+condition_string1 := 'v.user_id is not null';
+IF array_length(cats, 1) > 0 then
+    condition_string1 := condition_string1 || ' and v.violation_type = Any($1)';
+end if;
+ return query execute format('
+SELECT v.lat as lat, v.lon as lon,v.violation_type
+FROM   violations v
+WHERE %s;':: text , condition_string1) using cats;
+end;
+$$ language plpgsql ;
+
+
+
+CREATE OR REPLACE FUNCTION grid_func_stored(cats text[],cities text[],ts1 timestamp,ts2 timestamp)
+returns TABLE(lat double precision, lon double precision,violation_type varchar(100),ts TIMESTAMP,
+  metro_city VARCHAR(100),
+  license_plate VARCHAR(100),
+  image_url VARCHAR(500)) 
+  AS
+$$
+DECLARE 
+condition_string1 VARCHAR ;
+BEGIN
+condition_string1 := 'v.user_id is not null';
+IF array_length(cats, 1) > 0 then
+    condition_string1 := condition_string1 || ' and v.violation_type = Any($1)';
+end if;
+IF array_length(cities, 1) > 0 then
+    condition_string1 := condition_string1 || ' and v.metro_city = Any($2)';
+end if;
+
+if ts1 is not null and ts2 is not null and ts1<ts2 then
+  condition_string1 := condition_string1 || ' and v.ts between ' || quote_literal(ts1) || ' and '|| quote_literal(ts2);
+end IF;
+
+ return query execute format('
+SELECT v.lat as lat, v.lon as lon,v.violation_type,v.ts,v.metro_city,v.license_plate,v.image_url
+FROM   violations v
+WHERE %s;':: text , condition_string1) using cats,cities;
+end;
+$$ language plpgsql ;

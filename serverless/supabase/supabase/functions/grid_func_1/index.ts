@@ -35,11 +35,9 @@ serve(async (req) => {
     );
 }
   const incomingData  = await req.json()
-  const violations = ['CONSTRUCTION_VEHICLE','COMPANY','MUNICIPAL_VEHICLE','PRIVATE_VEHICLE','TAXI','OTHER']
-  const supabaseQuery = supabase
-  .from('violations')
-  .select('id,violation_type,user_id,ts,metro_city,license_plate,lat,lon,image_url');
-
+  // const violations = ['CONSTRUCTION_VEHICLE','COMPANY','MUNICIPAL_VEHICLE','PRIVATE_VEHICLE','TAXI','OTHER']
+  
+  var time1=null,time2=null,violations=null,cities=null
   if(incomingData["violation_type" as keyof typeof incomingData]){
     const violation_type= incomingData["violation_type" as keyof typeof incomingData]
     
@@ -47,22 +45,20 @@ serve(async (req) => {
       
       return escape(element);
     });
-      supabaseQuery.contains('violation_type',v2)
+    violations=v2;
     
     console.log("violations array ",v2)
   }
-
+ 
   if(incomingData["ts1" as keyof typeof incomingData] && incomingData["ts2" as keyof typeof incomingData] ){
     const ts1 = incomingData["ts1" as keyof typeof incomingData]
     const ts2 = incomingData["ts2" as keyof typeof incomingData]
     const t1=new Date(Date.parse(ts1))
     const t2= new Date(Date.parse(ts2))
     console.log(t1<t2)
-    console.log(t1)
-    console.log(t2)
     if(ts1<=ts2){
-      supabaseQuery.gte('ts',ts1)
-      supabaseQuery.lte('ts',ts2)
+      time1=ts1;
+      time2=ts2;
     }
     else {
       errorResponse("Timestamp1 < timestamp2",400)
@@ -72,17 +68,19 @@ serve(async (req) => {
     const mc=incomingData["metro_city" as keyof typeof incomingData].map((element:string,index:number)=> {
       return escape(element)
     })
-    supabaseQuery.in('metro_city',mc)
-  }
-  if(incomingData["license_plate" as keyof typeof incomingData]){
-    const lp = incomingData["license_plate" as keyof typeof incomingData].map((element:string,index:number)=> {
-      return escape(element)
-    })
-    supabaseQuery.in('license_plate',lp)
+    cities=mc;
   }
 
-  supabaseQuery.order('ts',{ascending:false})
-  const { data, error } = await supabaseQuery
+  const payload = { cats: violations,
+    cities:cities,
+    ts1: time1, 
+    ts2:time2}
+    console.log("payload ",payload)
+  const { error, data } = await supabase.rpc('grid_func_stored', payload);
+
+  console.log(error)
+
+
  
   return new Response(
     JSON.stringify(data),
