@@ -20,76 +20,76 @@ h3 a:hover, h2 a:hover {
   height: 80px;
 }
 
-  li {
-    margin-left: 25px;
-  }
+li {
+  margin-left: 25px;
+}
 
-  .navbar, .container-fluid, .nav-pills{
-    background-color: #154c79;
-  }
+.navbar, .container-fluid, .nav-pills{
+  background-color: #154c79;
+}
 
-  .form-class {
-    width: 50%;
-  }
+.form-class {
+  width: 50%;
+}
 
-  .landing-div, .liveDb-div {
-    margin-left: 30%;
-    margin-top: 50px;
-  }
+.landing-div, .liveDb-div {
+  margin-left: 30%;
+  margin-top: 50px;
+}
 
-  .liveDb-div .card {
-    margin-bottom: 20px;
-  }
+.liveDb-div .card {
+  margin-bottom: 20px;
+}
 
-  .about-content img {
-    width: 100%;
-  }
+.about-content img {
+  width: 100%;
+}
 
-  .about-content {
-    margin-top: 20px;
-    margin-left: 20px;
-  }
+.about-content {
+  margin-top: 20px;
+  margin-left: 20px;
+}
 
-  #root .container {
-    border: 1px solid grey;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    border-radius: 10px;
-    padding-bottom: 10px;
-    width: 1000px;
-  }
-  
-  .filterDiv {
-    margin: 50px 0 10px 200px;
-  }
+#root .container {
+  border: 1px solid grey;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  padding-bottom: 10px;
+  width: 1000px;
+}
 
-  .filterDiv form {
-    margin-left: 10px;
-  }
+.filterDiv {
+  margin: 50px 0 10px 200px;
+}
 
-  .filterDiv .defaultHidden {
-    display: none;
-  }
+.filterDiv form {
+  margin-left: 10px;
+}
 
-  .filterValues div {
-    margin-left: 10px;
-  }
+.filterDiv .defaultHidden {
+  display: none;
+}
 
-  .filterValues button {
-    margin-top: 10px;
-  }
+.filterValues div {
+  margin-left: 10px;
+}
 
-  .dropdown {
-    min-width: 130px;
-  }
+.filterValues button {
+  margin-top: 10px;
+}
 
-  .filterValues select{
-    min-width: 415px;
-  }
+.dropdown {
+  min-width: 130px;
+}
 
-  #map {
-    height: 600px;
-    }
+.filterValues select{
+  min-width: 415px;
+}
+
+#map {
+  height: 600px;
+  }
 
 .dropdown-toggle::after {
   margin-right: 1.255em;
@@ -142,4 +142,9 @@ h3 a:hover, h2 a:hover {
 
 .optionListContainer {
   z-index: 10 !important;
+}
+
+.smallNote {
+  margin-left: 5px;
+  font-size: 12px;
 }
