@@ -204,7 +204,11 @@ function Maps() {
         }
         )
         console.log(data)
-        console.log(error)
+
+        if (error) {
+            console.log(error)
+            alert("Error in loading maps");
+        }
 
         return data
     }
