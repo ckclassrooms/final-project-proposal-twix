@@ -1,4 +1,4 @@
-exports.metroCities = ["Albuquerque - NM","Alexandria - VA","Anchorage - AK","Ann Arbor - MI",
+exports.metroCities = ["Select one city", "Albuquerque - NM","Alexandria - VA","Anchorage - AK","Ann Arbor - MI",
 "Arlington - VA","Athens - GA","Atlanta - GA","Austin - TX","Baltimore - MD","Beaverton - OR",
 "Bellevue - WA","Bethesda - MD", "Bethlehem - PA","Boise - ID","Boston - MA","Boulder - CO",
 "Bristol - UK","Brookline - MA","Buffalo - NY","Burlington - VT","Calgary - AB - Canada",

@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 import Pagination from "react-bootstrap/Pagination";
 import Multiselect from 'multiselect-react-dropdown';
 import {metroCities} from './metroCity';
+import DOMPurify from 'dompurify';
 
 function LiveDb() {
     const [filterText, setFilterText] = useState(() => "Filter");
@@ -236,12 +237,12 @@ function LiveDb() {
                             <Card>
                             <Card.Img variant="top" src={ d["image_url"]} height="250px" width="285px"/>
                             <Card.Body>
-                                <Card.Text>Metro city: {d["metro_city"]} </Card.Text>
-                                <Card.Text>Violation type: {d["violation_type"]}</Card.Text>
+                                <Card.Text>Metro city: {DOMPurify().sanitize(unescape(d["metro_city"]))} </Card.Text>
+                                <Card.Text>Violation type: {DOMPurify().sanitize(unescape(d["violation_type"]))}</Card.Text>
                                 <Card.Text>Submitted:</Card.Text>
-                                <Card.Text>{ new Date(d["ts"]).toUTCString() }</Card.Text>
-                                <Card.Text>License Plate: { d["license_plate"]}</Card.Text>
-                                <Card.Text>Notes: {d["notes"]}</Card.Text>
+                                <Card.Text>{ new Date(DOMPurify().sanitize(unescape(d["ts"]))).toUTCString() }</Card.Text>
+                                <Card.Text>License Plate: { DOMPurify().sanitize(unescape(d["license_plate"]))}</Card.Text>
+                                <Card.Text>Notes: {DOMPurify().sanitize(unescape(d["notes"]))}</Card.Text>
                             </Card.Body>
                             </Card>
                         </Col> 

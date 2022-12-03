@@ -6,6 +6,7 @@ import { useRef, useEffect, useState } from 'react';
 import mapboxgl from '!mapbox-gl';
 import MapboxDraw from "@mapbox/mapbox-gl-draw";
 import { supabase } from '../supabaseClient';
+import DOMPurify from 'dompurify';
 
 import Button from 'react-bootstrap/Button';
 // import {Form} from 'react-bootstrap';
@@ -271,12 +272,12 @@ const [violation, setViolation] = useState([]);
 
             console.log("inside map click")
             const coordinates = e.features[0].geometry.coordinates.slice();
-            const violation = e.features[0].properties.violation;
-            const timeViolationDate = (e.features[0].properties.time).slice(0,10);
+            const violation = DOMPurify().sanitize(unescape(e.features[0].properties.violation));
+            const timeViolationDate = DOMPurify().sanitize(unescape((e.features[0].properties.time).slice(0,10)));
             console.log(timeViolationDate)
-            const timeViolationTime = (e.features[0].properties.time).slice(11,19);
+            const timeViolationTime = DOMPurify().sanitize(unescape((e.features[0].properties.time).slice(11,19)));
             console.log(timeViolationTime)
-            const imageURL = e.features[0].properties.image_url;
+            const imageURL = DOMPurify().sanitize(unescape(e.features[0].properties.image_url));
 
             // console.log("typeof")
             // console.log(typeof(violation))

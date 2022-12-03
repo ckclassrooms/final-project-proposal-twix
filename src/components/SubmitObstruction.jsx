@@ -140,7 +140,7 @@ if(file_uploaded){
         const { data, error } = await supabase.functions.invoke('submit_violation_2', {
           body: JSON.stringify({
             "lat": jsonObj["lat"],
-            "lon": jsonObj["lat"],
+            "lon": jsonObj["lon"],
             "license_plate": jsonObj["license"],
             "metro_city": jsonObj["city"],
             "violation_type": jsonObj["violation"],
