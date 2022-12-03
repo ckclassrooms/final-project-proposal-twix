@@ -275,7 +275,6 @@ const [violation, setViolation] = useState([]);
             // console.log("typeof")
             // console.log(typeof(violation))
 
-
             while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
                 coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
             }
@@ -283,7 +282,7 @@ const [violation, setViolation] = useState([]);
             new mapboxgl.Popup()
                 .setLngLat(coordinates)
                 // eslint-disable-next-line
-                .setHTML("<strong>Violation reported at: </strong> <br/>" + timeViolationDate +"<br/>" + timeViolationTime + "<br/>" + "<strong>Vehicle Category: </strong><br/>" + violation + "<br/><img style=\"width:100px;height:100px;\" align = \"center\" src='"+ imageURL + "\'>")
+                .setHTML("<strong>Violation reported at: </strong> <br/>" + timeViolationDate +"<br/>" + timeViolationTime + " GMT" +"<br/>" + "<strong>Vehicle Category: </strong><br/>" + violation + "<br/><img style=\"width:100px;height:100px;\" align = \"center\" src='"+ imageURL + "\'>")
                 .addTo(map.current);
         });
         layer_exists = true
