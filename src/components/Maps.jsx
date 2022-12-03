@@ -9,6 +9,7 @@ import { supabase } from '../supabaseClient';
 
 import Button from 'react-bootstrap/Button';
 // import {Form} from 'react-bootstrap';
+import Multiselect from 'multiselect-react-dropdown';
 
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN
@@ -41,7 +42,15 @@ function Maps() {
   const lng = -87.64
   const lat = 41.87
   const zoom = 11
-
+  const violationTypes = [
+    'CONSTRUCTION_VEHICLE', 
+    "COMPANY",
+    "MUNICIPAL_VEHICLE",
+    "PRIVATE_VEHICLE",
+    "TAXI",
+    "OTHER"
+    ];
+const [violation, setViolation] = useState([]);
   // const [lng, setLng] = useState(-87.64);
   // const [lat, setLat] = useState(41.87);
   // const [zoom, setZoom] = useState(10);
@@ -56,6 +65,11 @@ function Maps() {
             center: [lng, lat],
             zoom: zoom
         });
+        map.current.loadImage(
+            "https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png",
+            (error, image) => {
+                if (error) throw error;
+                map.current.addImage('custom-marker', image);})
         map.current.on('load', () => {
             console.log('test map on load')
             setLoadedMap(true);
@@ -90,10 +104,13 @@ function Maps() {
         removeData()
       }
       else if(e.type==='draw.create'){
+        removeData()
         const poly = draw.getAll();
         const locArray = poly.features[0].geometry.coordinates[0];
         loadPolygonData(locArray)
         console.log("Draw .create called",locArray);
+        // layer_exists = true
+        console.log("layer_exists" + layer_exists)
         
       }
       else if(e.type==='draw.update'){
@@ -141,16 +158,25 @@ function Maps() {
         console.log("test 2")
     }
 
+    function changeViolationValue(valueArray) {
+        setViolation(valueArray);
+    }
+
+    function removeViolationValue(valueArray) {
+        setViolation(valueArray);
+    }
+
     // eslint-disable-next-line
     async function loadPolygonData(array){
+        removeData()
         var array_cat = []
         var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
         for (var i = 0; i < checkboxes.length; i++) {
             array_cat.push(checkboxes[i].value)
         }
         let payload = {"poly":array}
-        if(array_cat.length >0)
-        payload["cats"]=array_cat
+        console.log(violation.length);
+        if (violation.length > 0) payload["cats"] = violation
         console.log("payload of polygon",payload)
         const { data, error } = await supabase.functions.invoke('maps_polygon_1', {
             body: payload
@@ -162,6 +188,8 @@ function Maps() {
         
         loadMapWithData(data)
         layer_exists = true
+        console.log("test here")
+        console.log(layer_exists)
 
     }
 
@@ -186,21 +214,32 @@ function Maps() {
     }
 
     function removeData(){
-        if (layer_exists === true) {
-            map.current.removeLayer('points')
-            map.current.removeSource('points_source')
-            map.current.removeImage('custom-marker')
-            layer_exists = false;
-        }
+        // if (layer_exists === true) {
+            // map.current.removeLayer('points')
+            // map.current.removeSource('points_source')
+            // map.current.removeImage('custom-marker')
+            // layer_exists = false;
+            if (map.current.getLayer("points")) {
+                map.current.removeLayer("points");
+            }
+            
+            if (map.current.getSource("points_source")) {
+                map.current.removeSource("points_source");
+            }
+
+            // try{
+            // map.current.removeImage('custom-marker')
+            // }
+            // catch{
+            //     console.log("error in removing image")
+            // }
+            
+        // }
     }
 
     async function loadMapWithData(data){
         removeData()
-        map.current.loadImage(
-            'https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png',
-            (error, image) => {
-                if (error) throw error;
-                map.current.addImage('custom-marker', image);
+       
                 map.current.addSource('points_source', {
                     'type': 'geojson',
                     'data': data
@@ -226,7 +265,7 @@ function Maps() {
                 });
 
 
-            })
+            
         map.current.on('click', 'points', (e) => {
             // Copy coordinates array.
 
@@ -258,6 +297,8 @@ function Maps() {
     }
 
     function Map_gen() {
+        console.log("inisde map gen " + layer_exists)
+        removeData()
         console.log("bounds all")
         const curr_bounds = map.current.getBounds()
         console.log("ne-lang" + curr_bounds['_ne']['lng'])
@@ -288,27 +329,29 @@ function Maps() {
                 var lon1 = curr_bounds['_ne']['lat']
                 var lat2 = curr_bounds['_ne']['lng']
                 var lon2 = curr_bounds['_sw']['lat']
-                var data = await supabaseCall(lat1, lon1, lat2, lon2, array_cat)
+                // var data = await supabaseCall(lat1, lon1, lat2, lon2, array_cat)
+                var data = await supabaseCall(lat1, lon1, lat2, lon2, violation)
                 loadMapWithData(data)
+                // layer_exists = true
                 
             }
             (async () => await getMap())()
         }
     }
 
-    function toggleTrue(source) {
-        var checkboxes = document.getElementsByClassName("form-check-input")
-        for(var i=0, n=checkboxes.length;i<n;i++) {
-          checkboxes[i].checked = true;
-        }
-      }
+    // function toggleTrue(source) {
+    //     var checkboxes = document.getElementsByClassName("form-check-input")
+    //     for(var i=0, n=checkboxes.length;i<n;i++) {
+    //       checkboxes[i].checked = true;
+    //     }
+    //   }
     
-    function toggleFalse(source) {
-        var checkboxes = document.getElementsByClassName("form-check-input")
-        for(var i=0, n=checkboxes.length;i<n;i++) {
-          checkboxes[i].checked = false;
-        }
-    }
+    // function toggleFalse(source) {
+    //     var checkboxes = document.getElementsByClassName("form-check-input")
+    //     for(var i=0, n=checkboxes.length;i<n;i++) {
+    //       checkboxes[i].checked = false;
+    //     }
+    // }
     // })
 
     return (
@@ -323,12 +366,19 @@ function Maps() {
             {/* <style dangerouslySetInnerHTML={{__html: "\n  body { margin:0; padding:0; }\n  #map { position:absolute; top:50px; bottom:0; width:100%; }\n" }} /> */}
             <div class="col-lg">
 
-            <h5>Select the categories you want to view:</h5>
-            <Button style={{t: "30px"}} onClick={() => toggleTrue()}>Select All</Button>
-            &nbsp;&nbsp;&nbsp;
-            <Button onClick={() => toggleFalse()}>De-select All</Button>
-            <br/><br/>
-            <div className="form-check">
+            <h5>Select the filters you want to apply: <br/> (Default: All results will be displayed)</h5>
+            {/* <Button style={{t: "30px"}} onClick={() => toggleTrue()}>Select All</Button> */}
+            {/* &nbsp;&nbsp;&nbsp; */}
+            {/* <Button onClick={() => toggleFalse()}>De-select All</Button> */}
+            <br/>
+            <Multiselect class="form-select"
+                options={violationTypes}
+                selectedValues={violation}
+                onSelect= {(event) => changeViolationValue(event)}
+                onRemove={(event) => removeViolationValue(event)}
+                isObject={false}
+            />
+            {/* <div className="form-check">
                 <input className="form-check-input" type="checkbox" value="CONSTRUCTION_VEHICLE" id="o1" name = "checkmap" />
                 <label className="form-check-label">
                     CONSTRUCTION VEHICLE
@@ -358,7 +408,7 @@ function Maps() {
                 <label className="form-check-label">
                     OTHERS
                 </label>
-            </div>
+            </div> */}
             <br />
 
             <div><Button onClick={() => mylocation()} id="fly">Go to my location!</Button></div>
