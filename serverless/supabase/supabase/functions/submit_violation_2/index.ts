@@ -72,14 +72,14 @@ const incomingData = await req.json()
   const time = new Date().toISOString();
   const body ={ 
     "user_number": user_id ,
-    "violation_type": violation_type,
+    "violation_type": escape(violation_type),
     "lat":lat,
     "lon":lon,
-    "metro_city":metro_city,
-    "license_plate":license_plate,
+    "metro_city":escape(metro_city),
+    "license_plate":escape(license_plate),
     "ts":time,
-    "image_url":image_url,
-    "notes":notes
+    "image_url":escape(image_url),
+    "notes":escape(notes)
     }
   console.log("Payload body = ",body)
   const { error, data } = await supabase.rpc('insert_into_table',body); 
