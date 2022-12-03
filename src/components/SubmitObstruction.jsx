@@ -127,6 +127,7 @@ if(file_uploaded){
     }
     document.getElementById("submit_form").reset();
     document.getElementById('output').style.display = 'none';
+    window.location.replace("https://cool-conkies-80a0da.netlify.app/#/liveDb");
   }
 
   async function uploadDets(jsonObj) {
