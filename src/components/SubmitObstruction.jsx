@@ -2,63 +2,68 @@ import React from 'react';
 import { supabase } from '../supabaseClient';
 import { v4 as uuidv4 } from 'uuid';
 import { metroCities } from './metroCity';
-
+var file_uploaded=false
 function SubmitObstruction() {
   console.log("submit obstruction")
   const loadFile = function (event) {
     var output = document.getElementById('output');
     output.src = URL.createObjectURL(event.target.files[0]);
     output.onload = function () {
+      file_uploaded=true
       URL.revokeObjectURL(output.src)
     }
   }
   var file_incorrect = false
   const uploadImage = async (event) => {
+if(file_uploaded){
+  try {
+    var allowedExtension = ['jpeg', 'jpg', 'png'];
+    const file = document.getElementById('single').files[0]
+    const fileExt = file.name.split('.').pop().toLowerCase();
+    var isValidFile = false;
+    // console.log(fileExt)
+    const fileName = `${uuidv4().toString().replace(/-/g, "")}.${fileExt}`
+    const filePath1 = `public/violations/${fileName}`
+    console.log(`File ${filePath1}`)
+    let { error: uploadError } = await supabase.storage.from('bike-lane-1').upload(filePath1, file)
 
-    try {
-      var allowedExtension = ['jpeg', 'jpg', 'png'];
-      const file = document.getElementById('single').files[0]
-      const fileExt = file.name.split('.').pop().toLowerCase();
-      var isValidFile = false;
-      // console.log(fileExt)
-      const fileName = `${uuidv4().toString().replace(/-/g, "")}.${fileExt}`
-      const filePath1 = `public/violations/${fileName}`
-      console.log(`File ${filePath1}`)
-      let { error: uploadError } = await supabase.storage.from('bike-lane-1').upload(filePath1, file)
+    if (uploadError) {
+      console.log("Unable to upload ", uploadError)
+      throw uploadError
+    }
+    for (var index in allowedExtension) {
 
-      if (uploadError) {
-        console.log("Unable to upload ", uploadError)
-        throw uploadError
-      }
-      for (var index in allowedExtension) {
-
-        if (fileExt === allowedExtension[index]) {
-          isValidFile = true;
-          break;
-        }
-      }
-      if (!isValidFile) {
-
-        file_incorrect = true
-        throw Error('Allowed Extensions are : *.' + allowedExtension.join(', *.'));
-      }
-      else {
-        console.log("Upload complete")
-        const { data } = supabase
-          .storage
-          .from('bike-lane-1')
-          .getPublicUrl(filePath1)
-        console.log("image uploaded url = ", data)
-        return data["publicUrl"]
+      if (fileExt === allowedExtension[index]) {
+        isValidFile = true;
+        break;
       }
     }
-    catch (error) {
+    if (!isValidFile) {
 
-      console.log("Upload error", error)
-      throw error
-    } finally {
+      file_incorrect = true
+      alert('Allowed Extensions are : *.' + allowedExtension.join(', *.'))
+      throw Error("allowed extension");
+    }
+    else {
       console.log("Upload complete")
+      const { data } = supabase
+        .storage
+        .from('bike-lane-1')
+        .getPublicUrl(filePath1)
+      console.log("image uploaded url = ", data)
+      return data["publicUrl"]
     }
+  }
+  catch (error) {
+
+    console.log("Upload error", error)
+    alert("Image upload failed")
+    throw error
+  } finally {
+    console.log("Upload complete")
+  }
+}
+    
   }
   function getLocation() {
     const options = {
@@ -127,6 +132,7 @@ function SubmitObstruction() {
       console.log("jsonArray");
       console.log(jsonObj);
       console.log("Uploading image")
+      
       const imagePath = await uploadImage()
       console.log("upload complete with imagepath = ", imagePath)
       console.log("Making db call")
@@ -153,7 +159,7 @@ function SubmitObstruction() {
       }
     }
     catch (error) {
-      alert(error)
+      console.log(error)
     }
   }
     function generateOptions() {

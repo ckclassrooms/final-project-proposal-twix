@@ -10,6 +10,12 @@ const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey',
 }
+function errorResponse(msg:string,code:number){
+  return new Response(JSON.stringify({ error: msg }), {
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    status: code,
+  })
+}
 serve(async (req) => {
   
   if (req.method === 'OPTIONS') {
@@ -46,14 +52,29 @@ const incomingData = await req.json()
 
   if("lat" in incomingData && "lon" in incomingData){
     lat=incomingData["lat" as keyof typeof incomingData]
+
     lon=incomingData["lon" as keyof typeof incomingData]
+
+    if(lat>90 || lat<-90 || lon<-180 || lon>180)
+      return errorResponse("Latitude and longitude out of bounds",400);
   }
-  if("license_plate" in incomingData)
-    license_plate=incomingData["license_plate" as keyof typeof incomingData]
+  if("license_plate" in incomingData){
+    var lp=incomingData["license_plate" as keyof typeof incomingData]
+    if(lp.length()>10)
+      return errorResponse("License plate length too long. Keep it under 10",400)
+    license_plate=lp
+
+
+  }
   
   if("notes" in incomingData)
-    notes=incomingData["notes" as keyof typeof incomingData]
-  
+  {
+    var nt=incomingData["notes" as keyof typeof incomingData]
+    if(nt.length()>150)
+      nt=nt.substring(150);
+    notes=nt
+  }
+    
   if("image_url" in incomingData)
     image_url=incomingData["image_url" as keyof typeof incomingData]
 
@@ -78,7 +99,7 @@ const incomingData = await req.json()
     "metro_city":escape(metro_city),
     "license_plate":escape(license_plate),
     "ts":time,
-    "image_url":escape(image_url),
+    "image_url":image_url,
     "notes":escape(notes)
     }
   console.log("Payload body = ",body)
