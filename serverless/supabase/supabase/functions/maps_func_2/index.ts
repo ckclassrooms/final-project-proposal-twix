@@ -39,7 +39,7 @@ const createGeoJSON= (data1:object[])=> {
         }
       },
       "geometry": {
-        "coordinates": [obj["lat" as keyof typeof obj],obj["lon" as keyof typeof obj]],
+        "coordinates": [obj["lon" as keyof typeof obj],obj["lat" as keyof typeof obj]],
         "type": "Point"
       }
     }
