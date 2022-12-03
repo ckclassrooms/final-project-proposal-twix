@@ -1,7 +1,7 @@
 import React from 'react';
 import { supabase } from '../supabaseClient';
 import { v4 as uuidv4 } from 'uuid';
-import {metroCities} from './metroCity';
+import { metroCities } from './metroCity';
 
 function SubmitObstruction() {
   const loadFile = function (event) {
@@ -37,7 +37,7 @@ function SubmitObstruction() {
         }
       }
       if (!isValidFile) {
-        
+
         file_incorrect = true
         throw Error('Allowed Extensions are : *.' + allowedExtension.join(', *.'));
       }
@@ -52,7 +52,7 @@ function SubmitObstruction() {
       }
     }
     catch (error) {
-      
+
       console.log("Upload error", error)
       throw error
     } finally {
@@ -113,7 +113,7 @@ function SubmitObstruction() {
     console.log("Form data", payload)
     if (city !== "Select One" && violation !== "Select One") {
       uploadDets(payload)
-      
+
     } else {
       alert("Please fill all required values (marked with *)")
     }
@@ -122,7 +122,7 @@ function SubmitObstruction() {
   }
 
   async function uploadDets(jsonObj) {
-    try{
+    try {
       console.log("jsonArray");
       console.log(jsonObj);
       console.log("Uploading image")
@@ -151,21 +151,21 @@ function SubmitObstruction() {
         alert("Form Submited")
       }
     }
-    catch(error){
+    catch (error) {
       alert(error)
     }
     function generateOptions() {
-      const values =[];
-      metroCities.forEach(city => {values.push(<option>{city}</option>)})
+      const values = [];
+      metroCities.forEach(city => { values.push(<option>{city}</option>) })
       return values;
     }
     return (
-        <>
+      <>
         <div class="d-flex justify-content-center">
-        <form class="form-class" id="submit_form" style={{marginTop: "60px"}}>
+          <form class="form-class" id="submit_form" style={{ marginTop: "60px" }}>
             <div class="form-group">
-                <label for="violation-type" class="required" aria-required="true">Category *</label>
-                <select class="form-control" id="violation-type" required>
+              <label for="violation-type" class="required" aria-required="true">Category *</label>
+              <select class="form-control" id="violation-type" required>
                 <option value="" selected="">Select One</option>
                 <option>Construction</option>
                 <option>Company Vehicle</option>
@@ -173,44 +173,44 @@ function SubmitObstruction() {
                 <option>Private Owner Vehicle</option>
                 <option>Taxi / Uber / Lyft</option>
                 <option>Other  (damaged lane, snow, debris, pedestrian, etc.)</option>
-                </select>
+              </select>
             </div>
             <div class="form-group">
-            <label for="city-selector" class="required" aria-required="true">Metro city *</label>
-            <select class="form-control" id="city-selector" required>
-              {generateOptions()}
-            </select>
+              <label for="city-selector" class="required" aria-required="true">Metro city *</label>
+              <select class="form-control" id="city-selector" required>
+                {generateOptions()}
+              </select>
             </div>
             <div class="form-group">
-                <label for="geoLocation">Location</label>
-                <input type="text" class="form-control" id="geoLocation" value="" disabled/>
-                <button type="button" class="btn btn-primary" onClick={()=>getLocation()}>Get Location</button>
-                <span className='smallNote'>(The location might take sometime to load)</span>
-            </div> 
-            <div class="form-group">
-                <label for="exampleFormControlInput1">License Plate Number</label>
-                <input type="email" class="form-control" id="license_plate" placeholder="CD 80519"/>
+              <label for="geoLocation">Location</label>
+              <input type="text" class="form-control" id="geoLocation" value="" disabled />
+              <button type="button" class="btn btn-primary" onClick={() => getLocation()}>Get Location</button>
+              <span className='smallNote'>(The location might take sometime to load)</span>
             </div>
             <div class="form-group">
-                <label for="exampleFormControlTextarea1">Notes</label>
-                <textarea class="form-control" id="notes" rows="3"></textarea>
+              <label for="exampleFormControlInput1">License Plate Number</label>
+              <input type="email" class="form-control" id="license_plate" placeholder="CD 80519" />
             </div>
             <div class="form-group">
-                <input
-                  type="file"
-                  id="single"
-                  accept="image/*"
-                  onChange={loadFile}
-                /></div>
-                <div>
-                <img id="output" alt={"Preview"} style={{height:"200px" ,width:"200px"}} />
+              <label for="exampleFormControlTextarea1">Notes</label>
+              <textarea class="form-control" id="notes" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <input
+                type="file"
+                id="single"
+                accept="image/*"
+                onChange={loadFile}
+              /></div>
+            <div>
+              <img id="output" alt={"Preview"} style={{ height: "200px", width: "200px" }} />
             </div>
             <button type="button" class="btn btn-primary" onClick={submitButtonClick}>Submit</button>
-            
-        </form>
-      </div>
-    </>
-  )
-}
 
-export default SubmitObstruction
+          </form>
+        </div>
+      </>
+    )
+  }
+}
+  export default SubmitObstruction
