@@ -167,8 +167,19 @@ function Maps() {
         if (error != null){
             alert("Unable to fetch data from server.")
         }
+<<<<<<< HEAD
         
         
+=======
+        )
+        console.log(data)
+
+        if (error) {
+            console.log(error)
+            alert("Error in loading maps");
+        }
+
+>>>>>>> uichanges
         return data
     }
 

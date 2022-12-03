@@ -10,11 +10,11 @@ var file_uploaded=false
 function SubmitObstruction() {
 
   const [notes, setNotes] = useState('');
-  const [city, setCity] = useState('');
+  const [city, setCity] = useState('default');
   const [location, setLocation] = useState('');
-  const [violation, setViolation] = useState('');
-  const [licensePlate, setlicensePlate] = useState('');
-
+  const [violation, setViolation] = useState('default');
+  const [licensePlate, setLicensePlate] = useState('');
+  // var selectedCity = "default", selectedViolation="default";
   const loadFile = function (event) {
     output = document.getElementById('output');
     output.src = URL.createObjectURL(event.target.files[0]);
@@ -25,45 +25,46 @@ function SubmitObstruction() {
   }
   var file_incorrect = false
   const uploadImage = async (event) => {
-if(file_uploaded){
-  try {
-    var allowedExtension = ['jpeg', 'jpg', 'png'];
-    const file = document.getElementById('single').files[0]
-    const fileExt = file.name.split('.').pop().toLowerCase();
-    var isValidFile = false;
-    // console.log(fileExt)
-    const fileName = `${uuidv4().toString().replace(/-/g, "")}.${fileExt}`
-    const filePath1 = `public/violations/${fileName}`
-    console.log(`File ${filePath1}`)
-    let { error: uploadError } = await supabase.storage.from('bike-lane-1').upload(filePath1, file)
+  if (file_uploaded){
+    try {
+      var allowedExtension = ['jpeg', 'jpg', 'png'];
+      const file = document.getElementById('single').files[0]
+      const fileExt = file.name.split('.').pop().toLowerCase();
+      var isValidFile = false;
+      // console.log(fileExt)
+      const fileName = `${uuidv4().toString().replace(/-/g, "")}.${fileExt}`
+      const filePath1 = `public/violations/${fileName}`
+      console.log(`File ${filePath1}`)
+      let { error: uploadError } = await supabase.storage.from('bike-lane-1').upload(filePath1, file)
 
-    if (uploadError) {
-      console.log("Unable to upload ", uploadError)
-      throw uploadError
-    }
-    for (var index in allowedExtension) {
+      if (uploadError) {
+        console.log("Unable to upload ", uploadError)
+        throw uploadError
+      }
+      for (var index in allowedExtension) {
 
-      if (fileExt === allowedExtension[index]) {
-        isValidFile = true;
-        break;
+        if (fileExt === allowedExtension[index]) {
+          isValidFile = true;
+          break;
+        }
+      }
+      if (!isValidFile) {
+
+        file_incorrect = true
+        alert('Allowed Extensions are : *.' + allowedExtension.join(', *.'))
+        throw Error("allowed extension");
+      }
+      else {
+        console.log("Upload complete")
+        const { data } = supabase
+          .storage
+          .from('bike-lane-1')
+          .getPublicUrl(filePath1)
+        console.log("image uploaded url = ", data)
+        return data["publicUrl"]
       }
     }
-    if (!isValidFile) {
 
-      file_incorrect = true
-      alert('Allowed Extensions are : *.' + allowedExtension.join(', *.'))
-      throw Error("allowed extension");
-    }
-    else {
-      console.log("Upload complete")
-      const { data } = supabase
-        .storage
-        .from('bike-lane-1')
-        .getPublicUrl(filePath1)
-      console.log("image uploaded url = ", data)
-      return data["publicUrl"]
-    }
-  }
   catch (error) {
     console.log("Upload error", error)
     console.log(error)
@@ -114,13 +115,23 @@ if(file_uploaded){
       payload["license"] = licensePlate
 
     console.log("Form data", payload)
-    if (city !== "Select one city" && violation !== "Select one category") {
+    if (city !== "default" && violation !== "default") {
       uploadDets(payload)
 
     } else {
       alert("Please fill all required values (marked with *)")
     }
-    document.getElementById("submit_form").reset();
+    // document.getElementById("submit_form").reset();
+    setLocation('');
+    if (city !== "default") {
+      setCity("default");
+    }
+    if (violation !== "default") {
+      setViolation("default");
+    }
+  
+    setNotes('');
+    setLicensePlate('');
     // document.getElementById('output').style.display = 'none';
     // document.getElementById('output').reset();
     // document.getElementById("submit_form").reset();
@@ -133,6 +144,7 @@ if(file_uploaded){
 
   async function uploadDets(jsonObj) {
     try {
+      showLoader();
       console.log("jsonArray");
       console.log(jsonObj);
       console.log("Uploading image")
@@ -157,6 +169,8 @@ if(file_uploaded){
         console.log("data:");
         console.log(data);
         console.log("Update the UI to reflect status")
+        removeLoader();
+        resetForm();
       }
       if (file_incorrect !== true) {
         alert("Form Submited")
@@ -167,6 +181,10 @@ if(file_uploaded){
     }
   }
   
+  function resetForm() {
+
+  }
+
   function generateOptions() {
     const values = [];
     metroCities.forEach(city => { values.push(<option>{city}</option>) })
@@ -178,21 +196,38 @@ if(file_uploaded){
     violationTypes.forEach(city => { values.push(<option>{city}</option>) })
     return values;
   }
+
+  function showLoader() {
+    console.log("loader called");
+    document.getElementsByClassName("overlay")[0].classList.remove("hide");
+    document.getElementsByClassName("nav")[0].classList.add("hide");
+    document.getElementsByClassName("submit-obstruction")[0].classList.add("hide");
+  }
+
+  function removeLoader() {
+    document.getElementsByClassName("overlay")[0].classList.add("hide");
+    document.getElementsByClassName("nav")[0].classList.remove("hide");
+    document.getElementsByClassName("submit-obstruction")[0].classList.remove("hide");
+  }
+
     return (
       <>
-        <div class="d-flex justify-content-center">
+      <div class="overlay hide">
+        <div class="loader"></div>
+      </div>
+        <div class="submit-obstruction d-flex justify-content-center">
           <form class="form-class form-horizontal" id="submit_form" style={{ marginTop: "60px" }}>
             <div class="form-group">
               <label for="violation-type" class="required control-label" aria-required="true">Category *</label>
-              <select class="form-control" id="violation-type" onChange={(event) => setViolation(event.target.value)} required>
-                <option value="" disabled>Select one category</option>
+              <select class="form-control" value={violation} id="violation-type" onChange={(event) => setViolation(event.target.value)} required>
+                <option value="default" disabled selected>Select one category</option>
                 {generateViolationOptions()}
               </select>
             </div>
             <div class="form-group">
               <label for="city-selector" class="control-label required" aria-required="true">Metro city *</label>
-              <select class="form-control" id="city-selector" required onChange={(event => setCity(event.target.value))}>
-              <option value="" disabled>Select one city</option>
+              <select class="form-control" value={city} id="city-selector" required onChange={(event => setCity(event.target.value))}>
+              <option value="default" disabled selected>Select one city</option>
                 {generateOptions()}
               </select>
             </div>
@@ -204,11 +239,11 @@ if(file_uploaded){
             </div>
             <div class="form-group">
               <label for="exampleFormControlInput1">License Plate Number</label>
-              <input type="email" class="form-control" id="license_plate" onChange={(event => setlicensePlate(event.target.value))} placeholder="CD 80519" />
+              <input type="email" value={licensePlate} class="form-control" id="license_plate" onChange={(event => setLicensePlate(event.target.value))} placeholder="CD 80519" />
             </div>
             <div class="form-group">
               <label for="exampleFormControlTextarea1">Notes</label>
-              <textarea class="form-control" id="notes" rows="3" onChange={(event => setNotes(event.target.value))}></textarea>
+              <textarea value={notes} class="form-control" id="notes" rows="3" onChange={(event => setNotes(event.target.value))}></textarea>
             </div>
             <div class="form-group input">
               <input
@@ -222,7 +257,7 @@ if(file_uploaded){
               <img id="output" alt={"Preview"} style={{ height: "200px", width: "200px" }} />
             </div>
             
-            <button type="button" class="btn" onClick={submitButtonClick}>Submit</button>
+            <button type="button" class="btn submit" onClick={submitButtonClick}>Submit</button>
 
           </form>
         </div>

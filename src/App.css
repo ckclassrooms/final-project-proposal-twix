@@ -263,6 +263,14 @@ li i {
   margin-left: 30px;
 }
 
+.form-group .form-control:focus {
+  border-color: #3b488c;
+}
+
+#root select option:hover {
+  background-color: #031f4c;
+}
+
 #root .form-class option:active, #root .form-class option:hover {
   background-color: #3b488c;
 }
@@ -271,14 +279,53 @@ li i {
   margin-top: 10px;
 }
 
-.timeFilterValue input, .timeFilterValue button, .timeFilterValue label {
-  margin-left: 20px;
+.timeFilterValue input, .timeFilterValue button, .timeFilterValue label, .metroCityFilterValue .btn {
+  margin-left: 30px;
 }
 
 .wrapTimeInput {
   display: flex;
 }
 
-.filter-dropdown .dropdown-toggle::after {
+.filter-dropdown .dropdown-toggle, .filter-dropdown {
+  width: 150px;
+}
+
+.dropdown-toggle {
+  text-align: center;
+}
+
+.overlay {
+  position:fixed;
+  z-index:99999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.overlay.hide {
+  display: none;
+}
+
+.overlay .loader {
+  top: 50%;
+}
+.submit-obstruction.hide, .nav.hide{
+  opacity: 0.5;
+}
+
+.form-class .submit {
+  margin-top: 10px;
+}
+
+.dropdown-toggle {
+  text-align: left;
+}
+
+.form-group label {
+  font-weight: bold;
+}
+
+.gridContainer.hide{
   display: none;
 }

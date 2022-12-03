@@ -22,8 +22,8 @@ function LiveDb() {
     const [paginationNumber, setPaginationNumber] = useState(() => 0);
     const valueToFilter = {
         'violationType': "Violation type",
-        'time': "Time",
-        'metroCity': "Metro city",
+        'time': "Timestamp",
+        'metroCity': "Metro cities",
         'Filter': 'Filter'
     }
     const [filter, setFilter] = useState(() => ({"violation_type": [], "metro_city": [], ts1: '', ts2: ''}));
@@ -81,6 +81,7 @@ function LiveDb() {
             }
         }
         document.getElementsByClassName("loaderContainer")[0].classList.add("show");
+        document.getElementsByClassName("gridContainer")[0].classList.add("hide");
         const { data, error } = await supabase.functions.invoke('grid_func_1', {
             body: notEmpty ? JSON.stringify(requestData) : {}
           })
@@ -99,6 +100,7 @@ function LiveDb() {
           }
         document.getElementsByClassName("loaderContainer")[0].classList.remove("show");
         document.getElementsByClassName("loaderContainer")[0].classList.add("hide");
+        document.getElementsByClassName("gridContainer")[0].classList.remove("hide");
     }
 
       const onDropdownChange = function(e) {
@@ -165,8 +167,8 @@ function LiveDb() {
        <div class="filterDiv d-flex flex-md-row">
             <DropdownButton className="filter-dropdown" id="dropdown-item-button" title={ valueToFilter[filterText]} onSelect={(eventKey, event) => onDropdownChange(event)}>
                 <Dropdown.Item as="button" value="violationType"> Violation type</Dropdown.Item>
-                <Dropdown.Item as="button" value="time">Time</Dropdown.Item>
-                <Dropdown.Item as="button" value="metroCity">Metro city</Dropdown.Item>
+                <Dropdown.Item as="button" value="time">Timestamp</Dropdown.Item>
+                <Dropdown.Item as="button" value="metroCity">Metro cities</Dropdown.Item>
             </DropdownButton>
             <br/>
             <div className="filterValues">
