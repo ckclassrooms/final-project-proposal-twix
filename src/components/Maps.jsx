@@ -167,11 +167,7 @@ function Maps() {
         if (error != null){
             alert("Unable to fetch data from server.")
         }
-<<<<<<< HEAD
         
-        
-=======
-        )
         console.log(data)
 
         if (error) {
@@ -179,7 +175,6 @@ function Maps() {
             alert("Error in loading maps");
         }
 
->>>>>>> uichanges
         return data
     }
 
