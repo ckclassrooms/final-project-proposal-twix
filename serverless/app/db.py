@@ -5,14 +5,14 @@ import uuid
 import time
 
 import random
-'''
+
 conn = psycopg2.connect(
         host="localhost",
         port=54322,
         database="postgres",
         user="postgres",
         password="postgres")
-'''
+
 
 
 def dummy_op():
@@ -56,7 +56,7 @@ def insert_into_tables(violation,cur):
 
 violation_types = ['CONSTRUCTION_VEHICLE','COMPANY','MUNICIPAL_VEHICLE','PRIVATE_VEHICLE','TAXI','OTHER']
 license_plates = ['adn23','23ewfsd','343sf','353r4f','w43trfw3','','32rwed','23454rre']
-user_ids = ["1","2","3","4"]
+user_ids = ["1"]
 image_urls = ['https://dl.airtable.com/.attachmentThumbnails/f9540c659b6c59abdaba8daee2e85ec5/e9f2dec5',
                 'https://dl.airtable.com/.attachmentThumbnails/dfa2c32d7c63ce832dc87921b0096cb8/ac2afcb9',
                'https://dl.airtable.com/.attachmentThumbnails/279117eeb93bce6a27ae7b7e22382bef/80f3ea82',
@@ -67,7 +67,7 @@ image_urls = ['https://dl.airtable.com/.attachmentThumbnails/f9540c659b6c59abdab
 def fill_db():
         cur = conn.cursor()
         start_timestamp = datetime.now().timestamp()
-        metro_city='chicago'
+        metro_city=['chicago','bangalore']
         center_lon= 41.864586
         center_lat= -87.794463
         for i in range(100):
@@ -79,7 +79,7 @@ def fill_db():
                         "user_id":str(random.choice(user_ids)),
                         "violation_type":random.choice(violation_types),
                         "time_stamp":ts,
-                        "metro_city":metro_city,
+                        "metro_city":random.choice(metro_city),
                         "license_plate":random.choice(license_plates),
                         "notes":"dummy_notes",
                         "lat":lat,
