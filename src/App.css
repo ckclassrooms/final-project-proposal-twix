@@ -59,6 +59,10 @@ li {
   width: 1000px;
 }
 
+#root .container.pagination {
+  border: none;
+}
+
 .filterDiv {
   margin: 50px 0 10px 200px;
 }
@@ -147,4 +151,53 @@ li {
 .smallNote {
   margin-left: 5px;
   font-size: 12px;
+}
+
+.nav li.icons {
+  display: none;
+  margin-left: 23px;
+  margin-top: 6px;
+}
+
+li i {
+  color: white;
+  top: 10px;
+}
+
+.container.errorContainer.hide {
+  display: none;
+}
+.container.errorContainer {
+  border: none !important;
+  margin: auto;
+  width: 22%;
+}
+
+.errorContainer .error2 {
+  margin-left: 30px;
+}
+
+@media screen and (max-width: 600px) {
+  .nav li {display: none;}
+  .nav li.icons {
+    display: block;
+    /* font-size: 12px; */
+    margin-bottom: 5px;
+  }
+  .nav-pills.responsive {
+    display: block;
+    text-align: left;
+    height: auto;
+    /* font-size:12px; */
+  }
+  .nav-pills.responsive li.icons, .nav-pills li.icons {
+    margin-left: 22px !important;
+  }
+  /* .nav-pills.responsive li.icons, .nav-pills.responsive li button{
+    font-size: 12px;
+  } */
+  .nav-pills.responsive li, .nav-pills.responsive .ms-auto li {
+    display: block;
+    margin-left: 9px !important;
+  }
 }
