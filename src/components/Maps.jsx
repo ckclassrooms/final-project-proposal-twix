@@ -11,7 +11,7 @@ import DOMPurify from 'dompurify';
 import Button from 'react-bootstrap/Button';
 // import {Form} from 'react-bootstrap';
 import Multiselect from 'multiselect-react-dropdown';
-
+import {violationTypes} from './Violation';
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN
 // mapboxgl.accessToken = "pk.eyJ1Ijoibml0aXNoZGV3YW4iLCJhIjoiY2xhM2ZqcXlzMGFxZjNvbDRkMHFjOHBjYyJ9.d7qTDfI-UTq6QwfUxbsfZw"
@@ -43,14 +43,7 @@ function Maps() {
   const lng = -87.64
   const lat = 41.87
   const zoom = 11
-  const violationTypes = [
-    'CONSTRUCTION_VEHICLE', 
-    "COMPANY",
-    "MUNICIPAL_VEHICLE",
-    "PRIVATE_VEHICLE",
-    "TAXI",
-    "OTHER"
-    ];
+
 const [violation, setViolation] = useState([]);
   // const [lng, setLng] = useState(-87.64);
   // const [lat, setLat] = useState(41.87);

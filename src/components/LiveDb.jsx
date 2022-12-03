@@ -10,6 +10,7 @@ import Pagination from "react-bootstrap/Pagination";
 import Multiselect from 'multiselect-react-dropdown';
 import {metroCities} from './metroCity';
 import DOMPurify from 'dompurify';
+import {violationTypes} from './Violation';
 
 function LiveDb() {
     const [filterText, setFilterText] = useState(() => "Filter");
@@ -26,14 +27,6 @@ function LiveDb() {
         'Filter': 'Filter'
     }
     const [filter, setFilter] = useState(() => ({"violation_type": [], "metro_city": [], ts1: '', ts2: ''}));
-    const violationTypes = [
-            'CONSTRUCTION_VEHICLE', 
-            "COMPANY",
-            "MUNICIPAL_VEHICLE",
-            "PRIVATE_VEHICLE",
-            "TAXI",
-            "OTHER"
-        ];
     var [active, setActive] = useState(() => 1);
     var [smallGrid, setSmallGrid] = useState(() => []);
 
@@ -92,7 +85,10 @@ function LiveDb() {
             body: notEmpty ? JSON.stringify(requestData) : {}
           })
           if (error) {
-            console.log(error);
+            document.getElementsByClassName("loaderContainer")[0].classList.remove("show");
+            document.getElementsByClassName("loaderContainer")[0].classList.add("hide");
+            document.getElementsByClassName("errorContainer")[0].classList.remove("hide");
+            document.getElementsByClassName("errorContainer")[0].classList.add("show");
           }
           if (data && data.length > 0) {
             const newLiveData = [];
@@ -229,6 +225,10 @@ function LiveDb() {
                 <Pagination.Last onClick={() => {pagination(paginationNumber);}}/>
             </Pagination>
             </div>
+            <Container className="errorContainer hide">
+                <div class="error1">We have a problem in loading the data.</div>
+                <div class="error2">Please contact the administrator!</div>
+            </Container>
             <Container className="loaderContainer"><div class="loader"></div></Container>
             <Container className="gridContainer">
                     <Row xs={3}>{

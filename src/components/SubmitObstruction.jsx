@@ -2,6 +2,8 @@ import React from 'react';
 import { supabase } from '../supabaseClient';
 import { v4 as uuidv4 } from 'uuid';
 import { metroCities } from './metroCity';
+import { violationTypes } from './Violation';
+
 var file_uploaded=false
 function SubmitObstruction() {
   console.log("submit obstruction")
@@ -162,11 +164,18 @@ if(file_uploaded){
       console.log(error)
     }
   }
-    function generateOptions() {
-      const values = [];
-      metroCities.forEach(city => { values.push(<option>{city}</option>) })
-      return values;
-    }
+  
+  function generateOptions() {
+    const values = [];
+    metroCities.forEach(city => { values.push(<option>{city}</option>) })
+    return values;
+  }
+
+  function generateViolationOptions() {
+    const values = [];
+    violationTypes.forEach(city => { values.push(<option>{city}</option>) })
+    return values;
+  }
     return (
       <>
         <div class="d-flex justify-content-center">
@@ -174,13 +183,8 @@ if(file_uploaded){
             <div class="form-group">
               <label for="violation-type" class="required" aria-required="true">Category *</label>
               <select class="form-control" id="violation-type" required>
-                <option value="" selected="">Select One</option>
-                <option>Construction</option>
-                <option>Company Vehicle</option>
-                <option>Municipal Vehicle - including USPS</option>
-                <option>Private Owner Vehicle</option>
-                <option>Taxi / Uber / Lyft</option>
-                <option>Other  (damaged lane, snow, debris, pedestrian, etc.)</option>
+                <option value="" selected="">Select one category</option>
+                {generateViolationOptions()}
               </select>
             </div>
             <div class="form-group">
