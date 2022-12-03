@@ -8,6 +8,7 @@ import Multiselect from 'multiselect-react-dropdown';
 import { violationTypes } from './Violation';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import mapboxgl from '!mapbox-gl';
+import taxi from "./images/taxi.png"
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN
 
@@ -45,16 +46,21 @@ function Maps() {
             zoom: zoom
         });
 
-        map.current.loadImage(
-            "https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png",
-            (error, image) => {
-                if (error) throw error;
-                map.current.addImage('custom-marker', image);
-            })
+        const image = new Image(35,35);
+        image.src = taxi
+
+        // map.current.loadImage(
+        //     "https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png",
+        //     (error, image) => {
+        //         if (error) throw error;
+        //         map.current.addImage('custom-marker', image);
+        //     })
 
         map.current.on('load', () => {
             console.log('test map on load')
             setLoadedMap(true);
+
+            map.current.addImage('taxi-marker', image)
         })
         map.current.addControl(draw, 'top-left');
         map.current.on('draw.create', updateArea);
@@ -200,7 +206,7 @@ function Maps() {
             'type': 'symbol',
             'source': 'points_source',
             'layout': {
-                'icon-image': 'custom-marker',
+                'icon-image': 'taxi-marker',
                 // get the title name from the source's "title" property
                 'text-field': ['get', 'title'],
                 'text-font': [
