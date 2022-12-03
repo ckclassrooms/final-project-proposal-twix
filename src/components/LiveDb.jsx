@@ -164,7 +164,7 @@ function LiveDb() {
         <>
        <div class="filterDiv d-flex flex-md-row">
             <DropdownButton className="filter-dropdown" id="dropdown-item-button" title={ valueToFilter[filterText]} onSelect={(eventKey, event) => onDropdownChange(event)}>
-                <Dropdown.Item as="button" value="violationType">Violation type</Dropdown.Item>
+                <Dropdown.Item as="button" value="violationType"> Violation type</Dropdown.Item>
                 <Dropdown.Item as="button" value="time">Time</Dropdown.Item>
                 <Dropdown.Item as="button" value="metroCity">Metro city</Dropdown.Item>
             </DropdownButton>
@@ -172,12 +172,14 @@ function LiveDb() {
             <div className="filterValues">
                 {
                     filterText === 'time' ? <div className="timeFilterValue">
+                    <div class="wrapTimeInput">
                     <Form.Label>From</Form.Label>
                     <input type="datetime-local" class="form-control" value={time1} onChange={(event) => {setTime(event.target.value, 1)}}></input>
                     <br/>
                     <Form.Label>To</Form.Label>
                     <input type="datetime-local" class="form-control" value={time2} onChange={(event) => {setTime(event.target.value, 2)}}></input>
                     <br/>
+                    </div>
                     <Button variant="primary" onClick={(event) => onFilterButtonClicked()}>Filter</Button></div>: null
                 }
                 {
@@ -241,8 +243,8 @@ function LiveDb() {
                                 <Card.Text>Violation type: {DOMPurify().sanitize(unescape(d["violation_type"]))}</Card.Text>
                                 <Card.Text>Submitted:</Card.Text>
                                 <Card.Text>{ new Date(DOMPurify().sanitize(unescape(d["ts"]))).toUTCString() }</Card.Text>
-                                <Card.Text>License Plate: { DOMPurify().sanitize(unescape(d["license_plate"]))}</Card.Text>
-                                <Card.Text>Notes: {DOMPurify().sanitize(unescape(d["notes"]))}</Card.Text>
+                                <Card.Text>License Plate: { d["license_plate"] !== "null" ? DOMPurify().sanitize(unescape(d["license_plate"])): ''}</Card.Text>
+                                <Card.Text>Notes: {d["notes"] ? DOMPurify().sanitize(unescape(d["notes"])) : ''}</Card.Text>
                             </Card.Body>
                             </Card>
                         </Col> 

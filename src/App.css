@@ -9,7 +9,7 @@
 
 h3 a, h2 a {
   text-decoration: none !important;
-  color: blue !important;
+  color: #3b488c !important;
 }
 
 h3 a:hover, h2 a:hover {
@@ -24,8 +24,49 @@ li {
   margin-left: 25px;
 }
 
-.navbar, .container-fluid, .nav-pills{
-  background-color: #154c79;
+.navbar, .container-fluid, .nav-pills, .container button, #root .btn{
+  background-color: #031f4c;
+  border: #031f4c;
+  color: white;
+}
+
+#root .nav-pills {
+  height: 40px;
+}
+
+#root .nav-pills .nav-item:active, #root .nav-pills .nav-item:hover, #root .nav-pills .nav-link.active,
+.nav-item .btn:active, .nav-item .btn:hover, .container button:active, .container button:hover, 
+.multiSelectContainer .optionListContainer li:hover, .optionListContainer .highlightOption, 
+#root .btn:hover, #root .btn:active, #root select option:active {
+  background-color: #3b488c;
+  border-color: #3b488c;
+  color: white;
+}
+
+#root .nav-pills .nav-link {
+  border-radius: 0px;
+}
+
+.nav-item .btn {
+  background-color: #031f4c;
+  color: white;
+  height: 36px;
+  padding: 5px 15px 5px 15px;
+}
+
+.search-wrapper .chip, .pagination ul li.active, .pagination .active > .page-link{
+  background-color: #031f4c;
+  border-color: #031f4c;
+}
+
+.container ul li a.page-link {
+  color : #031f4c;
+}
+
+.filter-dropdown .dropdown-item.active, .filter-dropdown .dropdown-item:active {
+  background-color: #3b488c;
+  border-color: #3b488c;
+  color: white;
 }
 
 .form-class {
@@ -61,6 +102,8 @@ li {
 
 #root .container.pagination {
   border: none;
+  margin-top: 20px;
+  padding-top: 10px;
 }
 
 .filterDiv {
@@ -101,10 +144,10 @@ li {
 
 .loader {
   position: absolute;
-    left: 50%;
-  border: 16px solid #f3f3f3; /* Light grey */
-   border-top: 16px solid #3498db; /* Blue */
-   border-radius: 50%;
+  left: 50%;
+  border: 16px solid #f3f3f3;
+  border-top: 16px solid #031f4c;
+  border-radius: 50%;
   width: 120px;
   height: 120px;
   animation: spin 2s linear infinite;
@@ -157,6 +200,9 @@ li {
   display: none;
   margin-left: 23px;
   margin-top: 6px;
+  width: 30px;
+  height: 30px;
+  font-size: 22px;
 }
 
 li i {
@@ -199,5 +245,40 @@ li i {
   .nav-pills.responsive li, .nav-pills.responsive .ms-auto li {
     display: block;
     margin-left: 9px !important;
+    background-color: #031f4c;
   }
+}
+
+@media screen and (max-width: 800px) {
+  #root .nav-pills {
+    height: 64px;
+  }
+}
+
+.form-group label, .form-group button, .form-group input {
+  margin: 10px 10px;
+}
+
+.violationFilterValue button {
+  margin-left: 30px;
+}
+
+#root .form-class option:active, #root .form-class option:hover {
+  background-color: #3b488c;
+}
+
+.timeFilterValue label {
+  margin-top: 10px;
+}
+
+.timeFilterValue input, .timeFilterValue button, .timeFilterValue label {
+  margin-left: 20px;
+}
+
+.wrapTimeInput {
+  display: flex;
+}
+
+.filter-dropdown .dropdown-toggle::after {
+  display: none;
 }
