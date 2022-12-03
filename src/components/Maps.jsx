@@ -49,13 +49,6 @@ function Maps() {
         const image = new Image(35,35);
         image.src = taxi
 
-        // map.current.loadImage(
-        //     "https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png",
-        //     (error, image) => {
-        //         if (error) throw error;
-        //         map.current.addImage('custom-marker', image);
-        //     })
-
         map.current.on('load', () => {
             console.log('test map on load')
             setLoadedMap(true);
@@ -180,11 +173,6 @@ function Maps() {
     }
 
     function removeData() {
-        // if (layer_exists === true) {
-        // map.current.removeLayer('points')
-        // map.current.removeSource('points_source')
-        // map.current.removeImage('custom-marker')
-        // layer_exists = false;
         if (map.current.getLayer("points")) {
             map.current.removeLayer("points");
         }
