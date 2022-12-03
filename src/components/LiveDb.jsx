@@ -42,7 +42,7 @@ function LiveDb() {
     }, []);
 
     var pages = [];
-    const numOfDataPerPage = 40;
+    const numOfDataPerPage = 39;
     var indOfLastData = active * numOfDataPerPage;
     var indOfFirstData = indOfLastData - numOfDataPerPage;
     for (let number = 1; number <= paginationNumber; number++) {
@@ -239,7 +239,7 @@ function LiveDb() {
                                 <Card.Text>Metro city: {d["metro_city"]} </Card.Text>
                                 <Card.Text>Violation type: {d["violation_type"]}</Card.Text>
                                 <Card.Text>Submitted:</Card.Text>
-                                <Card.Text>{ d["ts"] }</Card.Text>
+                                <Card.Text>{ new Date(d["ts"]).toUTCString() }</Card.Text>
                                 <Card.Text>License Plate: { d["license_plate"]}</Card.Text>
                                 <Card.Text>Notes: {d["notes"]}</Card.Text>
                             </Card.Body>
