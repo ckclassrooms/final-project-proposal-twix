@@ -350,7 +350,7 @@ function Maps() {
     // })
 
     return (
-        <div class="container" style={{ marginTop: "60px" }}>
+        <div class="container-xxl" style={{ marginTop: "60px" ,width: "100%;"}}>
             <div class="row">
                 <meta charSet="utf-8" />
                 <title>Maps for BikeSpy</title>
@@ -359,7 +359,7 @@ function Maps() {
                 <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.2/mapbox-gl-draw.js"></script>
                 <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.2/mapbox-gl-draw.css" type="text/css"></link>
                 {/* <style dangerouslySetInnerHTML={{__html: "\n  body { margin:0; padding:0; }\n  #map { position:absolute; top:50px; bottom:0; width:100%; }\n" }} /> */}
-                <div class="col-xl">
+                <div class="col-12">
 
                     <h5>Select the filters you want to apply: <br /> (Default: All results will be displayed)</h5>
                     {/* <Button style={{t: "30px"}} onClick={() => toggleTrue()}>Select All</Button> */}
@@ -382,7 +382,7 @@ function Maps() {
                         <Button onClick={() => Map_gen()}>Load Map</Button>
                     </div>
                 </div>
-                <div class="col-xl" ref={mapContainer} id="map" />
+                <div class="col-12" ref={mapContainer} id="map" />
             </div>
         </div>
     );

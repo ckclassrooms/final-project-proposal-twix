@@ -47,7 +47,7 @@ serve(async (req) => {
       
       return escape(element);
     });
-      supabaseQuery.in('violation_type',v2)
+      supabaseQuery.contains('violation_type',v2)
     
     console.log("violations array ",v2)
   }
