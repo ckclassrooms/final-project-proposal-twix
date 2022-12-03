@@ -186,10 +186,12 @@ function SubmitObstruction() {
                   id="single"
                   accept="image/*"
                   onChange={loadFile}
-                />
-                <img id="output" alt={"Preview"} />
+                /></div>
+                <div>
+                <img id="output" alt={"Preview"} style={{height:"200px" ,width:"200px"}} />
             </div>
             <button type="button" class="btn btn-primary" onClick={submitButtonClick}>Submit</button>
+            
         </form>
         </div>
         </>
