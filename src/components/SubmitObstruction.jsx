@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { metroCities } from './metroCity';
 
 function SubmitObstruction() {
+  console.log("submit obstruction")
   const loadFile = function (event) {
     var output = document.getElementById('output');
     output.src = URL.createObjectURL(event.target.files[0]);
@@ -154,6 +155,7 @@ function SubmitObstruction() {
     catch (error) {
       alert(error)
     }
+  }
     function generateOptions() {
       const values = [];
       metroCities.forEach(city => { values.push(<option>{city}</option>) })
@@ -211,6 +213,6 @@ function SubmitObstruction() {
         </div>
       </>
     )
-  }
+  
 }
   export default SubmitObstruction
