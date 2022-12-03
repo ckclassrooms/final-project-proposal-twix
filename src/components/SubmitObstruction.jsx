@@ -4,11 +4,12 @@ import { v4 as uuidv4 } from 'uuid';
 import { metroCities } from './metroCity';
 import { violationTypes } from './Violation';
 
+var output = ""
 var file_uploaded=false
 function SubmitObstruction() {
   console.log("submit obstruction")
   const loadFile = function (event) {
-    var output = document.getElementById('output');
+    output = document.getElementById('output');
     output.src = URL.createObjectURL(event.target.files[0]);
     output.onload = function () {
       file_uploaded=true
@@ -59,6 +60,7 @@ if(file_uploaded){
   catch (error) {
 
     console.log("Upload error", error)
+    console.log(error)
     alert("Image upload failed")
     throw error
   } finally {
@@ -126,8 +128,14 @@ if(file_uploaded){
       alert("Please fill all required values (marked with *)")
     }
     document.getElementById("submit_form").reset();
-    document.getElementById('output').style.display = 'none';
+    // document.getElementById('output').style.display = 'none';
+    // document.getElementById('output').reset();
+    // document.getElementById("submit_form").reset();
     // window.location.replace("https://cool-conkies-80a0da.netlify.app/#/liveDb");
+    output = document.getElementById('output');
+    output.src = ""
+    URL.revokeObjectURL(output.src)
+    file_uploaded=false
   }
 
   async function uploadDets(jsonObj) {
@@ -214,10 +222,12 @@ if(file_uploaded){
                 id="single"
                 accept="image/*"
                 onChange={loadFile}
-              /></div>
-            <div>
+              />
+            </div>
+            <div class="form-group">
               <img id="output" alt={"Preview"} style={{ height: "200px", width: "200px" }} />
             </div>
+            
             <button type="button" class="btn btn-primary" onClick={submitButtonClick}>Submit</button>
 
           </form>
