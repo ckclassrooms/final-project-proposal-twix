@@ -9,6 +9,7 @@ import { supabase } from '../supabaseClient';
 
 import Button from 'react-bootstrap/Button';
 // import {Form} from 'react-bootstrap';
+import Multiselect from 'multiselect-react-dropdown';
 
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN
@@ -41,7 +42,15 @@ function Maps() {
   const lng = -87.64
   const lat = 41.87
   const zoom = 11
-
+  const violationTypes = [
+    'CONSTRUCTION_VEHICLE', 
+    "COMPANY",
+    "MUNICIPAL_VEHICLE",
+    "PRIVATE_VEHICLE",
+    "TAXI",
+    "OTHER"
+    ];
+const [violation, setViolation] = useState([]);
   // const [lng, setLng] = useState(-87.64);
   // const [lat, setLat] = useState(41.87);
   // const [zoom, setZoom] = useState(10);
@@ -149,6 +158,14 @@ function Maps() {
         console.log("test 2")
     }
 
+    function changeViolationValue(valueArray) {
+        setViolation(valueArray);
+    }
+
+    function removeViolationValue(valueArray) {
+        setViolation(valueArray);
+    }
+
     // eslint-disable-next-line
     async function loadPolygonData(array){
         removeData()
@@ -158,8 +175,8 @@ function Maps() {
             array_cat.push(checkboxes[i].value)
         }
         let payload = {"poly":array}
-        if(array_cat.length >0)
-        payload["cats"]=array_cat
+        console.log(violation.length);
+        if (violation.length > 0) payload["cats"] = violation
         console.log("payload of polygon",payload)
         const { data, error } = await supabase.functions.invoke('maps_polygon_1', {
             body: payload
@@ -312,7 +329,8 @@ function Maps() {
                 var lon1 = curr_bounds['_ne']['lat']
                 var lat2 = curr_bounds['_ne']['lng']
                 var lon2 = curr_bounds['_sw']['lat']
-                var data = await supabaseCall(lat1, lon1, lat2, lon2, array_cat)
+                // var data = await supabaseCall(lat1, lon1, lat2, lon2, array_cat)
+                var data = await supabaseCall(lat1, lon1, lat2, lon2, violation)
                 loadMapWithData(data)
                 // layer_exists = true
                 
@@ -353,7 +371,14 @@ function Maps() {
             {/* &nbsp;&nbsp;&nbsp; */}
             {/* <Button onClick={() => toggleFalse()}>De-select All</Button> */}
             <br/>
-            <div className="form-check">
+            <Multiselect class="form-select"
+                options={violationTypes}
+                selectedValues={violation}
+                onSelect= {(event) => changeViolationValue(event)}
+                onRemove={(event) => removeViolationValue(event)}
+                isObject={false}
+            />
+            {/* <div className="form-check">
                 <input className="form-check-input" type="checkbox" value="CONSTRUCTION_VEHICLE" id="o1" name = "checkmap" />
                 <label className="form-check-label">
                     CONSTRUCTION VEHICLE
@@ -383,7 +408,7 @@ function Maps() {
                 <label className="form-check-label">
                     OTHERS
                 </label>
-            </div>
+            </div> */}
             <br />
 
             <div><Button onClick={() => mylocation()} id="fly">Go to my location!</Button></div>

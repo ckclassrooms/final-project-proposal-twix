@@ -9,6 +9,13 @@ const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, content-type, x-client-info, apikey',
 }
+
+function errorResponse(msg:string,code:number){
+  return new Response(JSON.stringify({ error: msg }), {
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    status: code,
+  })
+}
 serve(async (req) => {
   const supabase = createClient(
     Deno.env.get("SUPABASE_URL") ?? "",
@@ -28,13 +35,21 @@ serve(async (req) => {
     );
 }
   const incomingData  = await req.json()
-
+  const violations = ['CONSTRUCTION_VEHICLE','COMPANY','MUNICIPAL_VEHICLE','PRIVATE_VEHICLE','TAXI','OTHER']
   const supabaseQuery = supabase
   .from('violations')
   .select('id,violation_type,user_id,ts,metro_city,license_plate,lat,lon,image_url');
 
   if(incomingData["violation_type" as keyof typeof incomingData]){
-    supabaseQuery.in('violation_type',incomingData["violation_type" as keyof typeof incomingData])
+    const violation_type= incomingData["violation_type" as keyof typeof incomingData]
+    
+    var v2=violation_type.map((element:string, index:number) => {
+      
+      return escape(element);
+    });
+      supabaseQuery.in('violation_type',v2)
+    
+    console.log("violations array ",v2)
   }
 
   if(incomingData["ts1" as keyof typeof incomingData] && incomingData["ts2" as keyof typeof incomingData] ){
@@ -50,17 +65,20 @@ serve(async (req) => {
       supabaseQuery.lte('ts',ts2)
     }
     else {
-      return new Response(JSON.stringify({ error: "Timestamp1 < timestamp2" }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 400,
-      })
+      errorResponse("Timestamp1 < timestamp2",400)
     }
   }
   if(incomingData["metro_city" as keyof typeof incomingData]){
-    supabaseQuery.in('metro_city',incomingData["metro_city" as keyof typeof incomingData])
+    const mc=incomingData["metro_city" as keyof typeof incomingData].map((element:string,index:number)=> {
+      return escape(element)
+    })
+    supabaseQuery.in('metro_city',mc)
   }
   if(incomingData["license_plate" as keyof typeof incomingData]){
-    supabaseQuery.in('license_plate',incomingData["license_plate" as keyof typeof incomingData])
+    const lp = incomingData["license_plate" as keyof typeof incomingData].map((element:string,index:number)=> {
+      return escape(element)
+    })
+    supabaseQuery.in('license_plate',lp)
   }
 
   supabaseQuery.order('ts',{ascending:false})
