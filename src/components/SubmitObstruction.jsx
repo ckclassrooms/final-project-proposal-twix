@@ -20,6 +20,11 @@ function SubmitObstruction() {
     const fileSize = event.target.files[0].size / 1024 / 1024; // in MiB
     if (fileSize > 5) {
     alert('File size exceeds 5 MiB');
+    const file =
+                document.getElementById('single');
+            file.value = '';
+    alert("File too large. File removed from form.")
+            
     return;
     // $(file).val(''); //for clearing with Jquery
     }
@@ -142,9 +147,8 @@ function SubmitObstruction() {
   
     setNotes('');
     setLicensePlate('');
-    document.getElementById('output').style.display = 'none';
-    // document.getElementById('output').reset();
-    document.getElementById("submit_form").reset();
+    
+    resetForm()
     // window.location.replace("https://cool-conkies-80a0da.netlify.app/#/liveDb");
     // output = document.getElementById('output');
     // output.src = ""
@@ -179,12 +183,11 @@ function SubmitObstruction() {
         console.log("data:");
         console.log(data);
         console.log("Update the UI to reflect status")
+        alert("Form Submited")
         removeLoader();
         resetForm();
       }
-      if (file_incorrect !== true) {
-        alert("Form Submited")
-      }
+     
     }
     catch (error) {
       console.log(error)
@@ -192,7 +195,14 @@ function SubmitObstruction() {
   }
   
   function resetForm() {
-
+    document.getElementById('city-selector').selectedIndex = null;
+    document.getElementById('output').style.display = 'inline';
+    output = document.getElementById('output');
+    output.src="";
+    const file =
+                document.getElementById('single');
+            file.value = '';
+    // document.getElementById("submit_form").reset();
   }
 
   function generateOptions() {
