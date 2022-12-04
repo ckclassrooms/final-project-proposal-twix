@@ -42,9 +42,14 @@ li {
   height: 40px;
 }
 
+.optionListContainer .highlightOption {
+  background-color: white;
+  color: black;
+}
+
 #root .nav-pills .nav-item:active, #root .nav-pills .nav-item:hover, #root .nav-pills .nav-link.active,
 .nav-item .btn:active, .nav-item .btn:hover, .container button:active, .container button:hover, 
-.multiSelectContainer .optionListContainer li:hover, .optionListContainer .highlightOption, 
+.multiSelectContainer .optionListContainer li:hover, 
 #root .btn:hover, #root .btn:active, #root select option:active {
   background-color: #3b488c;
   border-color: #3b488c;
@@ -86,12 +91,7 @@ li {
   margin-top: 150px;
 }
 
-.card:hover {
-  border:1px solid #3b488c;
-  box-shadow: 0 0 0 0.25rem rgb(59 72 140 / 25%);
-}
-
-.card:hover {
+.landingContainer .card:hover {
   border:1px solid #3b488c;
   box-shadow: 0 0 0 0.25rem rgb(59 72 140 / 25%);
 }
@@ -242,6 +242,7 @@ li i {
   display: none;
 }
 .container.errorContainer {
+  display: block;
   border: none !important;
   margin: auto;
   width: 22%;
