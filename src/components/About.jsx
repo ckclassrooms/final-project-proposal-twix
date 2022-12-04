@@ -83,7 +83,7 @@ function About() {
                         If the user is not logged in, they can navigate to the following pages:
                         <ul>
                             <li>
-                            <b>Live Database:</b> Displays a Grid View of all the obstructions reported in a paginated manner. This page also allows filtering the results based on Violation Type, Date of Violation, and City of reported Violation. The grid displays the city of violation, the violation type, and the date and time of the violation report. If the user has uploaded an image, submitted a license plate, and submitted the location, the same will be displayed as well.
+                            <b>Live Database:</b> Displays a Grid View of all the obstructions reported in a paginated manner. This page also allows filtering the results based on Violation Type, Date of Violation, and City of reported Violation. The grid displays the city of violation, the violation type, and the date and time of the violation report. If the user has uploaded an image and submitted a license plate, the same will be displayed as well.
                             </li>
                             <li>
                             <b>Maps View:</b> Visualizes the obstructions on a map. The obstructions are loaded based on the visible area of the map, and if the user changes the visible area/zooms in or out, the button 'Load Map' needs to be clicked to refresh the map to reload the violations in this new visible area. Users can click on violation markers to open a popup with details of the violation (including an image if submitted).
@@ -92,10 +92,10 @@ function About() {
                             <ul>
                                 <li>
                                 <b>Using Category Filter:</b> User can choose specific categories for which results need to be displayed by using multi-select options and clicking on 'Load Map' button.
-                                <i>Note that the user can fly the map to their current device location using the 'Go to my location!' button.</i>
+                                <em> Note that the user can fly the map to their current device location using the 'Go to my location!' button.</em>
                                 </li>
                                 <li>
-                                <b>Using polygon selector:</b> Results can be filtered by drawing a polygon, or moving a previously drawn polygon.
+                                <b>Using polygon selector:</b> Results can be filtered by drawing a polygon, or moving a previously drawn polygon. Further details are given in 'Beyond the declared scope' section below.
                                 </li>
                             </ul>
                             </li>
@@ -135,7 +135,7 @@ function About() {
                                 The user can start drawing a polygon by clicking the draw button (top left corner) and clicking on map for the first point. The further clicks on map will mark the vertices for the polygon until a double click on map. Once the polygon is completed, data corresponding to the points within the polygon will be loaded on the map.
                             </li>
                             <li>
-                                To remove the drawn polygon, the delete button (top left corner) can be pressed. Further details are given in 'Beyond the declared scope' section below.
+                                To remove the drawn polygon, the delete button (top left corner) can be pressed.
                             </li>
                             <li>
                                 The drawn polygon can also be moved around on the map by dragging. The data will be loaded dynamically once the polygon is moved to a new location.

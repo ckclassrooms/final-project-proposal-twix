@@ -7,28 +7,15 @@ App Deployment: https://cool-conkies-80a0da.netlify.app/
 ## Team Members:
 | Name                            | Net ID   |
 | ------------------------------- | -------- |
-| Nitish Dewan                    | ndewan2  |
 | Jeet Paresh Mehta               | jmehta27 |
 | Monisha Siddananda Sampath      | msidda2  |
+| Nitish Dewan                    | ndewan2  |
 | Sharath Bhargav                 | sbharg9  |
 
-## Objectives: 
-1. Users should be able to login via Email or an SSO.
-2. Once logged in, users should be able to submit a violation with required details using the form provided (including location).
-3. Users will be able to visualize all the violations submitted for an area and filter data as needed.
-4. Users can also visualize the violations on a map.
+## Final Checkpoint Updates:
+The final checkpoint updates and detailed instrcutions are available at the 'About' Page on our website.
 
-## Project Summary:
-The project involves a web application that allows users to report and submit the details of any Bike Lane violation. Violations mainly consist of a vehicle parked in the bike lane. The application also allows the user to submit images along with other details of violation. This data is stored in a database and can be accessed by any registered user using the interface provided. 
-
-In addition to the live database view, the data can also be visualized in an interactive map. 
-
-We envision the following security and privacy concerns when managing the user data for our application:
-- The location acquired from the device should be securely read and stored.
-- The authentication methods, SSO or User Sign-up, should be implemented securely.
-- All confidential data should be stored in hashed form, and not as plain-text.
-
-For the implementation, the following tech stack is being considered:
+For the implementation, the following tech stack is used:
 
 | Tech Stack   | Description |
 | -----------  | ----------- |
@@ -36,18 +23,3 @@ For the implementation, the following tech stack is being considered:
 | Frameworks   | React       |
 | Services     | Supabase    |
 | Database     | PostgreSQL, PostGIS|
-
-## MVP:
-Current milestones achieved:
-
-1. The front-end interface and basic functionality such as Navigation Bar, Form Control, layout and Access Control is setup.
-2. The user can login via GitHub OAuth which is routed via Supabase.
-3. At the back-end, the database, edge functions for data transmission to and from DB is setup.
-4. Maps page development is in progress.
-5. The image store with Supabaae is setup to accept input images via form and tag it to violation.
-
-Further Steps:
-1. Work on grid layout to make it dynamic based on data received from DB.
-2. Fix Mapbox conflicts and have the user visualize violations on Map, only for the visible area of map, controlled by corresponding events.
-
-Note: Few options such as 'Submit Obstruction' and 'Live DB' are accessible from Navigation Bar without login for testing purposes. Final version will have everything in Nav Bar locked under access control.

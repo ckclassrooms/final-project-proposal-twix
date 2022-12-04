@@ -257,18 +257,20 @@ function SubmitObstruction() {
               </select>
             </div>
             <div class="form-group">
-              <label for="geoLocation">Location</label>
+              <label for="geoLocation">Incident Location (Current)</label>
               <input type="text" class="form-control" id="geoLocation" value={location} disabled />
               <button type="button" class="btn" onClick={() => getLocation()}>Get Location</button>
-              <span className='smallNote'>(The location might take sometime to load)</span>
+              <span className='smallNote'>(Required to view the result on map. The location might take sometime to load.)</span>
             </div>
             <div class="form-group">
               <label for="exampleFormControlInput1">License Plate Number</label>
               <input type="email" value={licensePlate} class="form-control" maxlength="10" id="license_plate" onChange={(event => setLicensePlate(event.target.value))} placeholder="CD 80519" />
+              <span className='smallNote'>(Limit: 100 characters)</span>
             </div>
             <div class="form-group">
               <label for="exampleFormControlTextarea1">Notes</label>
               <textarea value={notes} class="form-control" id="notes" rows="3" maxlength="500" onChange={(event => setNotes(event.target.value))}></textarea>
+              <span className='smallNote'>(Limit: 100 characters)</span>
             </div>
             <div class="form-group input">
               <input
