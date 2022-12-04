@@ -92,10 +92,10 @@ function About() {
                             <ul>
                                 <li>
                                 <b>Using Category Filter:</b> User can choose specific categories for which results need to be displayed by using multi-select options and clicking on 'Load Map' button.
-                                <i>Note that the user can fly the map to their current device location using the 'Go to my location!' button.</i>
+                                <em> Note that the user can fly the map to their current device location using the 'Go to my location!' button.</em>
                                 </li>
                                 <li>
-                                <b>Using polygon selector:</b> Results can be filtered by drawing a polygon, or moving a previously drawn polygon.
+                                <b>Using polygon selector:</b> Results can be filtered by drawing a polygon, or moving a previously drawn polygon. Further details are given in 'Beyond the declared scope' section below.
                                 </li>
                             </ul>
                             </li>
@@ -135,7 +135,7 @@ function About() {
                                 The user can start drawing a polygon by clicking the draw button (top left corner) and clicking on map for the first point. The further clicks on map will mark the vertices for the polygon until a double click on map. Once the polygon is completed, data corresponding to the points within the polygon will be loaded on the map.
                             </li>
                             <li>
-                                To remove the drawn polygon, the delete button (top left corner) can be pressed. Further details are given in 'Beyond the declared scope' section below.
+                                To remove the drawn polygon, the delete button (top left corner) can be pressed.
                             </li>
                             <li>
                                 The drawn polygon can also be moved around on the map by dragging. The data will be loaded dynamically once the polygon is moved to a new location.
