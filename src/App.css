@@ -373,3 +373,8 @@ margin-left: 10px;
 .alert.hide {
   display: none;
 }
+
+.card-text b:hover {
+  text-decoration: underline !important;
+  cursor: pointer;
+}
