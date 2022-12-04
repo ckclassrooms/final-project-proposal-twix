@@ -9,6 +9,7 @@ import Multiselect from 'multiselect-react-dropdown';
 import {metroCities} from './metroCity';
 import DOMPurify from 'dompurify';
 import {violationTypes} from './Violation';
+import Alert from 'react-bootstrap/Alert';
 
 function LiveDb() {
     const [time1, setTime1] = useState(() => '');
@@ -79,10 +80,11 @@ function LiveDb() {
             body: notEmpty ? JSON.stringify(requestData) : {}
           })
           if (error) {
+            console.log("in error");
             document.getElementsByClassName("loaderContainer")[0].classList.remove("show");
             document.getElementsByClassName("loaderContainer")[0].classList.add("hide");
             document.getElementsByClassName("errorContainer")[0].classList.remove("hide");
-            document.getElementsByClassName("errorContainer")[0].classList.add("show");
+            console.log(document.getElementsByClassName("errorContainer")[0].classList);
           }
           if (data && data.length > 0) {
             const newLiveData = [];
@@ -90,10 +92,11 @@ function LiveDb() {
             setLiveData(newLiveData);
             setPaginationNumber(Math.floor(newLiveData.length/numOfDataPerPage) + 1);
             setSmallGrid(newLiveData.slice(indOfFirstData, indOfLastData));
+            document.getElementsByClassName("errorContainer")[0].classList.add("hide");
           }
         document.getElementsByClassName("loaderContainer")[0].classList.remove("show");
         document.getElementsByClassName("loaderContainer")[0].classList.add("hide");
-        document.getElementsByClassName("gridContainer")[0].classList.remove("hide");
+        document.getElementsByClassName("gridContainer")[0].classList.remove("hide")
     }
 
     function onFilterButtonClicked() {
@@ -214,8 +217,11 @@ function LiveDb() {
             </Pagination>
             </div>
             <Container className="errorContainer hide">
-                <div class="error1">We have a problem in loading the data.</div>
-                <div class="error2">Please contact the administrator!</div>
+                <Alert variant="danger">
+                    <p>
+                    We have a problem in loading the data.<br/>Please contact the administrator!
+                    </p>
+                </Alert>
             </Container>
             <Container className="loaderContainer"><div class="loader"></div></Container>
             <Container className="gridContainer">
