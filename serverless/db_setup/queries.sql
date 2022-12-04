@@ -1,35 +1,3 @@
-SELECT loc 
-FROM violations 
-WHERE ST_Covers(ST_Buffer(
- ST_GeogFromText('POINT(41.869507 -87.653015)'),
- 5, 'quad_segs=8'), violations.loc);
-
-
-SELECT ST_Buffer(
- ST_GeogFromText('POINT(41.869507 -87.653015)'),
- 5, 'quad_segs=8');
-
-
-SELECT ST_X(loc::geometry) as lat, ST_Y(loc::geometry)as lon
-FROM violations 
-WHERE ST_Covers(ST_Buffer(
- ST_GeogFromText('POINT( -87.653015 41.869507)'),
- 5, 'quad_segs=8'), violations.loc);
- 
-
-
-SELECT ST_X(loc::geometry) as lat, ST_Y(loc::geometry)as lon,loc
-FROM violations 
-WHERE ST_covers(
- ST_TRANSFORM(ST_MakePolygon(ST_GeomFromText('SRID=4326;LINESTRING(
-    -87.647589 41.869612, 
-    -87.642740  41.869950,
-    -87.642666  41.865633, 
-    -87.648841 41.865296, 
-    -87.647589 41.869612)')),4326),
-  st_transform(violations.loc::geometry,4326));
-
-
 
 --- Main function of maps page >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -73,7 +41,7 @@ select * from insert_into_table(1,'TAXI',22.02,22.02,'bangalore','sdds3','2022-1
 
 
 
---------- >>>>>>>>>>>>>>>>>>>>
+--------- >>>>>>>>>>>>>>>>>>>> Polygon function
 CREATE OR REPLACE FUNCTION polygon_map("locs" text,cats text[])
 returns TABLE(lat double precision, lon double precision,id integer,violation_type text,ts timestamp, image_url text) 
   LANGUAGE sql AS
@@ -87,58 +55,10 @@ $func$;
 
 
 
+-- ><>>>>>>>>>>>>>>>>>>>>>>>>>> Grid function
 
 
--- >>>>>>>>>>>>>>>>>>>>>>>
-
-
-
-
-
-CREATE OR REPLACE FUNCTION poly_test("locs" text)
-returns geometry
-  LANGUAGE sql AS
-$func$
-SELECT 
- ST_Polygon(ST_GeomFromText(locs),4326);
-$func$;
-
-
-select * from poly_test('SRID=4326;LINESTRING(-87.651769 41.880070,-87.647589 41.869612,-87.651769 41.780070,-87.651769 41.880070)')
-
-
-select * from polygon_map('SRID=4326;LINESTRING(-87.659934 41.880217,-87.633329 41.879729,-87.639035 41.861947,-87.683181 41.843282,-87.659934 41.880217)',['TAXI'])
-
-
-select * from get_points1(-87.651769,
-     41.880070,
-    -87.647589,
-    41.869612,array['TAXI'])
-
-
-
--- ><>>>>>>>>>>>>>>>>>>>>>>>>>>
-CREATE OR REPLACE FUNCTION test3(cats text[],cities text[])
-returns TABLE(lat double precision, lon double precision,violation_type varchar(100)) 
-  AS
-$$
-DECLARE 
-condition_string1 VARCHAR ;
-BEGIN
-condition_string1 := 'v.user_id is not null';
-IF array_length(cats, 1) > 0 then
-    condition_string1 := condition_string1 || ' and v.violation_type = Any($1)';
-end if;
- return query execute format('
-SELECT v.lat as lat, v.lon as lon,v.violation_type
-FROM   violations v
-WHERE %s;':: text , condition_string1) using cats;
-end;
-$$ language plpgsql ;
-
-
-
-CREATE OR REPLACE FUNCTION grid_func_stored(cats text[],cities text[],ts1 timestamp,ts2 timestamp)
+CREATE OR REPLACE FUNCTION grid_func_stored("cats" text[],"cities" text[],"ts1" timestamp,"ts2" timestamp)
 returns TABLE(lat double precision, lon double precision,violation_type varchar(100),ts TIMESTAMP,
   metro_city VARCHAR(100),
   license_plate VARCHAR(100),
@@ -163,6 +83,6 @@ end IF;
  return query execute format('
 SELECT v.lat as lat, v.lon as lon,v.violation_type,v.ts,v.metro_city,v.license_plate,v.image_url
 FROM   violations v
-WHERE %s;':: text , condition_string1) using cats,cities;
+WHERE %s order by v.ts desc;':: text , condition_string1) using cats,cities;
 end;
 $$ language plpgsql ;
