@@ -133,11 +133,7 @@ function About() {
             </p>
             <h2>Notable Highlights</h2>
             <p>
-                <ol>
-                    <li>
-                        <b>PostGIS:</b>
-                    </li>
-                </ol>
+                <b>PostGIS:</b> PostGIS is an extension for PostGres database, which allows us to manage spatial data effectivly. This has been extensively used for our application.
             </p>
             
             <h2>Additional Points to Note:</h2>
@@ -146,6 +142,7 @@ function About() {
                     <li>Get Location for 'Submit Obstruction' page might not work on some browsers.</li>
                     <li>On 'Maps' page, the user is limited to draw only one polygon at a time. This is a limitation introduced due to time constraints. </li>
                     <li> In both 'Maps' and 'LiveDB' page, more filters can be introduced in the future. This again has not been added due to time contraints and is a not a feature expected in a MVP. </li>
+                    <li>In future, user will be able to choose a location from a visible map while submitting an obstruction.</li>
                     <li>The 'Submit Obstruction' page allows us to choose a city from dropdown, while the location is picked up from browser. This mismatch will be handled in future scope where location and city are both disabled, and city will be fetched from location only.</li>
                 </ol>
             </p>
