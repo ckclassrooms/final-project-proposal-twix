@@ -144,12 +144,12 @@ function About() {
                 </ol>
             </p>
             </div>
-            <a target="_blank" href="https://icons8.com/icon/gMxh4liv8Mjt/car-roof-box">Car Roof Box</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
-            <a target="_blank" href="https://icons8.com/icon/36496/garbage-truck">Garbage Truck</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
-            <a target="_blank" href="https://icons8.com/icon/88269/taxi-waiting">Taxi Waiting</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
-            <a target="_blank" href="https://icons8.com/icon/40316/vehicle-insurance">Vehicle Insurance</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
-            <a target="_blank" href="https://icons8.com/icon/9342/construction">Construction</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
-            <a target="_blank" href="https://icons8.com/icon/1510/multiply">Multiply</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+            <a  href="https://icons8.com/icon/gMxh4liv8Mjt/car-roof-box">Car Roof Box</a> icon by <a  href="https://icons8.com">Icons8</a>
+            <a  href="https://icons8.com/icon/36496/garbage-truck">Garbage Truck</a> icon by <a  href="https://icons8.com">Icons8</a>
+            <a  href="https://icons8.com/icon/88269/taxi-waiting">Taxi Waiting</a> icon by <a  href="https://icons8.com">Icons8</a>
+            <a  href="https://icons8.com/icon/40316/vehicle-insurance">Vehicle Insurance</a> icon by <a  href="https://icons8.com">Icons8</a>
+            <a  href="https://icons8.com/icon/9342/construction">Construction</a> icon by <a href="https://icons8.com">Icons8</a>
+            <a  href="https://icons8.com/icon/1510/multiply">Multiply</a> icon by <a  href="https://icons8.com">Icons8</a>
         </>
     )
 }
