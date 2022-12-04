@@ -164,7 +164,7 @@ function Maps() {
         }
         let payload = { "poly": array }
         if (violation.length > 0) payload["cats"] = violation
-
+        console.log("Load polygon payload",payload)
         const { data, error } = await supabase.functions.invoke('maps_polygon_1', {
             body: payload
         }
