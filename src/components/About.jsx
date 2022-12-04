@@ -67,7 +67,7 @@ function About() {
             </p>
             <p><b>Note:</b> Few options such as 'Submit Obstruction' and 'Live DB' are accessible from Navigation Bar without login for testing purposes. Final version will have everything in Nav Bar locked under access control.</p> */}
 
-            <b>Screen Recording</b> for Map functionality is available at: https://drive.google.com/file/d/1AfR38DTZelBwhIaMGG6bmJID3pu87_RN/view?usp=share_link
+            <b>Screen Recording</b> for Map functionality is available at: <a href="https://drive.google.com/file/d/1AfR38DTZelBwhIaMGG6bmJID3pu87_RN/view?usp=share_link">Drive link</a>
             <br/><br/>
 
             <h2>Application Functionality:</h2>
