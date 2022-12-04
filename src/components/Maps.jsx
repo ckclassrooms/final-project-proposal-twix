@@ -72,7 +72,6 @@ function Maps() {
         private_image.src = private_vehicle
 
         map.current.on('load', () => {
-            console.log('test map on load')
             setLoadedMap(true);
 
             map.current.addImage('taxi-marker', taxi_image)
@@ -114,14 +113,11 @@ function Maps() {
             const poly = draw.getAll();
             const locArray = poly.features[0].geometry.coordinates[0];
             loadPolygonData(locArray)
-            console.log("Draw .create called", locArray);
-            console.log("layer_exists" + layer_exists)
         }
         else if (e.type === 'draw.update') {
             const poly = draw.getAll();
             const locArray = poly.features[0].geometry.coordinates[0];
             loadPolygonData(locArray)
-            console.log("draw.update called", locArray);
         }
     }
 
@@ -196,8 +192,6 @@ function Maps() {
         if (error != null){
             alert("Unable to fetch data from server.")
         }
-        
-        console.log(data)
 
         if (error) {
             console.log(error)
@@ -257,7 +251,7 @@ function Maps() {
         });
 
         map.current.on('click', 'points', (e) => {
-            console.log("inside map click")
+            
             const coordinates = e.features[0].geometry.coordinates.slice();
             const violation = e.features[0].properties.violation;
             const timeViolationDate = (e.features[0].properties.time).slice(0, 10);
