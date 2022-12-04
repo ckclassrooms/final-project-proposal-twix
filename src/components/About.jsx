@@ -12,16 +12,16 @@ function About() {
                 <h4>Team Members:</h4>
                 <ul>
                     <li>
-                        Monisha Siddananda Sampath
+                        Jeet Mehta 
                     </li>
                     <li>
-                        Sharath S Bhargav
+                        Monisha Siddananda Sampath
                     </li>
                     <li>
                         Nitish Dewan
                     </li>
                     <li>
-                        Jeet Mehta 
+                        Sharath S Bhargav
                     </li>
                 </ul>
                 <br/>
