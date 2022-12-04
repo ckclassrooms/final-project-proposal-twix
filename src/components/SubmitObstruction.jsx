@@ -257,10 +257,10 @@ function SubmitObstruction() {
               </select>
             </div>
             <div class="form-group">
-              <label for="geoLocation">Location</label>
+              <label for="geoLocation">Incident Location (Current)</label>
               <input type="text" class="form-control" id="geoLocation" value={location} disabled />
               <button type="button" class="btn" onClick={() => getLocation()}>Get Location</button>
-              <span className='smallNote'>(The location might take sometime to load)</span>
+              <span className='smallNote'>(Required to view the result on map. The location might take sometime to load.)</span>
             </div>
             <div class="form-group">
               <label for="exampleFormControlInput1">License Plate Number</label>

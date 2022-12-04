@@ -83,7 +83,7 @@ function About() {
                         If the user is not logged in, they can navigate to the following pages:
                         <ul>
                             <li>
-                            <b>Live Database:</b> Displays a Grid View of all the obstructions reported in a paginated manner. This page also allows filtering the results based on Violation Type, Date of Violation, and City of reported Violation. The grid displays the city of violation, the violation type, and the date and time of the violation report. If the user has uploaded an image, submitted a license plate, and submitted the location, the same will be displayed as well.
+                            <b>Live Database:</b> Displays a Grid View of all the obstructions reported in a paginated manner. This page also allows filtering the results based on Violation Type, Date of Violation, and City of reported Violation. The grid displays the city of violation, the violation type, and the date and time of the violation report. If the user has uploaded an image and submitted a license plate, the same will be displayed as well.
                             </li>
                             <li>
                             <b>Maps View:</b> Visualizes the obstructions on a map. The obstructions are loaded based on the visible area of the map, and if the user changes the visible area/zooms in or out, the button 'Load Map' needs to be clicked to refresh the map to reload the violations in this new visible area. Users can click on violation markers to open a popup with details of the violation (including an image if submitted).
