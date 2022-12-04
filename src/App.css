@@ -373,3 +373,11 @@ margin-left: 10px;
 .alert.hide {
   display: none;
 }
+
+.alertContainer, .successAlertContainer {
+  margin-top: 10px;
+}
+
+.alertContainer.hide, .successAlertContainer.hide  {
+  display: none;
+}

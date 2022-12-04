@@ -8,7 +8,7 @@ import Multiselect from 'multiselect-react-dropdown';
 import { violationTypes } from './Violation';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import mapboxgl from '!mapbox-gl';
-
+import Alert from 'react-bootstrap/Alert';
 // imports for custom markers
 import taxi from "./images/taxi.png"
 import company from "./images/company.png"
@@ -39,7 +39,7 @@ function Maps() {
     const lng = -87.64
     const lat = 41.87
     const zoom = 11
-
+    const [alertValue, setAlertValue] = useState('');
     const [violation, setViolation] = useState([]);
 
     var layer_exists = false
@@ -208,12 +208,14 @@ function Maps() {
             body: payload
         })
         if (error != null){
-            alert("Unable to fetch data from server.")
+            setAlertValue("Unable to fetch data from server.");
+            document.getElementsByClassName("alertContainer")[0].classList.remove("hide");
         }
 
         if (error) {
             console.log(error)
-            alert("Error in loading maps");
+            setAlertValue("Error in loading maps");
+            document.getElementsByClassName("alertContainer")[0].classList.remove("hide");
         }
 
         return data
@@ -348,6 +350,13 @@ function Maps() {
                     <div id="button">
                         <Button onClick={() => Map_gen()}>Load Map</Button>
                     </div>
+                    <div class="alertContainer hide">
+                    <Alert variant="danger" onClose={() => document.getElementsByClassName("alertContainer")[0].classList.add("hide")} dismissible>
+                            <p>
+                            {alertValue}
+                            </p>
+                        </Alert>
+              </div>
                     <br/>
                 </div>
                 <div class="col-12" ref={mapContainer} id="map" />

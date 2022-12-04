@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { metroCities } from './metroCity';
 import { violationTypes } from './Violation';
 import { useState } from "react";
+import Alert from 'react-bootstrap/Alert';
 
 var output = ""
 var file_uploaded=false
@@ -14,16 +15,19 @@ function SubmitObstruction() {
   const [location, setLocation] = useState('');
   const [violation, setViolation] = useState('default');
   const [licensePlate, setLicensePlate] = useState('');
+  const [alertValue, setAlertValue] = useState('');
 
   const loadFile = function (event) {
     output = document.getElementById('output');
     const fileSize = event.target.files[0].size / 1024 / 1024; // in MiB
     if (fileSize > 5) {
-    alert('File size exceeds 5 MiB');
+      setAlertValue('File size exceeds 5 MiB');
+      showAlert();
     const file =
                 document.getElementById('single');
             file.value = '';
-    alert("File too large. File removed from form.")
+            setAlertValue("File too large. File removed from form.");
+    showAlert();
             
     return;
     // $(file).val(''); //for clearing with Jquery
@@ -66,7 +70,8 @@ function SubmitObstruction() {
       if (!isValidFile) {
 
         file_incorrect = true
-        alert('Allowed Extensions are : *.' + allowedExtension.join(', *.'))
+        setAlertValue('Allowed Extensions are : *.' + allowedExtension.join(', *.'));
+        showAlert();
         throw Error("allowed extension");
       }
       else {
@@ -83,7 +88,8 @@ function SubmitObstruction() {
   catch (error) {
     console.log("Upload error", error)
     console.log(error)
-    alert("Image upload failed")
+    setAlertValue("Image upload failed");
+    showAlert()
     removeLoader(); // changed
     throw error
   } finally {
@@ -134,7 +140,8 @@ function SubmitObstruction() {
       uploadDets(payload)
 
     } else {
-      alert("Please fill all required values (marked with *)")
+      setAlertValue("Please fill all required values (marked with *)");
+      showAlert();
     }
     // document.getElementById("submit_form").reset();
     setLocation('');
@@ -180,7 +187,8 @@ function SubmitObstruction() {
         })
         if (error) {
           console.log(error);
-          alert("Upload failed.")
+          setAlertValue("Upload failed.");
+          showAlert();
           removeLoader();
           resetForm();
           return;
@@ -188,7 +196,7 @@ function SubmitObstruction() {
         console.log("data:");
         console.log(data);
         console.log("Update the UI to reflect status")
-        alert("Form Submited")
+        document.getElementsByClassName("successAlertContainer")[0].classList.remove("hide");
         removeLoader();
         resetForm();
       }
@@ -235,6 +243,14 @@ function SubmitObstruction() {
     document.getElementsByClassName("submit-obstruction")[0].classList.remove("hide");
   }
 
+  function showAlert() {
+    console.log(document.getElementsByClassName("alertContainer"));
+    document.getElementsByClassName("alertContainer")[0].classList.remove("hide");
+  }
+
+  function hideAlert() {
+    document.getElementsByClassName("alertContainer")[0].classList.add("hide");
+  }
     return (
       <>
       <div class="overlay hide">
@@ -281,9 +297,21 @@ function SubmitObstruction() {
             <div class="form-group">
               <img id="output" alt={"Preview"} style={{ height: "200px", width: "200px" }} />
             </div>
-            
+            <div class="alertContainer hide">
+              <Alert variant="danger" onClose={hideAlert()} dismissible>
+                    <p>
+                    {alertValue}
+                    </p>
+                </Alert>
+              </div>
+            <div class="successAlertContainer hide">
+            <Alert variant="success" onClose={()=> {document.getElementsByClassName("successAlertContainer")[0].classList.add("hide");}} dismissible>
+                  <p>
+                  "Form submitted"
+                  </p>
+              </Alert>
+            </div>
             <button type="button" class="btn submit" onClick={submitButtonClick}>Submit</button>
-
           </form>
         </div>
       </>
