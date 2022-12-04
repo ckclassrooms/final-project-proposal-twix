@@ -118,12 +118,22 @@ li {
   display: none;
 }
 
+.filterValues {
+  margin-left: 11%;
+}
+
 .filterValues div {
   margin-left: 10px;
 }
 
+.filterValues label {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
 .filterValues button {
   margin-top: 10px;
+  margin-left: 38px;
 }
 
 .dropdown {
@@ -275,14 +285,25 @@ li i {
   background-color: #3b488c;
 }
 
+.timeFilterValue, .metroCityFilterValue, .violationFilterValue {
+  margin-top: 10px;
+}
+
+.metroCityFilterValue label, .violationFilterValue label{
+  margin-left: 25px;
+}
+
 .timeFilterValue label {
   margin-top: 10px;
 }
 
-.timeFilterValue input, .timeFilterValue button, .timeFilterValue label, .metroCityFilterValue .btn {
+.timeFilterValue button, .timeFilterValue label, .metroCityFilterValue .btn {
   margin-left: 30px;
 }
 
+.timeFilterValue input {
+margin-left: 10px;
+}
 .wrapTimeInput {
   display: flex;
 }
@@ -327,5 +348,9 @@ li i {
 }
 
 .gridContainer.hide{
+  display: none;
+}
+
+.alert.hide {
   display: none;
 }

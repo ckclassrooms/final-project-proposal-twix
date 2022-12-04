@@ -1,8 +1,6 @@
 import React from 'react';
 import {supabase} from '../supabaseClient';
 import { Col, Container, Row, Card } from 'react-bootstrap';
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
 import Button from 'react-bootstrap/Button';
 import {Form} from 'react-bootstrap';
 import { useState, useEffect } from "react";
@@ -13,19 +11,12 @@ import DOMPurify from 'dompurify';
 import {violationTypes} from './Violation';
 
 function LiveDb() {
-    const [filterText, setFilterText] = useState(() => "Filter");
     const [time1, setTime1] = useState(() => '');
     const [time2, setTime2] = useState(() => '');
     const [city, setCity] = useState(() => '');
     const [liveData, setLiveData] = useState(() => []);
     const [violation, setViolation] = useState([]);
     const [paginationNumber, setPaginationNumber] = useState(() => 0);
-    const valueToFilter = {
-        'violationType': "Violation type",
-        'time': "Timestamp",
-        'metroCity': "Metro cities",
-        'Filter': 'Filter'
-    }
     const [filter, setFilter] = useState(() => ({"violation_type": [], "metro_city": [], ts1: '', ts2: ''}));
     var [active, setActive] = useState(() => 1);
     var [smallGrid, setSmallGrid] = useState(() => []);
@@ -103,10 +94,6 @@ function LiveDb() {
         document.getElementsByClassName("gridContainer")[0].classList.remove("hide");
     }
 
-      const onDropdownChange = function(e) {
-        setFilterText(e.target.value);
-    }
-
     function onFilterButtonClicked() {
         getGrid(filter);
     }
@@ -165,15 +152,9 @@ function LiveDb() {
     return (
         <>
        <div class="filterDiv d-flex flex-md-row">
-            <DropdownButton className="filter-dropdown" id="dropdown-item-button" title={ valueToFilter[filterText]} onSelect={(eventKey, event) => onDropdownChange(event)}>
-                <Dropdown.Item as="button" value="violationType"> Violation type</Dropdown.Item>
-                <Dropdown.Item as="button" value="time">Timestamp</Dropdown.Item>
-                <Dropdown.Item as="button" value="metroCity">Metro cities</Dropdown.Item>
-            </DropdownButton>
-            <br/>
             <div className="filterValues">
-                {
-                    filterText === 'time' ? <div className="timeFilterValue">
+                <div className="timeFilterValue">
+                    <label>Time</label>
                     <div class="wrapTimeInput">
                     <Form.Label>From</Form.Label>
                     <input type="datetime-local" class="form-control" value={time1} onChange={(event) => {setTime(event.target.value, 1)}}></input>
@@ -182,10 +163,10 @@ function LiveDb() {
                     <input type="datetime-local" class="form-control" value={time2} onChange={(event) => {setTime(event.target.value, 2)}}></input>
                     <br/>
                     </div>
-                    <Button variant="primary" onClick={(event) => onFilterButtonClicked()}>Filter</Button></div>: null
-                }
-                {
-                filterText === "violationType" ? <div className="violationFilterValue">
+                </div>
+                
+                <div className="violationFilterValue">
+                <label>Violation type</label>
                     <Multiselect class="form-select"
                         options={violationTypes}
                         selectedValues={violation}
@@ -193,10 +174,10 @@ function LiveDb() {
                         onRemove={(event) => removeViolationValue(event)}
                         isObject={false}
                     />
-                    <Button variant="primary" onClick={(event)=> onFilterButtonClicked()}>Filter</Button></div>: null
-                }
-                {
-                    filterText === 'metroCity' ? <div className="metroCityFilterValue">
+                </div>
+                
+                <div className="metroCityFilterValue">
+                    <label>Metro city</label>
                     <Multiselect class="form-select"
                         options={metroCities}
                         selectedValues={city}
@@ -204,9 +185,8 @@ function LiveDb() {
                         onRemove={(valueArray) => removeCityValue(valueArray)}
                         isObject={false}
                     />
-                    <Button variant="primary" onClick={(event) => onFilterButtonClicked()}>Filter</Button></div>: null
-                }
-            </div>
+                </div>
+            <Button variant="primary" onClick={(event) => onFilterButtonClicked()}>Filter</Button></div>
         </div>
         <div className="container pagination d-flex justify-content-center">
             <Pagination size="sm" count={liveData.length} defaultPage={6} boundaryCount={2}>
