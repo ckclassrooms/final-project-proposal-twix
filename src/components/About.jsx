@@ -137,9 +137,19 @@ function About() {
                 <ol>
                     <li>Get Location for Submit Obstruction page might not work on all browsers. This has been tested extensively on Brave and Chrome, where it works for most cases. The issue is randomly occuring.</li>
                     <li>Polygon, as explined in the video, needs to be deleted exclusively using the delete button before searching again using the filter options.</li>
+                    <li>In "Maps" page, the user is limited to draw only one polygon at a time. This is a limitation introduced due to time constraints. </li>
+                    <li>In both "Maps" and "LiveDB" page, more filters can be introduced in the future.</li>
+                    <li>There is no limit placed on image size that is accepted from user in Submit obstruction. This again is a not a feature expected in a MVP and has not been added due to time contraints.</li>
+
                 </ol>
             </p>
             </div>
+            <a target="_blank" href="https://icons8.com/icon/gMxh4liv8Mjt/car-roof-box">Car Roof Box</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+            <a target="_blank" href="https://icons8.com/icon/36496/garbage-truck">Garbage Truck</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+            <a target="_blank" href="https://icons8.com/icon/88269/taxi-waiting">Taxi Waiting</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+            <a target="_blank" href="https://icons8.com/icon/40316/vehicle-insurance">Vehicle Insurance</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+            <a target="_blank" href="https://icons8.com/icon/9342/construction">Construction</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+            <a target="_blank" href="https://icons8.com/icon/1510/multiply">Multiply</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
         </>
     )
 }
