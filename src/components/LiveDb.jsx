@@ -235,8 +235,8 @@ function LiveDb() {
                                 <Card.Text>Violation type: {DOMPurify().sanitize(unescape(d["violation_type"]))}</Card.Text>
                                 <Card.Text>Submitted:</Card.Text>
                                 <Card.Text>{ new Date(DOMPurify().sanitize(unescape(d["ts"]))).toUTCString() }</Card.Text>
-                                <Card.Text>License Plate: { d["license_plate"] !== "null" ? DOMPurify().sanitize(unescape(d["license_plate"])): ''}</Card.Text>
-                                <Card.Text>Notes: {d["notes"] !== undefined && d["notes"] !== null && d["notes"] !== "null" ? DOMPurify().sanitize(unescape(d["notes"])) : ''}</Card.Text>
+                                <Card.Text>License Plate: { d["license_plate"] !== null ? DOMPurify().sanitize(unescape(d["license_plate"])): ''}</Card.Text>
+                                <Card.Text>Notes: {d["notes"] !== undefined && d["notes"] !== null && d["notes"] !== null ? DOMPurify().sanitize(unescape(d["notes"])) : ''}</Card.Text>
                             </Card.Body>
                             </Card>
                         </Col> 
