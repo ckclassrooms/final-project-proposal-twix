@@ -179,6 +179,10 @@ function SubmitObstruction() {
         })
         if (error) {
           console.log(error);
+          alert("Upload failed.")
+          removeLoader();
+          resetForm();
+          return;
         }
         console.log("data:");
         console.log(data);
