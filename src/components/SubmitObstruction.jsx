@@ -89,7 +89,6 @@ function SubmitObstruction() {
     };
 
     function success(pos) {
-      // eslint-disable-next-line
       const crd = pos.coords;
       console.log('Your current position is:');
       console.log(`Latitude : ${crd.latitude}`);
