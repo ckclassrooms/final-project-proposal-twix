@@ -94,6 +94,8 @@ function LiveDb() {
         document.getElementsByClassName("loaderContainer")[0].classList.remove("show");
         document.getElementsByClassName("loaderContainer")[0].classList.add("hide");
         document.getElementsByClassName("gridContainer")[0].classList.remove("hide");
+        document.getElementsByClassName("errorContainer")[0].classList.remove("show");
+        document.getElementsByClassName("errorContainer")[0].classList.add("hide");
     }
 
     function onFilterButtonClicked() {
