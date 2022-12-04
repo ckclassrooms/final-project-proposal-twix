@@ -81,8 +81,8 @@ function Maps() {
             map.current.addImage('municipal-marker', municipal_image)
             map.current.addImage('other-marker', other_image)
             map.current.addImage('construction-marker', construction_image)
-
-
+            
+            Map_gen(true)
         })
         map.current.addControl(draw, 'top-left');
         map.current.on('draw.create', updateArea);
@@ -104,6 +104,20 @@ function Maps() {
         });
     });
 
+    function deletePolygons(){
+        const data = draw.getAll();
+            console.log("data in delete polygon ",data)
+                var pids = []
+                
+                data.features.forEach((f) => {
+                    if (f.geometry.type === 'Polygon' ) {
+                        pids.push(f.id)
+                    }
+                })
+                draw.delete(pids)
+            
+    }
+    
     function updateArea(e) {
         if (e.type === 'draw.delete') {
             removeData()
@@ -113,11 +127,13 @@ function Maps() {
             removeData()
             const poly = draw.getAll();
             const locArray = poly.features[0].geometry.coordinates[0];
+            
             loadPolygonData(locArray)
         }
         else if (e.type === 'draw.update') {
             const poly = draw.getAll();
             const locArray = poly.features[0].geometry.coordinates[0];
+            
             loadPolygonData(locArray)
         }
     }
@@ -146,6 +162,7 @@ function Maps() {
         }
         navigator.geolocation.getCurrentPosition(success, error, options);
     }
+
 
     function changeViolationValue(valueArray) {
         setViolation(valueArray);
@@ -278,8 +295,9 @@ function Maps() {
         layer_exists = true
     }
 
-    function Map_gen() {
+    function Map_gen(temp_data) {
         removeData()
+        deletePolygons()
         const curr_bounds = map.current.getBounds()
 
         var array_cat = []
@@ -287,14 +305,12 @@ function Maps() {
         for (var i = 0; i < checkboxes.length; i++) {
             array_cat.push(checkboxes[i].value)
         }
-
-        if (mapLoaded === true) {
+        if (temp_data === true || mapLoaded === true) {
             async function getMap() {
                 var lat1 = curr_bounds['_sw']['lng']
                 var lon1 = curr_bounds['_ne']['lat']
                 var lat2 = curr_bounds['_ne']['lng']
                 var lon2 = curr_bounds['_sw']['lat']
-                
                 var data = await supabaseCall(lat1, lon1, lat2, lon2, violation)
                 loadMapWithData(data)
             }

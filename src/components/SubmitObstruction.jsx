@@ -17,6 +17,12 @@ function SubmitObstruction() {
   // var selectedCity = "default", selectedViolation="default";
   const loadFile = function (event) {
     output = document.getElementById('output');
+    const fileSize = event.target.files[0].size / 1024 / 1024; // in MiB
+    if (fileSize > 5) {
+    alert('File size exceeds 5 MiB');
+    return;
+    // $(file).val(''); //for clearing with Jquery
+    }
     output.src = URL.createObjectURL(event.target.files[0]);
     console.log(event.target.files[0])
     console.log(output.src)
@@ -253,7 +259,7 @@ function SubmitObstruction() {
               <input
                 type="file"
                 id="single"
-                accept="*"
+                accept=".png,.jpeg,.jpg"
                 onChange={loadFile}
               />
             </div>
