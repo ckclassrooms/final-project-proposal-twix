@@ -8,8 +8,14 @@ import Multiselect from 'multiselect-react-dropdown';
 import { violationTypes } from './Violation';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import mapboxgl from '!mapbox-gl';
+
+// imports for custom markers
 import taxi from "./images/taxi.png"
-import bus from "./images/bus.png"
+import company from "./images/company.png"
+import construction from "./images/construction.png"
+import municipal from "./images/municipal.png"
+import private_vehicle from "./images/private_vehicle.png"
+import other from "./images/other.png"
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN
 
@@ -50,23 +56,33 @@ function Maps() {
         const taxi_image = new Image(35,35);
         taxi_image.src = taxi
 
-        const bus_image = new Image(35,35);
-        bus_image.src = bus
+        const company_image = new Image(35,35);
+        company_image.src = company
+
+        const construction_image = new Image(35,35);
+        construction_image.src = construction
+
+        const other_image = new Image(35,35);
+        other_image.src = other
+
+        const municipal_image = new Image(35,35);
+        municipal_image.src = municipal
+
+        const private_image = new Image(35,35);
+        private_image.src = private_vehicle
 
         map.current.on('load', () => {
             console.log('test map on load')
             setLoadedMap(true);
 
             map.current.addImage('taxi-marker', taxi_image)
-            map.current.addImage('bus-marker', bus_image)
+            map.current.addImage('company-marker', company_image)
+            map.current.addImage('private-marker', private_image)
+            map.current.addImage('municipal-marker', municipal_image)
+            map.current.addImage('other-marker', other_image)
+            map.current.addImage('construction-marker', construction_image)
 
-        })
 
-        map.current.on('load', () => {
-            console.log('test map on load')
-            setLoadedMap(true);
-
-            map.current.addImage('bus-marker', bus_image)
         })
         map.current.addControl(draw, 'top-left');
         map.current.on('draw.create', updateArea);
@@ -217,10 +233,18 @@ function Maps() {
                 'match',
                 [ 'get', 'violation' ], // type corresponds to the field name you are keying off of
                 [ 'COMPANY' ],
-                'taxi-marker',
+                'company-marker',
                 [ 'CONSTRUCTION_VEHICLE' ],
-                'violation-marker',
-                'taxi-marker' // fallback icon
+                'construction-marker',
+                [ 'PRIVATE_VEHICLE' ],
+                'private-marker',
+                [ 'MUNICIPAL_VEHICLE' ],
+                'municipal-marker',
+                [ 'TAXI' ],
+                'taxi-marker',
+                [ 'OTHER' ],
+                'other-marker',
+                'other-marker' // fallback icon
               ],
                 'text-field': ['get', 'title'],
                 'text-font': [
