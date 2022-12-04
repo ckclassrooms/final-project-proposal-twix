@@ -9,6 +9,7 @@ import { violationTypes } from './Violation';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import mapboxgl from '!mapbox-gl';
 import taxi from "./images/taxi.png"
+import bus from "./images/bus.png"
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN
 
@@ -46,14 +47,26 @@ function Maps() {
             zoom: zoom
         });
 
-        const image = new Image(35,35);
-        image.src = taxi
+        const taxi_image = new Image(35,35);
+        taxi_image.src = taxi
+
+        const bus_image = new Image(35,35);
+        bus_image.src = bus
 
         map.current.on('load', () => {
             console.log('test map on load')
             setLoadedMap(true);
 
-            map.current.addImage('taxi-marker', image)
+            map.current.addImage('taxi-marker', taxi_image)
+            map.current.addImage('bus-marker', bus_image)
+
+        })
+
+        map.current.on('load', () => {
+            console.log('test map on load')
+            setLoadedMap(true);
+
+            map.current.addImage('bus-marker', bus_image)
         })
         map.current.addControl(draw, 'top-left');
         map.current.on('draw.create', updateArea);
@@ -200,8 +213,15 @@ function Maps() {
             'type': 'symbol',
             'source': 'points_source',
             'layout': {
-                'icon-image': 'taxi-marker',
-                // get the title name from the source's "title" property
+                'icon-image': [
+                'match',
+                [ 'get', 'violation' ], // type corresponds to the field name you are keying off of
+                [ 'COMPANY' ],
+                'taxi-marker',
+                [ 'CONSTRUCTION_VEHICLE' ],
+                'violation-marker',
+                'taxi-marker' // fallback icon
+              ],
                 'text-field': ['get', 'title'],
                 'text-font': [
                     'Open Sans Semibold',
@@ -293,6 +313,7 @@ function Maps() {
                     <div id="button">
                         <Button onClick={() => Map_gen()}>Load Map</Button>
                     </div>
+                    <br/>
                 </div>
                 <div class="col-12" ref={mapContainer} id="map" />
             </div>
