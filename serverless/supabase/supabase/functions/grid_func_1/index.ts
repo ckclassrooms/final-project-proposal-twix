@@ -79,7 +79,7 @@ serve(async (req) => {
     ts1: time1, 
     ts2:time2}
     console.log("payload ",payload)
-  const { error, data } = await supabase.rpc('grid_func_stored', payload);
+  const { error, data } = await supabase.rpc('grid_func_stored1', payload);
 
   console.log(error)
 

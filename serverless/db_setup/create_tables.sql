@@ -2,9 +2,9 @@ CREATE EXTENSION postgis;
 CREATE EXTENSION address_standardizer;
 CREATE EXTENSION address_standardizer_data_us;
 
-CREATE TABLE violations (
+CREATE TABLE violations1 (
   id              SERIAL PRIMARY KEY,
-  user_id           VARCHAR(100),
+  user_id           uuid,
   violation_type    VARCHAR(100) NULL,
   ts                TIMESTAMP NOT NULL,
   metro_city        VARCHAR(100) NULL,

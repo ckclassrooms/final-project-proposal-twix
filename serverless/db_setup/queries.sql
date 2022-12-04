@@ -62,7 +62,7 @@ CREATE OR REPLACE FUNCTION grid_func_stored("cats" text[],"cities" text[],"ts1" 
 returns TABLE(lat double precision, lon double precision,violation_type varchar(100),ts TIMESTAMP,
   metro_city VARCHAR(100),
   license_plate VARCHAR(100),
-  image_url VARCHAR(500)) 
+  image_url VARCHAR(500),notes varchar(100)) 
   AS
 $$
 DECLARE 
@@ -81,7 +81,7 @@ if ts1 is not null and ts2 is not null and ts1<ts2 then
 end IF;
 
  return query execute format('
-SELECT v.lat as lat, v.lon as lon,v.violation_type,v.ts,v.metro_city,v.license_plate,v.image_url
+SELECT v.lat as lat, v.lon as lon,v.violation_type,v.ts,v.metro_city,v.license_plate,v.image_url,v.notes
 FROM   violations v
 WHERE %s order by v.ts desc;':: text , condition_string1) using cats,cities;
 end;
