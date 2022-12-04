@@ -43,6 +43,7 @@ function Maps() {
     const [violation, setViolation] = useState([]);
 
     var layer_exists = false
+    console.log(layer_exists)
 
     useEffect(() => {
         if (map.current) return;
