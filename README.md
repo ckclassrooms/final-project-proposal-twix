@@ -2,7 +2,7 @@
 ## Team Name
 **Twix** (Github Repo: https://github.com/ckclassrooms/final-project-proposal-twix.git)
 
-App Deployment: https://cool-conkies-80a0da.netlify.app/
+App Deployment: https://cool-conkies-80a0da.netlify.app/#/
 
 ## Team Members:
 | Name                            | Net ID   |
