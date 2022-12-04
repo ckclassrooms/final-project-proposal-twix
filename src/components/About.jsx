@@ -106,7 +106,7 @@ function About() {
                         <li>
                             <b>Optional</b>
                             <ul>
-                                <li>Licence Plate</li>
+                                <li>License Plate</li>
                                 <li>Geo-location</li>
                                 <li>Single Image of Violation</li>
                                 <li>Additional Notes</li>
@@ -145,9 +145,8 @@ function About() {
                 <ol>
                     <li>Get Location for 'Submit Obstruction' page might not work on some browsers.</li>
                     <li>On 'Maps' page, the user is limited to draw only one polygon at a time. This is a limitation introduced due to time constraints. </li>
-                    <li> In both 'Maps' and 'LiveDB' page, more filters can be introduced in the future. </li>
-                    <li>There is no limit placed on image size that is accepted from user in 'Submit Obstruction'. This again has not been added due to time contraints and is a not a feature expected in a MVP.</li>
-
+                    <li> In both 'Maps' and 'LiveDB' page, more filters can be introduced in the future. This again has not been added due to time contraints and is a not a feature expected in a MVP. </li>
+                    <li>The 'Submit Obstruction' page allows us to choose a city from dropdown, while the location is picked up from browser. This mismatch will be handled in future scope where location and city are both disabled, and city will be fetched from location only.</li>
                 </ol>
             </p>
             </div>

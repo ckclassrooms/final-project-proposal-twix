@@ -94,6 +94,8 @@ function LiveDb() {
         document.getElementsByClassName("loaderContainer")[0].classList.remove("show");
         document.getElementsByClassName("loaderContainer")[0].classList.add("hide");
         document.getElementsByClassName("gridContainer")[0].classList.remove("hide");
+        document.getElementsByClassName("errorContainer")[0].classList.remove("show");
+        document.getElementsByClassName("errorContainer")[0].classList.add("hide");
     }
 
     function onFilterButtonClicked() {
@@ -158,7 +160,7 @@ function LiveDb() {
        <div class="filterDiv d-flex flex-md-row">
             <div className="filterValues">
                 <div className="timeFilterValue">
-                    <label>Time</label>
+                    <label>Date and Time</label>
                     <div class="wrapTimeInput">
                     <Form.Label>From</Form.Label>
                     <input type="datetime-local" class="form-control" value={time1} onChange={(event) => {setTime(event.target.value, 1)}}></input>
