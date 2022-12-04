@@ -265,10 +265,12 @@ function SubmitObstruction() {
             <div class="form-group">
               <label for="exampleFormControlInput1">License Plate Number</label>
               <input type="email" value={licensePlate} class="form-control" maxlength="10" id="license_plate" onChange={(event => setLicensePlate(event.target.value))} placeholder="CD 80519" />
+              <span className='smallNote'>(Limit: 100 characters)</span>
             </div>
             <div class="form-group">
               <label for="exampleFormControlTextarea1">Notes</label>
               <textarea value={notes} class="form-control" id="notes" rows="3" maxlength="500" onChange={(event => setNotes(event.target.value))}></textarea>
+              <span className='smallNote'>(Limit: 100 characters)</span>
             </div>
             <div class="form-group input">
               <input
