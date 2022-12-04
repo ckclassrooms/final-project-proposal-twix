@@ -135,7 +135,7 @@ function About() {
             <h2>Additional Points to Note:</h2>
             <p>
                 <ol>
-                    <li>Get Location for Submit Obstruction page might not work on all browsers. This has been tested extensively on Brave and Chrome, where it works for most cases. The issue is randomly occuring.</li>
+                    <li>Get Location for Submit Obstruction page might not work on some browsers.</li>
                     <li>Polygon, as explined in the video, needs to be deleted exclusively using the delete button before searching again using the filter options.</li>
                     <li>In "Maps" page, the user is limited to draw only one polygon at a time. This is a limitation introduced due to time constraints. </li>
                     <li>In both "Maps" and "LiveDB" page, more filters can be introduced in the future.</li>
