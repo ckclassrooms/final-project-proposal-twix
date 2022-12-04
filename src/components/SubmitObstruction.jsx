@@ -18,10 +18,14 @@ function SubmitObstruction() {
   const loadFile = function (event) {
     output = document.getElementById('output');
     output.src = URL.createObjectURL(event.target.files[0]);
+    console.log(event.target.files[0])
+    console.log(output.src)
     output.onload = function () {
+      console.log("working")
       file_uploaded=true
       URL.revokeObjectURL(output.src)
     }
+    file_uploaded=true
   }
   var file_incorrect = false
   const uploadImage = async (event) => {
@@ -69,6 +73,7 @@ function SubmitObstruction() {
     console.log("Upload error", error)
     console.log(error)
     alert("Image upload failed")
+    removeLoader(); // changed
     throw error
   } finally {
     console.log("Upload complete")
@@ -132,13 +137,13 @@ function SubmitObstruction() {
   
     setNotes('');
     setLicensePlate('');
-    // document.getElementById('output').style.display = 'none';
+    document.getElementById('output').style.display = 'none';
     // document.getElementById('output').reset();
-    // document.getElementById("submit_form").reset();
+    document.getElementById("submit_form").reset();
     // window.location.replace("https://cool-conkies-80a0da.netlify.app/#/liveDb");
-    output = document.getElementById('output');
-    output.src = ""
-    URL.revokeObjectURL(output.src)
+    // output = document.getElementById('output');
+    // output.src = ""
+    // URL.revokeObjectURL(output.src)
     file_uploaded=false
   }
 
@@ -249,7 +254,7 @@ function SubmitObstruction() {
               <input
                 type="file"
                 id="single"
-                accept="image/*"
+                accept="*"
                 onChange={loadFile}
               />
             </div>
