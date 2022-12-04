@@ -67,12 +67,14 @@ function About() {
             </p>
             <p><b>Note:</b> Few options such as 'Submit Obstruction' and 'Live DB' are accessible from Navigation Bar without login for testing purposes. Final version will have everything in Nav Bar locked under access control.</p> */}
 
+            <b>Screen Recording</b> for Map functionality is available at: [drive link]
+            <br/><br/>
 
             <h2>Application Functionality:</h2>
             <p>
                 <ol>
                     <li>
-                        The user is greeted with an initial welcome page with a Nav Bar (containing About, Live Database, Maps, and Login Buttons).
+                        The user is greeted with an initial welcome page introducing the different sections with a Nav Bar (containing About, Live Database, Maps, and Login Buttons).
                     </li>
                     <li>
                         Once the user clicks on login, the user is redirected to a Github Login Page, where the user can authorize our application (Github OAuth set using Supabase)
@@ -87,7 +89,7 @@ function About() {
                             <b>Maps View:</b> Visualizes the obstructions on a map. The obstructions are loaded based on the visible area of the map, and if the user changes the visible area/zooms in or out, the button 'Search Again' needs to be clicked to refresh the map to reload the violations in this new visible area. Users can click on violation markers to open a popup with details of the violation (including an image if submitted).
                             </li>
                             <li>
-                            <b>About Page:</b> This page gives an overall idea of the infrastructure, and design of the Web Application.
+                            <b>About Page:</b> This page gives an overall idea of the infrastructure, and design of the Web Application along with the detailed usage instructions.
                             </li>
                         </ul>
                     </li>
@@ -116,11 +118,18 @@ function About() {
             </p>
             <h2>Beyond the declared scope:</h2>
             <p>
-                <ol>
-                    <li>
-                        <b>Polygon Select on Map:</b> 
-                    </li>
-                </ol>
+                        <b>Polygon Select on Map:</b> The map, along with the usual filters, supports using a polygon to visualize results as well. 
+                        <ul>
+                            <li>
+                                The user can start drawing a polygon by clicking the draw button (top left corner) and clicking on map for the first point. The further clicks on map will mark the vertices for the polygon until a double click on map. Once the polygon is completed, data corresponding to the points within the polygon will be loaded on the map.
+                            </li>
+                            <li>
+                                To remove the drawn polygon, the delete button (top left corner) can be pressed. 
+                            </li>
+                            <li>
+                                The drawn polygon can also be moved around on the map by dragging. The data will be loaded dynamically once the polygon is moved to a new location.
+                            </li>
+                        </ul>
             </p>
             <h2>Notable Highlights</h2>
             <p>
@@ -130,16 +139,14 @@ function About() {
                     </li>
                 </ol>
             </p>
-            <b>Screen Recording</b> for Map functionality is available at: [drive link]
             
             <h2>Additional Points to Note:</h2>
             <p>
                 <ol>
-                    <li>Get Location for Submit Obstruction page might not work on some browsers.</li>
-                    <li>Polygon, as explined in the video, needs to be deleted exclusively using the delete button before searching again using the filter options.</li>
-                    <li>In "Maps" page, the user is limited to draw only one polygon at a time. This is a limitation introduced due to time constraints. </li>
-                    <li>In both "Maps" and "LiveDB" page, more filters can be introduced in the future.</li>
-                    <li>There is no limit placed on image size that is accepted from user in Submit obstruction. This again is a not a feature expected in a MVP and has not been added due to time contraints.</li>
+                    <li>Get Location for 'Submit Obstruction' page might not work on some browsers.</li>
+                    <li>On 'Maps' page, the user is limited to draw only one polygon at a time. This is a limitation introduced due to time constraints. </li>
+                    <li> In both 'Maps' and 'LiveDB' page, more filters can be introduced in the future. </li>
+                    <li>There is no limit placed on image size that is accepted from user in 'Submit Obstruction'. This again has not been added due to time contraints and is a not a feature expected in a MVP.</li>
 
                 </ol>
             </p>
