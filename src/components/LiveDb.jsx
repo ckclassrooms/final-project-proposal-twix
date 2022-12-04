@@ -158,7 +158,7 @@ function LiveDb() {
        <div class="filterDiv d-flex flex-md-row">
             <div className="filterValues">
                 <div className="timeFilterValue">
-                    <label>Time</label>
+                    <label>Date and Time</label>
                     <div class="wrapTimeInput">
                     <Form.Label>From</Form.Label>
                     <input type="datetime-local" class="form-control" value={time1} onChange={(event) => {setTime(event.target.value, 1)}}></input>
