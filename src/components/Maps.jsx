@@ -105,7 +105,8 @@ function Maps() {
     });
 
     function deletePolygons(){
-        const data = draw.getAll();
+        try{
+            const data = draw.getAll();
             console.log("data in delete polygon ",data)
                 var pids = []
                 
@@ -115,6 +116,11 @@ function Maps() {
                     }
                 })
                 draw.delete(pids)
+        }
+        catch(error){
+            console.log("cat")
+        }
+        
             
     }
     
@@ -215,7 +221,9 @@ function Maps() {
             console.log(error)
             alert("Error in loading maps");
         }
-
+        console.log(
+        "map env data",data
+        )
         return data
     }
 
