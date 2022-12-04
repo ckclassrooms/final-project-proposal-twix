@@ -14,7 +14,7 @@ function SubmitObstruction() {
   const [location, setLocation] = useState('');
   const [violation, setViolation] = useState('default');
   const [licensePlate, setLicensePlate] = useState('');
-  // var selectedCity = "default", selectedViolation="default";
+
   const loadFile = function (event) {
     output = document.getElementById('output');
     const fileSize = event.target.files[0].size / 1024 / 1024; // in MiB
@@ -169,6 +169,7 @@ function SubmitObstruction() {
       if (file_incorrect !== true) {
         const { data, error } = await supabase.functions.invoke('submit_violation_2', {
           body: JSON.stringify({
+            "notes": jsonObj["notes"],
             "lat": jsonObj["lat"],
             "lon": jsonObj["lon"],
             "license_plate": jsonObj["license"],
