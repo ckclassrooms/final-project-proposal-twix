@@ -58,7 +58,7 @@ serve(async (req) => {
     console.log("Ts1",t1)
       console.log("ts2",t2)
     console.log(t1<t2)
-    if(ts1<=ts2){
+    if(ts1<ts2){
       time1=ts1;
       time2=ts2;
       
