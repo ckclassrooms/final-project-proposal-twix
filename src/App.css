@@ -7,6 +7,14 @@
   color: white !important;
 }
 
+.container.landingContainer {
+  border: none !important;
+}
+
+.container .row {
+  margin-bottom: 10px;
+}
+
 h3 a, h2 a {
   text-decoration: none !important;
   color: #3b488c !important;
@@ -74,8 +82,18 @@ li {
 }
 
 .landing-div, .liveDb-div {
-  margin-left: 30%;
-  margin-top: 50px;
+  margin-left: 18%;
+  margin-top: 150px;
+}
+
+.card:hover {
+  border:1px solid #3b488c;
+  box-shadow: 0 0 0 0.25rem rgb(59 72 140 / 25%);
+}
+
+.card:hover {
+  border:1px solid #3b488c;
+  box-shadow: 0 0 0 0.25rem rgb(59 72 140 / 25%);
 }
 
 .liveDb-div .card {

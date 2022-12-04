@@ -22,6 +22,8 @@ function LiveDb() {
     var [smallGrid, setSmallGrid] = useState(() => []);
 
     useEffect(() => {
+        setLiveData([]);
+        setSmallGrid([]);
         getGrid();
         // eslint-disable-next-line
     }, []);
@@ -95,6 +97,8 @@ function LiveDb() {
     }
 
     function onFilterButtonClicked() {
+        setLiveData([]);
+        setSmallGrid([]);
         getGrid(filter);
     }
 
