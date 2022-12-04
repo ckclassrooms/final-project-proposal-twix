@@ -55,13 +55,16 @@ serve(async (req) => {
     const ts2 = incomingData["ts2" as keyof typeof incomingData]
     const t1=new Date(Date.parse(ts1))
     const t2= new Date(Date.parse(ts2))
+    console.log("Ts1",t1)
+      console.log("ts2",t2)
     console.log(t1<t2)
     if(ts1<=ts2){
       time1=ts1;
       time2=ts2;
+      
     }
     else {
-      errorResponse("Timestamp1 < timestamp2",400)
+      return errorResponse("Timestamp1 < timestamp2",400)
     }
   }
   if(incomingData["metro_city" as keyof typeof incomingData]){
